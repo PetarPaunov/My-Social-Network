@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>03d58fc7-cda6-4c3f-a7b3-ec6716537af3</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,11 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\MySocialNetwork.Authentication\MySocialNetwork.Authentication.csproj" />
+    <ProjectReference Include="..\MySocialNetwork.Core\MySocialNetwork.Core.csproj" />
     <ProjectReference Include="..\MySocialNetwork.Infrastructure\MySocialNetwork.Infrastructure.csproj" />
   </ItemGroup>
 

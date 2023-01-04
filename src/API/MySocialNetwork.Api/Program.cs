@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using MySocialNetwork.Authentication.Configuration;
+using MySocialNetwork.Core.Configuration;
 using MySocialNetwork.Infrastructure;
 using MySocialNetwork.Infrastructure.Models;
 using System.Text;
