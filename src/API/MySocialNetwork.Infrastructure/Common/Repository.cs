@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Microsoft.EntityFrameworkCore;
     using System.Linq.Expressions;
+    using MySocialNetwork.Infrastructure;
 
     /// <summary>
     /// Implementation of repository access methods

@@ -3,8 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using MySocialNetwork.Core.Configuration;
+using MySocialNetwork.Core.Contracts;
+using MySocialNetwork.Core.Services;
 using MySocialNetwork.Infrastructure;
 using MySocialNetwork.Infrastructure.Models;
+using SkiShop.Data.Common;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +34,7 @@ var tokenValidationParameters = new TokenValidationParameters()
     IssuerSigningKey = new SymmetricSecurityKey(key),
     ValidateIssuer = false, // TODO: Update
     ValidateActor = false, // TODO: Update
+    ValidateAudience = false,
     RequireExpirationTime = false, // TODO: Update
     ValidateLifetime = true
 };
@@ -56,6 +60,9 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 
 })
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
 var app = builder.Build();
 

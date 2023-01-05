@@ -6,6 +6,7 @@
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
     using MySocialNetwork.Core.Configuration;
+    using MySocialNetwork.Core.Contracts;
     using MySocialNetwork.Core.Models.Account;
     using MySocialNetwork.Infrastructure.Models;
     using System.IdentityModel.Tokens.Jwt;
@@ -17,14 +18,20 @@
     public class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly TokenValidationParameters validationParameters;
+        private readonly IJwtTokenService jwtTokenService;
         private readonly JwtConfig jwtConfig;
 
         public AccountController(
             UserManager<ApplicationUser> userManager, 
-            IOptionsMonitor<JwtConfig> optionsMonitor)
+            IOptionsMonitor<JwtConfig> optionsMonitor,
+            TokenValidationParameters validationParameters,
+            IJwtTokenService jwtTokenService)
         {
             this.userManager = userManager;
             this.jwtConfig = optionsMonitor.CurrentValue;
+            this.validationParameters = validationParameters;
+            this.jwtTokenService = jwtTokenService;
         }
 
         [HttpPost]
@@ -71,11 +78,12 @@
                 });
             }
 
-            var token = GenerateJwtToken(user);
+            var tokenResult = await this.jwtTokenService.GenerateJwtToken(user);
 
             return Ok(new AuthResult()
             {
-                Token = token,
+                Token = tokenResult.JwtToken,
+                RefreshToken = tokenResult.RefreshToken,
                 Success = true,
             });
         }
@@ -124,41 +132,47 @@
                 });
             }
 
-            var jwtToken = GenerateJwtToken(user);
+            var result = await this.jwtTokenService.GenerateJwtToken(user);
 
             return Ok(new AuthResult()
             {
-                Token = jwtToken,
+                Token = result.JwtToken,
+                RefreshToken = result.RefreshToken,
                 Success = true
             });
         }
 
-        private string GenerateJwtToken(ApplicationUser user)
+        [HttpPost]
+        [Route("refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] TokenRequestModel requestModel)
         {
-            var jwtHandler = new JwtSecurityTokenHandler();
-
-            var key = Encoding.ASCII.GetBytes(this.jwtConfig.Secret);
-
-            var tokenDescriptor = new SecurityTokenDescriptor()
+            if (!ModelState.IsValid)
             {
-                Subject = new ClaimsIdentity(new[]
+                return BadRequest(new AuthResult()
                 {
-                    new Claim("Id", user.Id),
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Email), // unique Id
-                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // used by the refresh token
-                }),
-                Expires = DateTime.UtcNow.Add(this.jwtConfig.ExpiryTimeFrame), // TODO: update that expiration time to minutes
-                SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-            };
+                    Success = false,
+                    Errors = new List<string>()
+                    {
+                        "Invalid payload"
+                    }
+                });
+            }
 
-            // generate the security token 
-            var token = jwtHandler.CreateToken(tokenDescriptor);
+            var result = await jwtTokenService.VerifyToken(requestModel);
 
-            var jwtToken = jwtHandler.WriteToken(token);
+            if (result == null)
+            {
+                return BadRequest(new AuthResult()
+                {
+                    Success = false,
+                    Errors = new List<string>()
+                    {
+                        "Token validation faild"
+                    }
+                });
+            }
 
-            return jwtToken;
+            return Ok(result);
         }
     }
 }
