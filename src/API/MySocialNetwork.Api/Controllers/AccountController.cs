@@ -4,9 +4,13 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
+    using Microsoft.IdentityModel.Tokens;
     using MySocialNetwork.Core.Configuration;
     using MySocialNetwork.Core.Models.Account;
     using MySocialNetwork.Infrastructure.Models;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Security.Claims;
+    using System.Text;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -67,7 +71,94 @@
                 });
             }
 
-            return null;
+            var token = GenerateJwtToken(user);
+
+            return Ok(new AuthResult()
+            {
+                Token = token,
+                Success = true,
+            });
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] ApplicationUserLoginModel request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new AuthResult()
+                {
+                    Success = false,
+                    Errors = new List<string>()
+                    {
+                        "Something went wrong!"
+                    }
+                });
+            }
+
+            var user = await this.userManager.FindByEmailAsync(request.Email);
+
+            if (user == null)
+            {
+                return BadRequest(new AuthResult()
+                {
+                    Success = false,
+                    Errors = new List<string>()
+                    {
+                        "Invalid authentication request"
+                    }
+                });
+            }
+
+            var isCorrect = await this.userManager.CheckPasswordAsync(user, request.Password);
+
+            if (!isCorrect)
+            {
+                return BadRequest(new AuthResult()
+                {
+                    Success = false,
+                    Errors = new List<string>()
+                    {
+                        "Invalid authentication request"
+                    }
+                });
+            }
+
+            var jwtToken = GenerateJwtToken(user);
+
+            return Ok(new AuthResult()
+            {
+                Token = jwtToken,
+                Success = true
+            });
+        }
+
+        private string GenerateJwtToken(ApplicationUser user)
+        {
+            var jwtHandler = new JwtSecurityTokenHandler();
+
+            var key = Encoding.ASCII.GetBytes(this.jwtConfig.Secret);
+
+            var tokenDescriptor = new SecurityTokenDescriptor()
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim("Id", user.Id),
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Email), // unique Id
+                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // used by the refresh token
+                }),
+                Expires = DateTime.UtcNow.AddHours(3), // TODO: update that expiration time to minutes
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+            };
+
+            // generate the security token 
+            var token = jwtHandler.CreateToken(tokenDescriptor);
+
+            var jwtToken = jwtHandler.WriteToken(token);
+
+            return jwtToken;
         }
     }
 }
