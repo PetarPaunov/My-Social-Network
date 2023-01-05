@@ -1,10 +1,8 @@
 ﻿namespace MySocialNetwork.Core.Models.Account
 {
-    public class AuthResult
+    public class TokenRequestModel
     {
         public string Token { get; set; } = null!;
         public string RefreshToken { get; set; } = null!;
-        public bool Success { get; set; }
-        public List<string> Errors { get; set; } = new List<string>();
     }
 }

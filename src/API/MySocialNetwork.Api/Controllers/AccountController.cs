@@ -148,7 +148,7 @@
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // used by the refresh token
                 }),
-                Expires = DateTime.UtcNow.AddHours(3), // TODO: update that expiration time to minutes
+                Expires = DateTime.UtcNow.Add(this.jwtConfig.ExpiryTimeFrame), // TODO: update that expiration time to minutes
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             };
