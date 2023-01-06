@@ -63,6 +63,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
