@@ -27,7 +27,8 @@
                 Title = model.Title,
                 Description = model.Description,
                 ApplicationUserId = userId,
-                ImageUrl = imageUrl
+                ImageUrl = imageUrl,
+                CreationDate = DateTime.UtcNow,
             };
 
             await repository.AddAsync<Post>(post);
