@@ -1,3 +1,4 @@
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -8,6 +9,7 @@ using MySocialNetwork.Core.Services;
 using MySocialNetwork.Infrastructure;
 using MySocialNetwork.Infrastructure.Models;
 using SkiShop.Data.Common;
+using System.Security.Principal;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,9 +63,18 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+var cloudName = builder.Configuration.GetValue<string>("CloudAccountSettings:CloudName");
+var apiKey = builder.Configuration.GetValue<string>("CloudAccountSettings:ApiKey");
+var apiSecret = builder.Configuration.GetValue<string>("CloudAccountSettings:ApiSecret");
+
+builder.Services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
+
+
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<ICommonService, CommonService>();
 
 var app = builder.Build();
 
