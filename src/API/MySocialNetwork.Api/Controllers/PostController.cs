@@ -24,6 +24,16 @@
             this.userManager = userManager;
         }
 
+        [HttpGet]
+        [Route("all")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAllPosts()
+        {
+            var posts = await this.postService.GetAllPostsAsync();
+
+            return Ok(posts);
+        }
+
         [HttpPost]
         [Route("add-post")]
         public async Task<IActionResult> AddPost([FromForm] AddPostModel model)
