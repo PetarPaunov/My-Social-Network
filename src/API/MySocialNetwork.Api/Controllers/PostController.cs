@@ -82,5 +82,21 @@
 
             return Ok("Success");
         }
+
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<IActionResult> DeletePost([FromQuery] string postId)
+        {
+            var postGuid = new Guid(postId);
+
+            var isDeleted = await this.postService.DeletePostAsync(postGuid);
+
+            if (!isDeleted)
+            {
+                return BadRequest("Somethig went wrong!");
+            }
+
+            return Ok("Success");
+        }
     }
 }

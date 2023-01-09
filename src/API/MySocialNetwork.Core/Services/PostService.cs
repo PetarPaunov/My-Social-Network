@@ -38,6 +38,22 @@
             return true;
         }
 
+        public async Task<bool> DeletePostAsync(Guid postId)
+        {
+            var post = await this.repository.GetByIdAsync<Post>(postId);
+
+            if (post == null)
+            {
+                return false;
+            }
+
+            post.IsDeleted = true;
+
+            await repository.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<GetPostModel> GetForUpdateAsync(Guid postId, string userId)
         {
             var post = await this.repository.AllReadonly<Post>()
