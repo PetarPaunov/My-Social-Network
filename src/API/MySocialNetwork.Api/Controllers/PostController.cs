@@ -50,5 +50,37 @@
             return Ok();
         }
 
+        [HttpGet]
+        [Route("get-for-update")]
+        public async Task<IActionResult> GetForUpdate([FromQuery] string postId)
+        {
+            var guidId = new Guid(postId);
+            var loggedInUser = await this.userManager.GetUserAsync(this.HttpContext.User);
+
+            var post = await this.postService.GetForUpdateAsync(guidId, loggedInUser.Id);
+
+            if (post == null)
+            {
+                return BadRequest("Somethig went wrong!");
+            }
+
+            return Ok(post);
+        }
+
+        [HttpPut]
+        [Route("update")]
+        public async Task<IActionResult> UpdatePost([FromForm] UpdatePostModel model)
+        {
+            var loggedInUser = await this.userManager.GetUserAsync(this.HttpContext.User);
+
+            bool isUpdated = await this.postService.UpdatePostAsync(model, loggedInUser.Id);
+
+            if (!isUpdated)
+            {
+                return BadRequest("Somethig went wrong!");
+            }
+
+            return Ok("Success");
+        }
     }
 }
