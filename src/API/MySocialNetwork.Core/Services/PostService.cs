@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using MySocialNetwork.Core.Contracts;
+    using MySocialNetwork.Core.Models.Comment;
     using MySocialNetwork.Core.Models.Post;
     using MySocialNetwork.Infrastructure.Models;
     using SkiShop.Data.Common;
@@ -65,18 +66,26 @@
                     Title = x.Title,
                     Description = x.Description,
                     Likes = x.Like,
-                    ImageUrl = x.ImageUrl
+                    ImageUrl = x.ImageUrl,
+                    Comments = x.Comments
+                    .Where(c => c.IsDeleted == false)
+                    .Select(c => new GetCommentModel()
+                    {
+                        Description = c.Description,
+                        ApplicationUserUsername = c.ApplicationUser.UserName
+                    })
+                    .ToList()
                 })
                 .ToListAsync();
 
             return posts;
         }
 
-        public async Task<GetPostModel> GetForUpdateAsync(Guid postId, string userId)
+        public async Task<GetPostForUpdateModel> GetForUpdateAsync(Guid postId, string userId)
         {
             var post = await this.repository.AllReadonly<Post>()
                 .Where(x => x.Id == postId && x.ApplicationUserId == userId)
-                .Select(x => new GetPostModel()
+                .Select(x => new GetPostForUpdateModel()
                 {
                     Id = x.Id,
                     Title = x.Title,
