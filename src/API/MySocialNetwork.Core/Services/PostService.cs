@@ -97,6 +97,24 @@
             return post;
         }
 
+        public async Task LikePostAsync(Guid postId)
+        {
+            var post = await this.repository.GetByIdAsync<Post>(postId);
+
+            post.Like++;
+
+            await this.repository.SaveChangesAsync();
+        }
+
+        public async Task DislikePostAsync(Guid postId)
+        {
+            var post = await this.repository.GetByIdAsync<Post>(postId);
+
+            post.Like--;
+
+            await this.repository.SaveChangesAsync();
+        }
+
         public async Task<bool> UpdatePostAsync(UpdatePostModel model, string userId)
         {
             var post = await this.repository.All<Post>()

@@ -108,5 +108,26 @@
 
             return Ok("Success");
         }
+
+        [HttpPost]
+        [Route("like")]
+        public async Task<IActionResult> LikePost([FromQuery] string postId)
+        {
+            var postGuid = new Guid(postId);
+            await this.postService.LikePostAsync(postGuid);
+
+            return Ok("Success");
+        }
+
+        [HttpPost]
+        [Route("dislike")]
+        public async Task<IActionResult> DislikePost([FromQuery] string postId)
+        {
+
+            var postGuid = new Guid(postId);
+            await this.postService.DislikePostAsync(postGuid);
+
+            return Ok("Success");
+        }
     }
 }
