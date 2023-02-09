@@ -16,12 +16,15 @@
     {
         private readonly IPostService postService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILikeService likeService;
 
-
-        public PostController(IPostService postService, UserManager<ApplicationUser> userManager)
+        public PostController(IPostService postService, 
+                              UserManager<ApplicationUser> userManager,
+                              ILikeService likeService)
         {
             this.postService = postService;
             this.userManager = userManager;
+            this.likeService = likeService;
         }
 
         [HttpGet]
@@ -110,22 +113,23 @@
         }
 
         [HttpPost]
-        [Route("like")]
+        [Route("toggle-like")]
         public async Task<IActionResult> LikePost([FromQuery] string postId)
         {
-            var postGuid = new Guid(postId);
-            await this.postService.LikePostAsync(postGuid);
-
-            return Ok("Success");
-        }
-
-        [HttpPost]
-        [Route("dislike")]
-        public async Task<IActionResult> DislikePost([FromQuery] string postId)
-        {
+            var loggedInUser = await this.userManager.GetUserAsync(this.HttpContext.User);
 
             var postGuid = new Guid(postId);
-            await this.postService.DislikePostAsync(postGuid);
+
+            var isLiked = await this.likeService.IsLiked(loggedInUser.Id, postGuid);
+
+            if (!isLiked)
+            {
+                await this.likeService.AddLike(loggedInUser.Id, postGuid);
+            }
+            else
+            {
+                await this.likeService.RemoveLike(loggedInUser.Id, postGuid);
+            }
 
             return Ok("Success");
         }

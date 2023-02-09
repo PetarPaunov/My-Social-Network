@@ -1,6 +1,5 @@
 ﻿namespace MySocialNetwork.Core.Services
 {
-    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using MySocialNetwork.Core.Contracts;
     using MySocialNetwork.Core.Models.Comment;
@@ -65,7 +64,7 @@
                     Id = x.Id,
                     Title = x.Title,
                     Description = x.Description,
-                    Likes = x.Like,
+                    Likes = x.Likes.Count(),
                     ImageUrl = x.ImageUrl,
                     Comments = x.Comments
                     .Where(c => c.IsDeleted == false)
@@ -95,24 +94,6 @@
                 .FirstOrDefaultAsync();
 
             return post;
-        }
-
-        public async Task LikePostAsync(Guid postId)
-        {
-            var post = await this.repository.GetByIdAsync<Post>(postId);
-
-            post.Like++;
-
-            await this.repository.SaveChangesAsync();
-        }
-
-        public async Task DislikePostAsync(Guid postId)
-        {
-            var post = await this.repository.GetByIdAsync<Post>(postId);
-
-            post.Like--;
-
-            await this.repository.SaveChangesAsync();
         }
 
         public async Task<bool> UpdatePostAsync(UpdatePostModel model, string userId)

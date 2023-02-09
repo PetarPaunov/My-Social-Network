@@ -7,6 +7,7 @@
     {
         public Post()
         {
+            this.Likes = new HashSet<Like>();
             this.Comments = new HashSet<Comment>();
         }
 
@@ -22,8 +23,6 @@
 
         public string? ImageUrl { get; set; }
 
-        public int Like { get; set; }
-
         public string ApplicationUserId { get; set; }
 
         [ForeignKey(nameof(ApplicationUserId))]
@@ -32,6 +31,8 @@
         public DateTime CreationDate { get; set; }
 
         public bool IsDeleted { get; set; } = false;
+
+        public ICollection<Like> Likes { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
     }

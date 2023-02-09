@@ -1,10 +1,8 @@
 ﻿namespace MySocialNetwork.Infrastructure
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-    using Microsoft.Data.SqlClient;
     using Microsoft.EntityFrameworkCore;
     using MySocialNetwork.Infrastructure.Models;
-    using System.Security.Cryptography.X509Certificates;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -16,6 +14,7 @@
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Like> Likes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -37,6 +36,15 @@
             builder.Entity<Comment>()
                 .Property(x => x.IsDeleted)
                 .HasDefaultValue(false);
+
+            builder.Entity<Like>()
+                .HasKey(x => new { x.PostId, x.ApplicationUserId });
+
+            builder.Entity<Like>()
+                .HasOne(x => x.Post)
+                .WithMany(x => x.Likes)
+                .HasForeignKey(x => x.PostId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }

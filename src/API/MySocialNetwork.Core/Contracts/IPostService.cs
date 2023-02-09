@@ -9,7 +9,5 @@
         Task<bool> UpdatePostAsync(UpdatePostModel model, string userId);
         Task<bool> DeletePostAsync(Guid postId);
         Task<IEnumerable<GetPostModel>> GetAllPostsAsync();
-        Task LikePostAsync(Guid postId);
-        Task DislikePostAsync(Guid postId);
     }
 }
