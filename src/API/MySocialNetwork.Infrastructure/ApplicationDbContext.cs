@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using MySocialNetwork.Infrastructure.Models;
+    using System.Security.Cryptography.X509Certificates;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -15,6 +16,7 @@
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Like> Likes { get; set; }
+        public DbSet<Request> Requests { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

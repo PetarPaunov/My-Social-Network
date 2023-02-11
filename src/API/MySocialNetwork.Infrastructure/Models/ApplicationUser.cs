@@ -9,6 +9,7 @@
         {
             this.Posts = new HashSet<Post>();
             this.Comments = new HashSet<Comment>();
+            this.Requests = new HashSet<Request>();
         }
 
         [Required]
@@ -21,6 +22,8 @@
 
         public string? ImageUrl { get; set; }
         public string? Address { get; set; }
+
+        public ICollection<Request> Requests { get; set; }
 
         public ICollection<Post> Posts { get; set; }
 
