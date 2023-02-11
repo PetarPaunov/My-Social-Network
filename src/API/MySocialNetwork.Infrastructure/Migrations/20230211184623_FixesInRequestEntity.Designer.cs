@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MySocialNetwork.Infrastructure;
 
@@ -11,9 +12,10 @@ using MySocialNetwork.Infrastructure;
 namespace MySocialNetwork.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230211184623_FixesInRequestEntity")]
+    partial class FixesInRequestEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -378,31 +380,13 @@ namespace MySocialNetwork.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("RequestUserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("RequestUserId");
 
                     b.ToTable("Requests");
                 });
@@ -527,9 +511,13 @@ namespace MySocialNetwork.Infrastructure.Migrations
 
             modelBuilder.Entity("MySocialNetwork.Infrastructure.Models.Request", b =>
                 {
-                    b.HasOne("MySocialNetwork.Infrastructure.Models.ApplicationUser", null)
+                    b.HasOne("MySocialNetwork.Infrastructure.Models.ApplicationUser", "RequestUser")
                         .WithMany("Requests")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("RequestUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RequestUser");
                 });
 
             modelBuilder.Entity("MySocialNetwork.Infrastructure.Models.ApplicationUser", b =>

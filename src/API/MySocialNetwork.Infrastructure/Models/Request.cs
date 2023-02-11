@@ -7,7 +7,10 @@
         [Required]
         public Guid Id { get; set; }
 
-        public string ApplicationUserId { get; set; } = null!;
-        public ApplicationUser ApplicationUser { get; set; } = null!;
+        public string RequestUserId { get; set; } = null!;
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+        public string? ImageUrl { get; set; }
+        public string Username { get; set; } = null!;
     }
 }
