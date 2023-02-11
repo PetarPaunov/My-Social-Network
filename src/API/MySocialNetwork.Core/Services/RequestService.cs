@@ -17,6 +17,52 @@
             this.repository = repository;
         }
 
+        public async Task Accept(string userId, string requestId)
+        {
+            var user = await this.repository.All<ApplicationUser>()
+                .Include(x => x.Requests)
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            var guidRequestId = new Guid(requestId);
+
+            var request = user.Requests
+                .Where(x => x.Id == guidRequestId)
+                .FirstOrDefault();
+
+            var friend = await this.repository.All<ApplicationUser>()
+                .FirstOrDefaultAsync(x => x.Id == request.RequestUserId);
+
+            user.Friends.Add(friend);
+
+            user.Requests.Remove(request);
+
+            await this.repository.DeleteAsync<Request>(guidRequestId);
+
+            await this.repository.SaveChangesAsync();
+        }
+
+        public async Task Decline(string userId, string requestId)
+        {
+            var user = await this.repository.All<ApplicationUser>()
+                .Include(x => x.Requests)
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            var guidRequestId = new Guid(requestId);
+
+            var request = user.Requests
+                .Where(x => x.Id == guidRequestId)
+                .FirstOrDefault();
+
+            var friend = await this.repository.All<ApplicationUser>()
+                .FirstOrDefaultAsync(x => x.Id == request.RequestUserId);
+
+            user.Requests.Remove(request);
+
+            await this.repository.DeleteAsync<Request>(guidRequestId);
+
+            await this.repository.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<RequestViewModel>> GetRequests(string userId)
         {
             var user = await this.repository.All<ApplicationUser>()
@@ -25,10 +71,12 @@
 
             return user.Requests.Select(x => new RequestViewModel()
             {
-                UserId = x.ApplicationUser.Id,
-                FirstName = x.ApplicationUser.FirstName,
-                LastName = x.ApplicationUser.LastName,
-                Username = x.ApplicationUser.UserName
+                RequestId = x.Id,
+                UserId = x.RequestUserId,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Username = x.Username,
+                ImageUrl = x.ImageUrl,
             })
             .ToList();
         }
@@ -39,8 +87,11 @@
 
             var request = new Request()
             {
-                ApplicationUserId = sender.Id,
-                ApplicationUser = sender
+                RequestUserId = sender.Id,
+                FirstName = sender.FirstName,
+                LastName = sender.LastName,
+                Username = sender.UserName,
+                ImageUrl = sender.ImageUrl
             };
 
             resciver.Requests.Add(request);

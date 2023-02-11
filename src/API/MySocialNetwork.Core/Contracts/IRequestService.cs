@@ -7,5 +7,7 @@
     {
         Task<IEnumerable<RequestViewModel>> GetRequests(string userId);
         Task Send(ApplicationUser sender, string resciver);
+        Task Accept(string userId, string requestId);
+        Task Decline(string userId, string requestId);
     }
 }

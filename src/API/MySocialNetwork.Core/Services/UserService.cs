@@ -5,6 +5,7 @@
     using MySocialNetwork.Core.Models.Account;
     using MySocialNetwork.Infrastructure.Models;
     using SkiShop.Data.Common;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class UserService : IUserService
@@ -14,6 +15,25 @@
         public UserService(IRepository repository)
         {
             this.repository = repository;
+        }
+
+        public async Task<IEnumerable<FriendViewModel>> GetAllFriends(string userId)
+        {
+            var user = await this.repository.All<ApplicationUser>()
+                .Include(x => x.Friends)
+                .Where(x => x.Id == userId)
+                .FirstOrDefaultAsync();
+
+            var friends = user.Friends.Select(x => new FriendViewModel()
+            {
+                UserId = x.Id,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Username = x.UserName,
+                ImageUrl = x.ImageUrl
+            });
+
+            return friends;
         }
 
         public async Task<bool> UpdateUserProfileAsync(string userId, UpdateProfileModel model)

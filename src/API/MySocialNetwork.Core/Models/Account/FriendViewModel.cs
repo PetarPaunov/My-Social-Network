@@ -1,8 +1,7 @@
-﻿namespace MySocialNetwork.Core.Models.Request
+﻿namespace MySocialNetwork.Core.Models.Account
 {
-    public class RequestViewModel
+    public class FriendViewModel
     {
-        public Guid RequestId { get; set; }
         public string UserId { get; set; } = null!;
         public string Username { get; set; } = null!;
         public string FirstName { get; set; } = null!;

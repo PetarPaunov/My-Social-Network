@@ -72,5 +72,16 @@
 
             return Ok("Success");
         }
+
+        [HttpGet]
+        [Route("friends")]
+        public async Task<IActionResult> GetAllFriends()
+        {
+            var loggedInUser = await this.userManager.GetUserAsync(this.HttpContext.User);
+
+            var friends = await this.userService.GetAllFriends(loggedInUser.Id);
+
+            return Ok(friends);
+        }
     }
 }

@@ -43,7 +43,29 @@
 
             await this.requestService.Send(loggedInUser, userId);
 
-            return Ok();
+            return Ok("Success");
+        }
+
+        [HttpPost]
+        [Route("accept")]
+        public async Task<IActionResult> AcceptRequest([FromQuery] string requestId)
+        {
+            var loggedInUser = await this.userManager.GetUserAsync(this.HttpContext.User);
+
+            await this.requestService.Accept(loggedInUser.Id, requestId);
+
+            return Ok("Success");
+        }
+
+        [HttpPost]
+        [Route("decline")]
+        public async Task<IActionResult> DeclineRequest([FromQuery] string requestId)
+        {
+            var loggedInUser = await this.userManager.GetUserAsync(this.HttpContext.User);
+
+            await this.requestService.Decline(loggedInUser.Id, requestId);
+
+            return Ok("Success");
         }
     }
 }
