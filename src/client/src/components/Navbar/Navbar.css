@@ -1,0 +1,43 @@
+.header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: sticky;
+    top: 0px;
+    background-color: var(--clr-background-grey);
+  }
+  
+  .header .logo {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--clr-primary-blue);
+    text-decoration: none;
+  }
+  
+  .header .nav .nav-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    list-style: none;
+  }
+  
+  .header .nav .nav-list .list-item .link {
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--clr-primary-blue);
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: 300ms;
+  }
+  
+  .header .nav .nav-list .list-item .link:hover {
+    background-color: var(--clr-primary-blue);
+    color: white;
+  }
+  
+  .header .nav .nav-list .list-item .prifile-link .profile-img {
+    background-color: white;
+    width: 50px;
+    border-radius: 50%;
+  }

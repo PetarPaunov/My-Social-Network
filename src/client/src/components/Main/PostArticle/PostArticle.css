@@ -1,0 +1,91 @@
+.main .bottom-part .left-part .post {
+    border-radius: 10px;
+    background-color: var(--clr-background-grey);
+    margin: 1rem 0;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  }
+  
+  .main .bottom-part .left-part .post .who {
+    display: flex;
+    align-items: flex-start;
+    padding: 0.5rem;
+  }
+  
+  .main .bottom-part .left-part .post .text {
+    padding: 0.5rem;
+  }
+  
+  .main .bottom-part .left-part .post .post-img {
+    width: 100%;
+  }
+  
+  .main .bottom-part .left-part .post .who .user-img {
+    width: 65px;
+    border-radius: 50%;
+  }
+  
+  .main .bottom-part .left-part .post .liks-comment-count {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+  }
+  
+  .main .bottom-part .left-part .post .liks-comment-count .like-container i,
+  .main .bottom-part .left-part .post .like .like-icon i {
+    color: var(--clr-primary-blue);
+    font-size: 22px;
+  }
+  
+  .main .bottom-part .left-part .post .like {
+    border-top: 1px solid var(--clr-primary-blue);
+    border-bottom: 1px solid var(--clr-primary-blue);
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .main .bottom-part .left-part .post .like .like-icon {
+    text-decoration: none;
+    color: black;
+  }
+  
+  .main .bottom-part .left-part .post .comment-form {
+    padding: 0.5rem;
+  }
+  
+  .main .bottom-part .left-part .post .comment-form .comment-area {
+    border: none;
+    width: 100%;
+    height: auto;
+    resize: none;
+    border-radius: 10px;
+    border: 1px solid var(--clr-primary-blue);
+    outline-color: var(--clr-primary-blue);
+    padding: 0.5rem;
+  }
+  
+  .main .bottom-part .left-part .post .comment-form .comment-button {
+    border: none;
+    color: white;
+    background-color: var(--clr-primary-blue);
+    font-weight: 500;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .main .bottom-part .left-part .post .comments {
+    padding: 0.5rem;
+  }
+  
+  .main .bottom-part .left-part .post .comments .comment .sender {
+    display: flex;
+  }
+  
+  .main .bottom-part .left-part .post .comments .comment .sender .sender-img {
+    width: 65px;
+    border-radius: 50%;
+  }
+  
+  .main .bottom-part .left-part .post .comments .comment .comment-text {
+    border-bottom: 1px solid var(--clr-primary-blue);
+    padding-bottom: 0.5rem;
+  }
