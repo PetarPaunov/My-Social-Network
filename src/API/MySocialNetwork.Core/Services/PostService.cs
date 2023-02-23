@@ -65,13 +65,17 @@
                     Title = x.Title,
                     Description = x.Description,
                     Likes = x.Likes.Count(),
+                    UserImage = x.ApplicationUser.ImageUrl,
+                    UserName = x.ApplicationUser.UserName,
                     ImageUrl = x.ImageUrl,
+                    CommentsCount = x.Comments.Count(),
                     Comments = x.Comments
                     .Where(c => c.IsDeleted == false)
                     .Select(c => new GetCommentModel()
                     {
                         Description = c.Description,
-                        ApplicationUserUsername = c.ApplicationUser.UserName
+                        ApplicationUserUsername = c.ApplicationUser.UserName,
+                        ApplicationUserImage = c.ApplicationUser.ImageUrl
                     })
                     .ToList()
                 })

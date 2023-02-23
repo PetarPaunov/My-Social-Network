@@ -4,5 +4,6 @@
     {
         public string Description { get; set; } = null!;
         public string ApplicationUserUsername { get; set; } = null!;
+        public string? ApplicationUserImage { get; set; }
     }
 }
