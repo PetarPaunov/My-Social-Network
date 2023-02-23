@@ -1,3 +1,6 @@
+import { Comment } from "../Comment/Comment";
+import { useEffect, useState } from "react";
+
 import "./PostArticle.css";
 
 export const PostArticle = (props) => {
@@ -5,22 +8,24 @@ export const PostArticle = (props) => {
     <article className="post">
       <div className="who">
         <img
-          src="./images/avatar-659651__340.webp"
+          src={props.userImage}
           alt=""
           className="user-img"
         />
-        <p className="user-name">Test User</p>
+        <div className="combine">
+          <p className="user-name">Test User</p>
+          <p className="post-title">{props.title}</p>
+        </div>
       </div>
       <p className="text">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
-        vel non inventore enim sed ratione doloremque iste est neque sapiente.
+        {props.description}
       </p>
-      <img src="./images/dummy-image.png" alt="" className="post-img" />
+      <img src={props.imageUrl} alt="" className="post-img" />
       <div className="liks-comment-count">
         <span className="like-container">
-          <i className="fa-solid fa-thumbs-up" /> 200
+          <i className="fa-solid fa-thumbs-up" /> {props.likes}
         </span>
-        <p className="comments-count">20 comments</p>
+        <p className="comments-count">{props.commentsCount} comments</p>
       </div>
       <div className="like">
         <a href="" className="like-icon">
@@ -42,20 +47,7 @@ export const PostArticle = (props) => {
         </button>
       </form>
       <div className="comments">
-        <div className="comment">
-          <div className="sender">
-            <img
-              src="./images/avatar-659651__340.webp"
-              alt=""
-              className="sender-img"
-            />
-            <p className="name">Test User</p>
-          </div>
-          <p className="comment-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex esse
-            ipsum nemo. Id natus inventore error odio optio nesciunt veritatis!
-          </p>
-        </div>
+        {props.comments.map(x => <Comment key={x.description} {...x} />)}
       </div>
     </article>
   );
