@@ -29,6 +29,8 @@
     padding: 5px 15px;
     border-radius: 5px;
     transition: 300ms;
+    border: none;
+    cursor: pointer;
   }
   
   .header .nav .nav-list .list-item .link:hover {
