@@ -1,0 +1,79 @@
+:root{
+    --clr-primary-blue: #1877f2;
+    --clr-primary-green: #42b72a;
+    --clr-background-grey: #f0f2f5;
+}
+
+.container-login{
+    position: absolute;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    /* display: none; */
+}
+
+.container-login .login .head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container-login .login .head a i {
+    color: black;
+}
+
+.container-login .login .log{
+    display: block;
+    width: 100%;
+    padding: 3px 0;
+    font-weight: bold;
+    font-size: 25px;
+    color: white;
+    background-color: var(--clr-primary-blue);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 2rem;
+}
+
+.container-login .login .log{
+    background-color: var(--clr-primary-green);
+}
+
+.container-login.active{
+    display: block;
+}
+
+.container-login .login{
+    position: inherit;
+    top: 50%;
+    left: 50%;
+    padding: 0px 25px;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 20px;
+}
+
+.container-login .login .title{
+    font-size: 35px;
+    margin-top: 10px;
+    color: var(--clr-primary-blue);
+}
+
+.container-login .login hr{
+    margin-bottom: 1rem;
+}
+
+.container-login .login .input input{
+    width: 100%;
+    outline-color: var(--clr-primary-blue);
+    border-radius: 5px;
+    border: 0.2px solid gray;
+    padding: 10px 25px;
+    margin-bottom: 1rem;
+}
+
+.container-login .login .input-double input{
+    width: 49.5%;
+}
