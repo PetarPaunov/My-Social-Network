@@ -6,6 +6,8 @@ import "./MainBottomLeft.css";
 
 export const MainBottomLeft = () => {
 
+    const spinnerStyle = { position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" };
+
     const [loading, setLoading] = useState(false);
     const [posts, setPosts] = useState([]);
 
@@ -22,7 +24,7 @@ export const MainBottomLeft = () => {
 
   return (
     
-      loading ? <GridLoader color="#1877f2" /> :
+      loading ? <GridLoader style={spinnerStyle} color="#1877f2" /> :
 
       <section className="left-part">
         {posts.map(x => <PostArticle key={x.id} {...x}/>)}
