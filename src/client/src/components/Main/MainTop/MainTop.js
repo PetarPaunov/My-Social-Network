@@ -1,9 +1,11 @@
 import './MainTop.css';
 
-export const MainTop = () => {
+export const MainTop = ({
+  onButtonClick
+}) => {
   return (
     <div className="top-part">
-      <button className="add-post">Add new post</button>
+      <button onClick={() => onButtonClick(true)} className="add-post">Add new post</button>
     </div>
   );
 };
