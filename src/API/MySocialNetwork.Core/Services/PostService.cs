@@ -59,6 +59,7 @@
         {
             var posts = await repository.AllReadonly<Post>()
                 .Where(x => x.IsDeleted == false)
+                .OrderByDescending(x => x.CreationDate)
                 .Select(x => new GetPostModel()
                 {
                     Id = x.Id,
