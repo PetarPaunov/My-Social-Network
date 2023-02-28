@@ -1,25 +1,30 @@
 import { MainTop } from "./MainTop/MainTop";
-import { MainBottom } from "./MainBottom/MainBottom";
-import { useState } from "react";
 import { Post } from "../Post/Post";
+import { MainBottomLeft } from "./MainBottomLeft/MainBottomLeft";
+
+import { useState } from "react";
 
 export const Main = () => {
+  const [postButton, setPostButton] = useState(false);
 
-    const [postButton, setPostButton] = useState(false);
+  const buttonClick = (isClicked) => {
+    setPostButton(isClicked);
+  };
 
-    const buttonClick = (isClicked) => {
-        setPostButton(isClicked);
-    }
+  const closePopupHandler = () => {
+    setPostButton(false);
+  };
 
-    const closePopupHandler = () => {
-        setPostButton(false);
-      };
+  return (
+    <main className="main">
+      {postButton ? <Post closePopup={closePopupHandler} /> : null}
 
-    return (
-        <main className="main">
-            {postButton ? <Post closePopup={closePopupHandler} /> : null}
-            <MainTop onButtonClick={buttonClick}/>
-            <MainBottom />
-        </main>
-    );
-}
+      <MainTop onButtonClick={buttonClick} />
+
+      <div className="bottom-part">
+        <MainBottomLeft />
+      </div>
+
+    </main>
+  );
+};

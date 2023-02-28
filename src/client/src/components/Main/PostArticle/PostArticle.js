@@ -1,5 +1,4 @@
 import { Comment } from "../Comment/Comment";
-import { useEffect, useState } from "react";
 
 import "./PostArticle.css";
 

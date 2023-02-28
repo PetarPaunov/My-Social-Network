@@ -17,8 +17,9 @@
   
   .main .bottom-part .left-part .post .post-img {
     width: 100%;
-    height: 100vh;
     object-fit: cover;
+    object-position: center;
+    -o-object-fit: cover;
   }
   
   .main .bottom-part .left-part .post .who .user-img {

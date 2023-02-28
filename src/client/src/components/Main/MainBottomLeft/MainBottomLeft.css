@@ -1,3 +1,8 @@
+.main .bottom-part {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .main .bottom-part .left-part {
   width: 50%;
 }
