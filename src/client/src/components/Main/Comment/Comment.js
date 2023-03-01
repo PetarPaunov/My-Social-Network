@@ -1,3 +1,5 @@
+import './Comment.css';
+
 export const Comment = (props) => {
   return (
     <div className="comment">
