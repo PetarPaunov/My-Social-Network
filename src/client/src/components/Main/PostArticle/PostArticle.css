@@ -71,36 +71,3 @@
     outline-color: var(--clr-primary-blue);
     padding: 0.5rem;
   }
-  
-  .main .bottom-part .left-part .post .comment-form .comment-button {
-    border: none;
-    color: white;
-    background-color: var(--clr-primary-blue);
-    font-weight: 500;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  
-  .main .bottom-part .left-part .post .comments {
-    padding: 0.5rem;
-  }
-  
-  .main .bottom-part .left-part .post .comments .comment .sender {
-    display: flex;
-  }
-  
-  .main .bottom-part .left-part .post .comments .comment .sender .sender-img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin-right: 1rem;
-  }
-
-  .main .bottom-part .left-part .post .comments .comment .sender .name{
-    font-weight: bold;
-  }
-  
-  .main .bottom-part .left-part .post .comments .comment .comment-text {
-    border-bottom: 1px solid var(--clr-primary-blue);
-    padding-bottom: 0.5rem;
-  }

@@ -1,4 +1,5 @@
-import { MainTop } from "./MainTop/MainTop";
+import './Main.css';
+
 import { Post } from "../Post/Post";
 import { MainBottomLeft } from "./MainBottomLeft/MainBottomLeft";
 
@@ -7,7 +8,7 @@ import { useState } from "react";
 export const Main = () => {
   const [postButton, setPostButton] = useState(false);
 
-  const buttonClick = (isClicked) => {
+  const onButtonClick = (isClicked) => {
     setPostButton(isClicked);
   };
 
@@ -19,12 +20,15 @@ export const Main = () => {
     <main className="main">
       {postButton ? <Post closePopup={closePopupHandler} /> : null}
 
-      <MainTop onButtonClick={buttonClick} />
+      <div className="top-part">
+        <button onClick={() => onButtonClick(true)} className="add-post">
+          Add new post
+        </button>
+      </div>
 
       <div className="bottom-part">
         <MainBottomLeft />
       </div>
-
     </main>
   );
 };

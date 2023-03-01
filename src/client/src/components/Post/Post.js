@@ -44,7 +44,7 @@ export const Post = ({ closePopup }) => {
     axios.post('http://localhost:5236/api/Post/add-post', data, {
       headers:{
         'Content-Type': 'multipart/form-data',
-        'Authorization' : "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsIm5hbWVpZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsInN1YiI6IlRlc3QyQFRlc3QuY29tIiwiZW1haWwiOiJUZXN0MkBUZXN0LmNvbSIsImp0aSI6IjFkYTRiNDU2LTk2ZDAtNGQyYS04YTJjLTBjNDFkMGFmM2E5MCIsIm5iZiI6MTY3NzU4NjQ3OSwiZXhwIjoxNjc3NjcyODc4LCJpYXQiOjE2Nzc1ODY0Nzl9.S_Dp3TE9P8_hJv08IUE0ut4K740PvAzvsDQriWZxReA"
+        'Authorization' : "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsIm5hbWVpZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsInN1YiI6IlRlc3QyQFRlc3QuY29tIiwiZW1haWwiOiJUZXN0MkBUZXN0LmNvbSIsImp0aSI6ImE2ZmNiMWM2LWU3MGYtNDMwNy1hMzg3LWM4ZjFhZWJlNjdkYSIsIm5iZiI6MTY3NzY5ODQwNywiZXhwIjoxNjc3Nzg0ODA2LCJpYXQiOjE2Nzc2OTg0MDd9.RygWp3qEhTNrswZRj7eNQrnx-O0ouxVLCRMo6Ct8lZE"
       }
     })
     .then((res) => {
