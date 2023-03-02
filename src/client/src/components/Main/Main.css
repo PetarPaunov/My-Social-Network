@@ -19,3 +19,7 @@
   border-radius: 10px;
   cursor: pointer;
 }
+
+.main .bottom-part .left-part {
+  width: 50%;
+}
