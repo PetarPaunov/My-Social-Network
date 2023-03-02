@@ -13,6 +13,7 @@
   
   .main .bottom-part .left-part .post .text {
     padding: 0.5rem;
+    overflow-wrap: break-word;
   }
   
   .main .bottom-part .left-part .post .post-img {

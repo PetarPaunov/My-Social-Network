@@ -14,6 +14,7 @@
   
   .main .bottom-part .left-part .post .comments .comment .sender {
     display: flex;
+    margin-top: 0.7rem;
   }
   
   .main .bottom-part .left-part .post .comments .comment .sender .sender-img {

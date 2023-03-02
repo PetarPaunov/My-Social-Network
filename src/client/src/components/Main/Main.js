@@ -15,7 +15,7 @@ const spinnerStyle = {
 
 export const Main = () => {
   const [postButton, setPostButton] = useState(false);
-  const [addedNewArticle, setAddedNewArticle] = useState(false);
+  const [changesInPost, setChangesInPost] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -28,9 +28,9 @@ export const Main = () => {
       .then((result) => {
         setPosts(result);
         setLoading(false);
-        setAddedNewArticle(false);
+        setChangesInPost(false);
       });
-  }, [addedNewArticle]);
+  }, [changesInPost]);
 
   const onButtonClick = (isClicked) => {
     setPostButton(isClicked);
@@ -40,13 +40,13 @@ export const Main = () => {
     setPostButton(false);
   };
 
-  const onNewArticleAdded = (isAdded) => {
-    setAddedNewArticle(isAdded)
+  const onPostChange = (isChanged) => {
+    setChangesInPost(isChanged)
   };
 
   return (
     <main className="main">
-      {postButton ? <Post onAddedArticle={onNewArticleAdded} closePopup={closePopupHandler} /> : null}
+      {postButton ? <Post onPostChange={onPostChange} closePopup={closePopupHandler} /> : null}
 
       <div className="top-part">
         <button onClick={() => onButtonClick(true)} className="add-post">
@@ -61,7 +61,7 @@ export const Main = () => {
         ) : (
           <section className="left-part">
             {posts.map((x) => (
-              <PostArticle key={x.id} {...x} />
+              <PostArticle key={x.id} {...x} onPostChange={onPostChange} />
             ))}
           </section>
         )}

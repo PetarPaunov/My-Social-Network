@@ -9,7 +9,7 @@ const initialFieldValues = {
   image: null,
 };
 
-export const Post = ({ closePopup, onAddedArticle }) => {
+export const Post = ({ closePopup, onPostChange }) => {
 
   const [values, setValues] = useState(initialFieldValues);
 
@@ -58,7 +58,7 @@ export const Post = ({ closePopup, onAddedArticle }) => {
       });
 
     closePopup();
-    onAddedArticle(true);
+    onPostChange(true);
   };
 
   return (
