@@ -74,6 +74,7 @@
                     .Where(c => c.IsDeleted == false)
                     .Select(c => new GetCommentModel()
                     {
+                        Id = c.Id,
                         Description = c.Description,
                         ApplicationUserUsername = c.ApplicationUser.UserName,
                         ApplicationUserImage = c.ApplicationUser.ImageUrl
