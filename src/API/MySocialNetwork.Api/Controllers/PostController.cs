@@ -37,6 +37,17 @@
             return Ok(posts);
         }
 
+        [HttpGet]
+        [Route("get-user-posts")]
+        public async Task<IActionResult> GetUserPosts()
+        {
+            var loggedInUser = await this.userManager.GetUserAsync(this.HttpContext.User);
+
+            var posts = await this.postService.GetUserPosts(loggedInUser.Id);
+
+            return Ok(posts);
+        }
+
         [HttpPost]
         [Route("add-post")]
         public async Task<IActionResult> AddPost([FromForm] AddPostModel model)

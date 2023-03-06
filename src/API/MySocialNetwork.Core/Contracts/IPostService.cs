@@ -9,5 +9,6 @@
         Task<bool> UpdatePostAsync(UpdatePostModel model, string userId);
         Task<bool> DeletePostAsync(Guid postId);
         Task<IEnumerable<GetPostModel>> GetAllPostsAsync();
+        Task<IEnumerable<GetPostModel>> GetUserPosts(string userId);
     }
 }

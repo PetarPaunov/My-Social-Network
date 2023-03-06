@@ -102,6 +102,37 @@
             return post;
         }
 
+        public async Task<IEnumerable<GetPostModel>> GetUserPosts(string userId)
+        {
+            var posts = await this.repository.AllReadonly<Post>()
+                .Where(x => x.ApplicationUserId == userId)
+                .OrderByDescending(x => x.CreationDate)
+                .Select(x => new GetPostModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Description = x.Description,
+                    Likes = x.Likes.Count(),
+                    UserImage = x.ApplicationUser.ImageUrl,
+                    UserName = x.ApplicationUser.UserName,
+                    ImageUrl = x.ImageUrl,
+                    CommentsCount = x.Comments.Count(),
+                    Comments = x.Comments
+                    .Where(c => c.IsDeleted == false)
+                    .Select(c => new GetCommentModel()
+                    {
+                        Id = c.Id,
+                        Description = c.Description,
+                        ApplicationUserUsername = c.ApplicationUser.UserName,
+                        ApplicationUserImage = c.ApplicationUser.ImageUrl
+                    })
+                    .ToList()
+                })
+                .ToListAsync();
+
+            return posts;
+        }
+
         public async Task<bool> UpdatePostAsync(UpdatePostModel model, string userId)
         {
             var post = await this.repository.All<Post>()
