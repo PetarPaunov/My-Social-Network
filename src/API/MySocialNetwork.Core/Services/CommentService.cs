@@ -1,5 +1,6 @@
 ﻿namespace MySocialNetwork.Core.Services
 {
+    using Microsoft.EntityFrameworkCore;
     using MySocialNetwork.Core.Contracts;
     using MySocialNetwork.Core.Models.Comment;
     using MySocialNetwork.Infrastructure.Models;
@@ -14,7 +15,7 @@
             this.repository = repository;
         }
 
-        public async Task AddCommentAsync(AddCommentModel model, string userId)
+        public async Task<GetCommentModel> AddCommentAsync(AddCommentModel model, string userId)
         {
             var postGuid = new Guid(model.PostId);
 
@@ -28,6 +29,19 @@
 
             await this.repository.AddAsync<Comment>(comment);
             await this.repository.SaveChangesAsync();
+
+            var commentToReturn = await this.repository.AllReadonly<Comment>()
+                .Where(x => x.CreationDate == comment.CreationDate)
+                .Select(x => new GetCommentModel()
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    ApplicationUserUsername = x.ApplicationUser.UserName,
+                    ApplicationUserImage = x.ApplicationUser.ImageUrl
+                })
+                .FirstOrDefaultAsync();
+
+            return commentToReturn;
         }
     }
 }

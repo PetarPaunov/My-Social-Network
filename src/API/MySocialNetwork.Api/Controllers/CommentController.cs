@@ -34,9 +34,9 @@
 
             var loggedInUser = await this.userManager.GetUserAsync(this.HttpContext.User);
 
-            await this.commentService.AddCommentAsync(model, loggedInUser.Id);
+            var comment = await this.commentService.AddCommentAsync(model, loggedInUser.Id);
 
-            return Ok("Success");
+            return Ok(comment);
         }
     }
 }
