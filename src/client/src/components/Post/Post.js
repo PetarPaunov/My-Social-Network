@@ -1,7 +1,11 @@
+import "./Post.css";
+
 import { useState } from "react";
+
+import {addNewPost} from '../../services/postService';
+
 import axios from "axios";
 
-import "./Post.css";
 
 const initialFieldValues = {
   title: "",
@@ -9,7 +13,7 @@ const initialFieldValues = {
   image: null,
 };
 
-export const Post = ({ closePopup, onPostChange }) => {
+export const Post = ({ closePopup, onAddedPost }) => {
 
   const [values, setValues] = useState(initialFieldValues);
 
@@ -33,7 +37,7 @@ export const Post = ({ closePopup, onPostChange }) => {
     }
   };
 
-  const postSubmitHandler = (e) => {
+  const postSubmitHandler = async (e) => {
     e.preventDefault();
 
     const data = new FormData();
@@ -41,24 +45,10 @@ export const Post = ({ closePopup, onPostChange }) => {
     data.append("Description", values.description);
     data.append("Image", values.image);
 
-    axios
-      .post("http://localhost:5236/api/Post/add-post", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization:
-            "Bearer " +
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsIm5hbWVpZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsInN1YiI6IlRlc3RAVGVzdC5jb20iLCJlbWFpbCI6IlRlc3RAVGVzdC5jb20iLCJqdGkiOiJjMDA5N2I0NS1jZjNjLTRhOGYtYjRmZi03MGJiYjcxZDEyMzMiLCJuYmYiOjE2NzgxMDQ0NzUsImV4cCI6MTY3ODE5MDg3NCwiaWF0IjoxNjc4MTA0NDc1fQ.aRz8OKkcb9eQMXnkJF-KfnNska1PTr9TMlzLaUdyMao",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const result = await addNewPost(data);
 
     closePopup();
-    onPostChange(true);
+    onAddedPost(result);
   };
 
   return (

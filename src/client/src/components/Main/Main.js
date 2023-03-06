@@ -17,7 +17,6 @@ const spinnerStyle = {
 
 export const Main = () => {
   const [postButton, setPostButton] = useState(false);
-  const [changesInPost, setChangesInPost] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -25,21 +24,15 @@ export const Main = () => {
   useEffect(() => {
     setLoading(true);
 
-    // fetch("http://localhost:5236/api/Post/all")
-    //   .then((res) => res.json())
-    //   .then((result) => {
-    //     setPosts(result);
-    //     setLoading(false);
-    //     setChangesInPost(false);
-    //   });
-
     getAllPosts()
     .then(result => {
       setPosts(result);
+      setLoading(false);
     })
     .catch(err => {
       console.log(err);
     });
+
   }, []);
 
   const onButtonClick = (isClicked) => {
@@ -50,14 +43,14 @@ export const Main = () => {
     setPostButton(false);
   };
 
-  const onPostChange = (isChanged) => {
-    setChangesInPost(isChanged);
+  const onAddedPost = (post) => {
+    setPosts(state => [post, ...state]);
   };
 
   return (
     <>
       {postButton ? (
-        <Post onPostChange={onPostChange} closePopup={closePopupHandler} />
+        <Post onAddedPost={onAddedPost} closePopup={closePopupHandler} />
       ) : null}
 
       <div className="top-part">
@@ -72,7 +65,7 @@ export const Main = () => {
         ) : (
           <section className="left-part">
             {posts.map((x) => (
-              <PostArticle key={x.id} {...x} onPostChange={onPostChange} />
+              <PostArticle key={x.id} {...x} onPostChange={onAddedPost} />
             ))}
           </section>
         )}
