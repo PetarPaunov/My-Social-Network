@@ -1,74 +1,101 @@
 .main .bottom-part .left-part .post {
-    border-radius: 10px;
-    background-color: var(--clr-background-grey);
-    margin: 1rem 0;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  }
-  
-  .main .bottom-part .left-part .post .who {
-    display: flex;
-    align-items: flex-start;
-    padding: 0.5rem;
-  }
-  
-  .main .bottom-part .left-part .post .text {
-    padding: 0.5rem;
-    overflow-wrap: break-word;
-  }
-  
-  .main .bottom-part .left-part .post .post-img {
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-    -o-object-fit: cover;
-  }
-  
-  .main .bottom-part .left-part .post .who .user-img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin-right: 1rem;
-  }
+  border-radius: 10px;
+  background-color: var(--clr-background-grey);
+  margin: 1rem 0;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+}
 
-  .main .bottom-part .left-part .post .who .user-name{
-    font-weight: bold;
-  }
-  
-  .main .bottom-part .left-part .post .liks-comment-count {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5rem;
-  }
-  
-  .main .bottom-part .left-part .post .liks-comment-count .like-container i,
-  .main .bottom-part .left-part .post .like .like-icon i {
-    color: var(--clr-primary-blue);
-    font-size: 22px;
-  }
-  
-  .main .bottom-part .left-part .post .like {
-    border-top: 1px solid var(--clr-primary-blue);
-    border-bottom: 1px solid var(--clr-primary-blue);
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .main .bottom-part .left-part .post .like .like-icon {
-    text-decoration: none;
-    color: black;
-  }
-  
-  .main .bottom-part .left-part .post .comment-form {
-    padding: 0.5rem;
-  }
-  
-  .main .bottom-part .left-part .post .comment-form .comment-area {
-    border: none;
-    width: 100%;
-    height: auto;
-    resize: none;
-    border-radius: 10px;
-    border: 1px solid var(--clr-primary-blue);
-    outline-color: var(--clr-primary-blue);
-    padding: 0.5rem;
-  }
+.main .bottom-part .left-part .post .who .top,
+.main .bottom-part .left-part .post .who {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.5rem;
+}
+
+.main .bottom-part .left-part .post .who {
+  justify-content: space-between;
+}
+
+.main .bottom-part .left-part .post .who .combine-container{
+  display: flex;
+}
+
+.main .bottom-part .left-part .post .text {
+  padding: 0.5rem;
+  overflow-wrap: break-word;
+}
+
+.main .bottom-part .left-part .post .post-img {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  -o-object-fit: cover;
+}
+
+.main .bottom-part .left-part .post .who .user-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+.main .bottom-part .left-part .post .who .user-name {
+  font-weight: bold;
+}
+
+.main .bottom-part .left-part .post .liks-comment-count {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+.main .bottom-part .left-part .post .liks-comment-count .like-container i,
+.main .bottom-part .left-part .post .like .like-icon i {
+  color: var(--clr-primary-blue);
+  font-size: 22px;
+}
+
+.main .bottom-part .left-part .post .like {
+  border-top: 1px solid var(--clr-primary-blue);
+  border-bottom: 1px solid var(--clr-primary-blue);
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.main .bottom-part .left-part .post .like .like-icon {
+  text-decoration: none;
+  color: black;
+}
+
+.main .bottom-part .left-part .post .comment-form {
+  padding: 0.5rem;
+}
+
+.main .bottom-part .left-part .post .comment-form .comment-area {
+  border: none;
+  width: 100%;
+  height: auto;
+  resize: none;
+  border-radius: 10px;
+  border: 1px solid var(--clr-primary-blue);
+  outline-color: var(--clr-primary-blue);
+  padding: 0.5rem;
+}
+
+.main .bottom-part .left-part .post .who .opitons .btn {
+  padding: 0.2rem 2rem;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.main .bottom-part .left-part .post .who .opitons .btn.update-post {
+  background-color: orange;
+  margin-right: .5rem;
+}
+
+.main .bottom-part .left-part .post .who .opitons .btn.delete-post {
+  background-color: red;
+}

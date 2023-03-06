@@ -1,15 +1,17 @@
-import {Navbar} from './components/Navbar/Navbar';
-import { Main } from './components/Main/Main';
-import { Register } from './components/Register/Register';
-import { Login } from './components/Login/Login';
-import { useState } from 'react';
+import { Navbar } from "./components/Navbar/Navbar";
+import { Main } from "./components/Main/Main";
+import { Register } from "./components/Register/Register";
+import { Login } from "./components/Login/Login";
+import { UserProfile } from "./components/UserProfile/UserProfile";
 
-import {navEnum} from './components/constants/navigationConstants.js';
+import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 
-import './App.css';
+import { navEnum } from "./components/constants/navigationConstants.js";
+
+import "./App.css";
 
 function App() {
-
   const [navButton, setNavButton] = useState(false);
   const [userAction, setUserAction] = useState(null);
 
@@ -24,11 +26,20 @@ function App() {
 
   return (
     <div className="App">
-      {navButton && userAction == navEnum.Register && <Register closePopup={closePopupHandler} />}
-      {navButton && userAction == navEnum.Login && <Login closePopup={closePopupHandler} />}
-      
-      <Navbar clickHandler={navClickHandler}/>
-      <Main />
+      {navButton && userAction == navEnum.Register && (
+        <Register closePopup={closePopupHandler} />
+      )}
+      {navButton && userAction == navEnum.Login && (
+        <Login closePopup={closePopupHandler} />
+      )}
+
+      <Navbar clickHandler={navClickHandler} />
+      <main className="main">
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="user-profile" element={<UserProfile />} />
+        </Routes>
+      </main>
     </div>
   );
 }

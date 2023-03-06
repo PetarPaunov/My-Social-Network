@@ -4,6 +4,8 @@ import { Post } from "../Post/Post";
 import { PostArticle } from "./PostArticle/PostArticle";
 import { GridLoader } from "react-spinners";
 
+import {getAllPosts} from '../../services/postService';
+
 import { useEffect, useState } from "react";
 
 const spinnerStyle = {
@@ -23,14 +25,22 @@ export const Main = () => {
   useEffect(() => {
     setLoading(true);
 
-    fetch("http://localhost:5236/api/Post/all")
-      .then((res) => res.json())
-      .then((result) => {
-        setPosts(result);
-        setLoading(false);
-        setChangesInPost(false);
-      });
-  }, [changesInPost]);
+    // fetch("http://localhost:5236/api/Post/all")
+    //   .then((res) => res.json())
+    //   .then((result) => {
+    //     setPosts(result);
+    //     setLoading(false);
+    //     setChangesInPost(false);
+    //   });
+
+    getAllPosts()
+    .then(result => {
+      setPosts(result);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }, []);
 
   const onButtonClick = (isClicked) => {
     setPostButton(isClicked);
@@ -41,12 +51,14 @@ export const Main = () => {
   };
 
   const onPostChange = (isChanged) => {
-    setChangesInPost(isChanged)
+    setChangesInPost(isChanged);
   };
 
   return (
-    <main className="main">
-      {postButton ? <Post onPostChange={onPostChange} closePopup={closePopupHandler} /> : null}
+    <>
+      {postButton ? (
+        <Post onPostChange={onPostChange} closePopup={closePopupHandler} />
+      ) : null}
 
       <div className="top-part">
         <button onClick={() => onButtonClick(true)} className="add-post">
@@ -55,7 +67,6 @@ export const Main = () => {
       </div>
 
       <div className="bottom-part">
-
         {loading ? (
           <GridLoader style={spinnerStyle} color="#1877f2" />
         ) : (
@@ -65,8 +76,7 @@ export const Main = () => {
             ))}
           </section>
         )}
-
       </div>
-    </main>
+    </>
   );
 };

@@ -17,16 +17,16 @@ export const PostArticle = (props) => {
 
     const data = {
       postId,
-      description: commentDescription
+      description: commentDescription,
     };
 
     fetch("http://localhost:5236/api/Comment/add", {
-      method: 'POST',
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization:
           "Bearer " +
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsIm5hbWVpZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsInN1YiI6IlRlc3QyQFRlc3QuY29tIiwiZW1haWwiOiJUZXN0MkBUZXN0LmNvbSIsImp0aSI6IjViMTA2ZTU3LTY4NDYtNDNmNS1iNzY4LTkwMDRjM2M3MDk0YyIsIm5iZiI6MTY3Nzc3MDk3NSwiZXhwIjoxNjc3ODU3MzczLCJpYXQiOjE2Nzc3NzA5NzV9.Bw1mnna9of9s3hcUQaRrkwbO-O84R7lt3XAOOKbKa_I",
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsIm5hbWVpZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsInN1YiI6IlRlc3RAVGVzdC5jb20iLCJlbWFpbCI6IlRlc3RAVGVzdC5jb20iLCJqdGkiOiJjMDA5N2I0NS1jZjNjLTRhOGYtYjRmZi03MGJiYjcxZDEyMzMiLCJuYmYiOjE2NzgxMDQ0NzUsImV4cCI6MTY3ODE5MDg3NCwiaWF0IjoxNjc4MTA0NDc1fQ.aRz8OKkcb9eQMXnkJF-KfnNska1PTr9TMlzLaUdyMao",
       },
       body: JSON.stringify(data),
     });
@@ -37,10 +37,17 @@ export const PostArticle = (props) => {
   return (
     <article className="post">
       <div className="who">
-        <img src={props.userImage} alt="" className="user-img" />
-        <div className="combine">
-          <p className="user-name">Test User</p>
-          <p className="post-title">{props.title}</p>
+        <div className="combine-container">
+          <img src={props.userImage} alt="" className="user-img" />
+          <div className="combine">
+            <p className="user-name">Test User</p>
+            <p className="post-title">{props.title}</p>
+          </div>
+        </div>
+
+        <div className="opitons">
+          <button className="btn update-post">Edit</button>
+          <button className="btn delete-post">Delete</button>
         </div>
       </div>
       <div className="text">{props.description}</div>
