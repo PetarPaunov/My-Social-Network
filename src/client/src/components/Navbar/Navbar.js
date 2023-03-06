@@ -1,4 +1,5 @@
 import {navEnum} from '../constants/navigationConstants.js'
+import { NavLink } from 'react-router-dom';
 
 import "./Navbar.css";
 
@@ -28,13 +29,18 @@ export const Navbar = ({
             </button>
           </li>
           <li className="list-item">
-            <a href="" className="prifile-link">
+            <NavLink to='/' className="link">
+              Home
+            </NavLink>
+          </li>
+          <li className="list-item">
+            <NavLink to='/user-profile' className="prifile-link">
               <img
-                src="./images/avatar-659651__340.webp"
+                src="https://fakeimg.pl/300/"
                 alt=""
                 className="profile-img"
               />
-            </a>
+            </NavLink>
           </li>
         </ul>
       </nav>
