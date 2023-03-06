@@ -1,18 +1,22 @@
-import { useState } from "react";
+import "./PostArticle.css";
+
+import { addComment } from "../../../services/commentService";
 
 import { Comment } from "../Comment/Comment";
 
-import "./PostArticle.css";
+import { useState } from "react";
 
 export const PostArticle = (props) => {
+
   const [postId] = useState(props.id);
+  const [comments, setComments] = useState(props.comments);
   const [commentDescription, setCommentDescription] = useState("");
 
   const onDescriptionChange = (e) => {
     setCommentDescription(e.target.value);
   };
 
-  const addNewComment = (e) => {
+  const addNewComment = async (e) => {
     e.preventDefault();
 
     const data = {
@@ -20,18 +24,9 @@ export const PostArticle = (props) => {
       description: commentDescription,
     };
 
-    fetch("http://localhost:5236/api/Comment/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization:
-          "Bearer " +
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsIm5hbWVpZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsInN1YiI6IlRlc3RAVGVzdC5jb20iLCJlbWFpbCI6IlRlc3RAVGVzdC5jb20iLCJqdGkiOiJjMDA5N2I0NS1jZjNjLTRhOGYtYjRmZi03MGJiYjcxZDEyMzMiLCJuYmYiOjE2NzgxMDQ0NzUsImV4cCI6MTY3ODE5MDg3NCwiaWF0IjoxNjc4MTA0NDc1fQ.aRz8OKkcb9eQMXnkJF-KfnNska1PTr9TMlzLaUdyMao",
-      },
-      body: JSON.stringify(data),
-    });
+    var result = await addComment(data);
 
-    props.onPostChange(true);
+    setComments(state => [...state, result])
   };
 
   return (
@@ -79,7 +74,7 @@ export const PostArticle = (props) => {
         </button>
       </form>
       <div className="comments">
-        {props.comments.map((x) => (
+        {comments.map((x) => (
           <Comment key={x.id} {...x} />
         ))}
       </div>
