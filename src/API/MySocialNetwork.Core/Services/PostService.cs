@@ -20,7 +20,7 @@
             this.commonService = commonService;
         }
 
-        public async Task<bool> AddPostAsync(AddPostModel model, string userId)
+        public async Task<GetPostModel> AddPostAsync(AddPostModel model, string userId)
         {
             var imageUrl = await this.commonService.UploadImage(model.Image);
 
@@ -36,7 +36,32 @@
             await repository.AddAsync<Post>(post);
             await repository.SaveChangesAsync();
 
-            return true;
+            var postToReturn = await this.repository.AllReadonly<Post>()
+                .Where(x => x.CreationDate == post.CreationDate)
+                .Select(x => new GetPostModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Description = x.Description,
+                    Likes = x.Likes.Count(),
+                    UserImage = x.ApplicationUser.ImageUrl,
+                    UserName = x.ApplicationUser.UserName,
+                    ImageUrl = x.ImageUrl,
+                    CommentsCount = x.Comments.Count(),
+                    Comments = x.Comments
+                    .Where(c => c.IsDeleted == false)
+                    .Select(c => new GetCommentModel()
+                    {
+                        Id = c.Id,
+                        Description = c.Description,
+                        ApplicationUserUsername = c.ApplicationUser.UserName,
+                        ApplicationUserImage = c.ApplicationUser.ImageUrl
+                    })
+                    .ToList()
+                })
+                .FirstOrDefaultAsync();
+
+            return postToReturn;
         }
 
         public async Task<bool> DeletePostAsync(Guid postId)

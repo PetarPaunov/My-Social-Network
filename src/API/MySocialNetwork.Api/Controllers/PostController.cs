@@ -64,14 +64,14 @@
                 return BadRequest("User not found!");
             }
 
-            var success = await this.postService.AddPostAsync(model, loggedInUser.Id);
+            var post = await this.postService.AddPostAsync(model, loggedInUser.Id);
 
-            if (!success)
+            if (post == null)
             {
                 return BadRequest("Something went wrong!");
             }
 
-            return Ok();
+            return Ok(post);
         }
 
         [HttpGet]
