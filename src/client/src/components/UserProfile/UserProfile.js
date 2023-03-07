@@ -1,6 +1,8 @@
 import { PostArticle } from "../Main/PostArticle/PostArticle";
 
 import { useEffect, useState } from "react";
+import { getUserPosts } from "../../services/postService";
+import { getUserInfo } from "../../services/userService";
 
 import "./UserProfile.css";
 
@@ -9,37 +11,24 @@ export const UserProfile = () => {
   const [userPosts, setUserPosts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5236/api/UserProfile/user-profile", {
-      headers: {
-        Authorization:
-          "Bearer " +
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsIm5hbWVpZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsInN1YiI6IlRlc3RAVGVzdC5jb20iLCJlbWFpbCI6IlRlc3RAVGVzdC5jb20iLCJqdGkiOiJjMDA5N2I0NS1jZjNjLTRhOGYtYjRmZi03MGJiYjcxZDEyMzMiLCJuYmYiOjE2NzgxMDQ0NzUsImV4cCI6MTY3ODE5MDg3NCwiaWF0IjoxNjc4MTA0NDc1fQ.aRz8OKkcb9eQMXnkJF-KfnNska1PTr9TMlzLaUdyMao",
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setUserInfo(result);
-      })
+    getUserInfo()
+      .then(setUserInfo)
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5236/api/Post/get-user-posts", {
-      headers: {
-        Authorization:
-          "Bearer " +
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsIm5hbWVpZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsInN1YiI6IlRlc3RAVGVzdC5jb20iLCJlbWFpbCI6IlRlc3RAVGVzdC5jb20iLCJqdGkiOiJjMDA5N2I0NS1jZjNjLTRhOGYtYjRmZi03MGJiYjcxZDEyMzMiLCJuYmYiOjE2NzgxMDQ0NzUsImV4cCI6MTY3ODE5MDg3NCwiaWF0IjoxNjc4MTA0NDc1fQ.aRz8OKkcb9eQMXnkJF-KfnNska1PTr9TMlzLaUdyMao",
-      },
-    })
-    .then((res) => res.json())
-    .then((result) => {
-        setUserPosts(result)
-    });
+    getUserPosts()
+      .then(setUserPosts)
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
-  console.log(userPosts);
+  const onDeletedPost = (postId) => {
+    setUserPosts(state => state.filter(post =>  post.id != postId))
+  };
 
   return (
     <div className="bottom-part">
@@ -69,8 +58,8 @@ export const UserProfile = () => {
       </section>
 
       <section className="left-part">
-        {userPosts.map(x => (
-            <PostArticle key={x.id} {...x} />
+        {userPosts.map((x) => (
+          <PostArticle key={x.id} {...x} onDelete={onDeletedPost} />
         ))}
       </section>
     </div>

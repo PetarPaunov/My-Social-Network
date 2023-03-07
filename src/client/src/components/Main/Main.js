@@ -47,6 +47,10 @@ export const Main = () => {
     setPosts(state => [post, ...state]);
   };
 
+  const onDeletedPost = (postId) => {
+    setPosts(state => state.filter(post =>  post.id != postId))
+  };
+
   return (
     <>
       {postButton ? (
@@ -65,7 +69,7 @@ export const Main = () => {
         ) : (
           <section className="left-part">
             {posts.map((x) => (
-              <PostArticle key={x.id} {...x} onPostChange={onAddedPost} />
+              <PostArticle key={x.id} {...x} onDelete={onDeletedPost} onPostChange={onAddedPost} />
             ))}
           </section>
         )}

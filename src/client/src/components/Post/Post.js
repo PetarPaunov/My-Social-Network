@@ -2,7 +2,7 @@ import "./Post.css";
 
 import { useState } from "react";
 
-import {addNewPost} from '../../services/postService';
+import { addNewPost } from '../../services/postService';
 
 import axios from "axios";
 

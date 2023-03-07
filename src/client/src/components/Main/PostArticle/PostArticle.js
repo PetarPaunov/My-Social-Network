@@ -1,6 +1,7 @@
 import "./PostArticle.css";
 
 import { addComment } from "../../../services/commentService";
+import { deletePost } from "../../../services/postService";
 
 import { Comment } from "../Comment/Comment";
 
@@ -29,6 +30,16 @@ export const PostArticle = (props) => {
     setComments(state => [...state, result])
   };
 
+  const onDelete = async (e) => {
+    e.preventDefault();
+
+    deletePost(postId)
+    .then(props.onDelete(postId))
+    .catch(err => {
+      console.log(err);
+    })
+  };
+
   return (
     <article className="post">
       <div className="who">
@@ -42,7 +53,7 @@ export const PostArticle = (props) => {
 
         <div className="opitons">
           <button className="btn update-post">Edit</button>
-          <button className="btn delete-post">Delete</button>
+          <button onClick={onDelete} className="btn delete-post">Delete</button>
         </div>
       </div>
       <div className="text">{props.description}</div>
