@@ -8,9 +8,9 @@ export const Navbar = ({
 }) => {
   return (
     <header className="header">
-      <a href="" className="logo">
+      <NavLink to="/" className="logo">
         MB
-      </a>
+      </NavLink>
       <nav className="nav">
         <ul className="nav-list">
           <li className="list-item">
