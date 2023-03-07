@@ -129,8 +129,8 @@
 
         public async Task<IEnumerable<GetPostModel>> GetUserPosts(string userId)
         {
-            var posts = await this.repository.AllReadonly<Post>()
-                .Where(x => x.ApplicationUserId == userId)
+            var posts = await this.repository.All<Post>()
+                .Where(x => x.ApplicationUserId == userId && x.IsDeleted == false)
                 .OrderByDescending(x => x.CreationDate)
                 .Select(x => new GetPostModel()
                 {
