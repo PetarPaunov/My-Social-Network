@@ -4,7 +4,7 @@
 
     public interface IUserService
     {
-        Task<bool> UpdateUserProfileAsync(string userId, UpdateProfileModel model);
+        Task<GetUserProfileModel> UpdateUserProfileAsync(string userId, UpdateProfileModel model);
         Task<IEnumerable<FriendViewModel>> GetAllFriends(string userId);
     }
 }

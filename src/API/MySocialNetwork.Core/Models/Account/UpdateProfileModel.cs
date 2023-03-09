@@ -1,5 +1,6 @@
 ﻿namespace MySocialNetwork.Core.Models.Account
 {
+    using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
 
     public class UpdateProfileModel
@@ -15,7 +16,7 @@
         [Required]
         [StringLength(50, MinimumLength = 3)]
         public string UserName { get; set; } = null!;
-        public string? ImageUrl { get; set; }
+        public IFormFile? Image { get; set; }
         public string? Address { get; set; }
     }
 }

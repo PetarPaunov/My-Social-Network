@@ -11,10 +11,12 @@
     public class UserService : IUserService
     {
         private readonly IRepository repository;
+        private readonly ICommonService commonService;
 
-        public UserService(IRepository repository)
+        public UserService(IRepository repository, ICommonService commonService)
         {
             this.repository = repository;
+            this.commonService = commonService;
         }
 
         public async Task<IEnumerable<FriendViewModel>> GetAllFriends(string userId)
@@ -36,7 +38,7 @@
             return friends;
         }
 
-        public async Task<bool> UpdateUserProfileAsync(string userId, UpdateProfileModel model)
+        public async Task<GetUserProfileModel> UpdateUserProfileAsync(string userId, UpdateProfileModel model)
         {
             var user = await this.repository.All<ApplicationUser>()
                 .Where(x => x.Id == userId)
@@ -44,18 +46,33 @@
 
             if (user == null)
             {
-                return false;
+                return null;
+            }
+
+            if (model.Image != null)
+            {
+                var imageUrl = await this.commonService.UploadImage(model.Image);
+                user.ImageUrl = imageUrl;
+
             }
 
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.UserName = model.UserName;
-            user.ImageUrl = model.ImageUrl;
             user.Address = model.Address;
 
             await this.repository.SaveChangesAsync();
 
-            return true;
+            var updatedUser = new GetUserProfileModel()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                ImageUrl = user.ImageUrl,
+                Address = user.Address
+            };
+
+            return updatedUser;
         }
     }
 }

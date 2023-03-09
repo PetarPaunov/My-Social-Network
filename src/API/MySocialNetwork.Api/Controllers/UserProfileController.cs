@@ -49,7 +49,7 @@
 
         [HttpPut]
         [Route("update")]
-        public async Task<IActionResult> Update([FromBody]UpdateProfileModel request)
+        public async Task<IActionResult> Update([FromForm]UpdateProfileModel request)
         {
             if (!ModelState.IsValid)
             {
@@ -63,14 +63,9 @@
                 return BadRequest("User not found!");
             }
 
-            var success = await this.userService.UpdateUserProfileAsync(loggedInUser.Id, request);
+            var user = await this.userService.UpdateUserProfileAsync(loggedInUser.Id, request);
 
-            if (!success)
-            {
-                return BadRequest("Something went wrong. Try again later!");
-            }
-
-            return Ok("Success");
+            return Ok(user);
         }
 
         [HttpGet]
