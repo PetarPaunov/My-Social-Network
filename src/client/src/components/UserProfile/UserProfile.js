@@ -5,10 +5,13 @@ import { getUserPosts } from "../../services/postService";
 import { getUserInfo } from "../../services/userService";
 
 import "./UserProfile.css";
+import { ChangeUserInfo } from "../ChangeUserInfo/ChangeUserInfo";
 
 export const UserProfile = () => {
+
   const [userInfo, setUserInfo] = useState({});
   const [userPosts, setUserPosts] = useState([]);
+  const [changeInfo, setChangeInfo] = useState(false);
 
   useEffect(() => {
     getUserInfo()
@@ -30,8 +33,17 @@ export const UserProfile = () => {
     setUserPosts(state => state.filter(post =>  post.id != postId))
   };
 
+  const onChangeInfoClick = () => {
+    setChangeInfo(state => !state);
+  }
+
+  const closePopupHandler = () => {
+    setChangeInfo(state => !state);
+  };
+
   return (
     <div className="bottom-part">
+      {changeInfo ? <ChangeUserInfo closePopup={closePopupHandler} /> : null}
       <section className="user-profile">
         <img src={userInfo.imageUrl} alt="" className="user-profile-img" />
 
@@ -54,7 +66,7 @@ export const UserProfile = () => {
           </p>
         </div>
 
-        <button className="user-profile-btn">Change Information</button>
+        <button onClick={onChangeInfoClick} className="user-profile-btn">Change Information</button>
       </section>
 
       <section className="left-part">

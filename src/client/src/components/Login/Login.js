@@ -4,19 +4,19 @@ export const Login = ({
     closePopup,
 }) => {
   return (
-    <div class="container-login">
-      <form action="" class="login">
-        <div class="head">
-          <h2 class="title">Log in</h2>
+    <div className="container-login">
+      <form action="" className="login">
+        <div className="head">
+          <h2 className="title">Log in</h2>
           <a href="#">
-            <i onClick={closePopup} class="fa-solid fa-x"></i>
+            <i onClick={closePopup} className="fa-solid fa-x"></i>
           </a>
         </div>
         <hr />
-        <div class="input">
+        <div className="input">
           <input type="email" name="" id="" placeholder="Enter your email" />
         </div>
-        <div class="input">
+        <div className="input">
           <input
             type="password"
             name=""
@@ -25,7 +25,7 @@ export const Login = ({
           />
         </div>
 
-        <button type="submit" class="log">
+        <button type="submit" className="log">
           Sing up
         </button>
       </form>
