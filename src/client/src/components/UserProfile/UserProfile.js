@@ -42,7 +42,7 @@ export const UserProfile = () => {
   };
 
   const onUserInfoChange = (newUserInfo) => {
-    setUserInfo(newUserInfo);
+    setUserInfo(state => newUserInfo);
   }
 
   return (
