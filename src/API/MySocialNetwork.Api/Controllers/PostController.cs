@@ -97,14 +97,14 @@
         {
             var loggedInUser = await this.userManager.GetUserAsync(this.HttpContext.User);
 
-            bool isUpdated = await this.postService.UpdatePostAsync(model, loggedInUser.Id);
+            var post = await this.postService.UpdatePostAsync(model, loggedInUser.Id);
 
-            if (!isUpdated)
+            if (post == null)
             {
                 return BadRequest("Somethig went wrong!");
             }
 
-            return Ok("Success");
+            return Ok(post);
         }
 
         [HttpDelete]

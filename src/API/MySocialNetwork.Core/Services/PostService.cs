@@ -158,7 +158,7 @@
             return posts;
         }
 
-        public async Task<bool> UpdatePostAsync(UpdatePostModel model, string userId)
+        public async Task<GetPostModel> UpdatePostAsync(UpdatePostModel model, string userId)
         {
             var post = await this.repository.All<Post>()
                 .Where(x => x.Id == model.Id && x.ApplicationUserId == userId)
@@ -166,7 +166,7 @@
 
             if (post == null)
             {
-                return false;
+                return null;
             }
 
             var imageUrl = await this.commonService.UploadImage(model.Image);
@@ -181,7 +181,32 @@
 
             await this.repository.SaveChangesAsync();
 
-            return true;
+            var postToReturn = await this.repository.AllReadonly<Post>()
+                .Where(x => x.Id == model.Id)
+                .Select(x => new GetPostModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Description = x.Description,
+                    Likes = x.Likes.Count(),
+                    UserImage = x.ApplicationUser.ImageUrl,
+                    UserName = x.ApplicationUser.UserName,
+                    ImageUrl = x.ImageUrl,
+                    CommentsCount = x.Comments.Count(),
+                    Comments = x.Comments
+                    .Where(c => c.IsDeleted == false)
+                    .Select(c => new GetCommentModel()
+                    {
+                        Id = c.Id,
+                        Description = c.Description,
+                        ApplicationUserUsername = c.ApplicationUser.UserName,
+                        ApplicationUserImage = c.ApplicationUser.ImageUrl
+                    })
+                    .ToList()
+                })
+                .FirstOrDefaultAsync();
+
+            return postToReturn;
         }
     }
 }

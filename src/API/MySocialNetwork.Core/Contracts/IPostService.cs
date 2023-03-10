@@ -6,7 +6,7 @@
     {
         Task<GetPostModel> AddPostAsync(AddPostModel model, string userId);
         Task<GetPostForUpdateModel> GetForUpdateAsync(Guid postId, string userId);
-        Task<bool> UpdatePostAsync(UpdatePostModel model, string userId);
+        Task<GetPostModel> UpdatePostAsync(UpdatePostModel model, string userId);
         Task<bool> DeletePostAsync(Guid postId);
         Task<IEnumerable<GetPostModel>> GetAllPostsAsync();
         Task<IEnumerable<GetPostModel>> GetUserPosts(string userId);
