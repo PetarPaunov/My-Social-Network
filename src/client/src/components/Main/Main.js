@@ -47,6 +47,16 @@ export const Main = () => {
     setPosts(state => [post, ...state]);
   };
 
+  const onEditedPost = (post) => {
+    setPosts(state => state.map(x => {
+      if (x.id == post.id){
+        x = post;
+      };
+
+      return x;
+    }))
+  }
+
   const onDeletedPost = (postId) => {
     setPosts(state => state.filter(post =>  post.id != postId))
   };
@@ -69,7 +79,7 @@ export const Main = () => {
         ) : (
           <section className="left-part">
             {posts.map((x) => (
-              <PostArticle key={x.id} {...x} onDelete={onDeletedPost} onPostChange={onAddedPost} />
+              <PostArticle onEdit={onEditedPost} key={x.id} {...x} onDelete={onDeletedPost} onPostChange={onAddedPost} />
             ))}
           </section>
         )}

@@ -45,6 +45,16 @@ export const UserProfile = () => {
     setUserInfo(state => newUserInfo);
   }
 
+  const onEditedPost = (post) => {
+    setUserPosts(state => state.map(x => {
+      if (x.id == post.id){
+        x = post;
+      };
+
+      return x;
+    }))
+  }
+
   return (
     <div className="bottom-part">
       {changeInfo ? <ChangeUserInfo onInfoChange={onUserInfoChange} userInfo={userInfo} closePopup={closePopupHandler} /> : null}
@@ -75,7 +85,7 @@ export const UserProfile = () => {
 
       <section className="left-part">
         {userPosts.map((x) => (
-          <PostArticle key={x.id} {...x} onDelete={onDeletedPost} />
+          <PostArticle key={x.id} {...x} onDelete={onDeletedPost} onEdit={onEditedPost} />
         ))}
       </section>
     </div>

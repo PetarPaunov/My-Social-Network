@@ -4,14 +4,16 @@ import { addComment } from "../../../services/commentService";
 import { deletePost } from "../../../services/postService";
 
 import { Comment } from "../Comment/Comment";
+import { EditPost } from "../../EditPost/EditPost";
 
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 export const PostArticle = (props) => {
 
   const [postId] = useState(props.id);
   const [comments, setComments] = useState(props.comments);
   const [commentDescription, setCommentDescription] = useState("");
+  const [editPost, setEditPost] = useState(false);
 
   const onDescriptionChange = (e) => {
     setCommentDescription(e.target.value);
@@ -40,7 +42,14 @@ export const PostArticle = (props) => {
     })
   };
 
+  const onEditPostOpen = () => {
+    setEditPost(state => !state);
+  };
+
   return (
+    <>
+    {editPost ? <EditPost onEdit={props.onEdit} onClose={onEditPostOpen} postInfo={props}/> : null}
+
     <article className="post">
       <div className="who">
         <div className="combine-container">
@@ -52,7 +61,7 @@ export const PostArticle = (props) => {
         </div>
 
         <div className="opitons">
-          <button className="btn update-post">Edit</button>
+          <button onClick={onEditPostOpen} className="btn update-post">Edit</button>
           <button onClick={onDelete} className="btn delete-post">Delete</button>
         </div>
       </div>
@@ -90,5 +99,6 @@ export const PostArticle = (props) => {
         ))}
       </div>
     </article>
+    </>
   );
 };
