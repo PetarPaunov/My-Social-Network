@@ -83,7 +83,9 @@
         [Route("all-users")]
         public async Task<IActionResult> GetAllLoggedInUsers()
         {
-            var users = await this.userService.GetAllLoggedInUsers();
+            var loggedInUser = await this.userManager.GetUserAsync(this.HttpContext.User);
+
+            var users = await this.userService.GetAllLoggedInUsers(loggedInUser.Id);
 
             return Ok(users);
         }

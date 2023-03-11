@@ -38,9 +38,15 @@
             return friends;
         }
 
-        public async Task<IEnumerable<FriendViewModel>> GetAllLoggedInUsers()
+        public async Task<IEnumerable<FriendViewModel>> GetAllLoggedInUsers(string userId)
         {
+            var user = await this.repository.All<ApplicationUser>()
+                .Include(x => x.Friends)
+                .Where(x => x.Id == userId)
+                .FirstOrDefaultAsync();
+
             var users = await this.repository.AllReadonly<ApplicationUser>()
+                .Where(x => x.Id != userId)
                 .Select(x => new FriendViewModel()
                 {
                     UserId = x.Id,
