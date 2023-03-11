@@ -38,6 +38,22 @@
             return friends;
         }
 
+        public async Task<IEnumerable<FriendViewModel>> GetAllLoggedInUsers()
+        {
+            var users = await this.repository.AllReadonly<ApplicationUser>()
+                .Select(x => new FriendViewModel()
+                {
+                    UserId = x.Id,
+                    Username = x.UserName,
+                    ImageUrl = x.ImageUrl,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName
+                })
+                .ToListAsync();
+
+            return users;
+        }
+
         public async Task<GetUserProfileModel> UpdateUserProfileAsync(string userId, UpdateProfileModel model)
         {
             var user = await this.repository.All<ApplicationUser>()

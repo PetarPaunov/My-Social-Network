@@ -78,5 +78,14 @@
 
             return Ok(friends);
         }
+
+        [HttpGet]
+        [Route("all-users")]
+        public async Task<IActionResult> GetAllLoggedInUsers()
+        {
+            var users = await this.userService.GetAllLoggedInUsers();
+
+            return Ok(users);
+        }
     }
 }
