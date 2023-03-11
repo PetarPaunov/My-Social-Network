@@ -34,6 +34,11 @@ export const Navbar = ({
             </NavLink>
           </li>
           <li className="list-item">
+            <NavLink to='/users' className="link">
+              Users
+            </NavLink>
+          </li>
+          <li className="list-item">
             <NavLink to='/user-profile' className="prifile-link">
               <img
                 src="https://fakeimg.pl/300/"

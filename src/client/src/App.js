@@ -3,6 +3,7 @@ import { Main } from "./components/Main/Main";
 import { Register } from "./components/Register/Register";
 import { Login } from "./components/Login/Login";
 import { UserProfile } from "./components/UserProfile/UserProfile";
+import { Users } from "./components/Users/Users";
 
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
@@ -37,7 +38,8 @@ function App() {
       <main className="main">
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="user-profile" element={<UserProfile />} />
+          <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/users" element={<Users />} />
         </Routes>
       </main>
     </div>

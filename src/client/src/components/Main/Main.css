@@ -23,3 +23,12 @@
 .main .bottom-part .left-part {
   width: 50%;
 }
+
+.main .bottom-part .right-part {
+  margin-top: 1rem;
+  width: 20%;
+  height: 100vh;
+  position: fixed;
+  right: 10px;
+  overflow: scroll;
+}

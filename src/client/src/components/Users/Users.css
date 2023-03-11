@@ -1,0 +1,42 @@
+.requests{
+    width: 60%;
+    margin: 1rem auto;
+  }
+  
+  .requests .requester{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 20px;
+    padding: .5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .requests .requester .left{
+    display: flex;
+    align-items: center;
+  }
+  
+  .requests .requester .right .btn{
+    padding: 2px 25px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 15px;
+  }
+  
+  .requests .requester .right .btn.accept{
+    background-color: var(--clr-primary-green);
+  }
+  
+  .requests .requester .right .btn.decline{
+    background-color: red;
+  }
+  
+  .requests .requester .left .img{
+    width: 70px;
+    margin-left: .5rem;
+    border-radius: 50%;
+  }

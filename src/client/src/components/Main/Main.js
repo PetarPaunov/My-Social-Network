@@ -2,9 +2,11 @@ import "./Main.css";
 
 import { Post } from "../Post/Post";
 import { PostArticle } from "./PostArticle/PostArticle";
+import { FriendSection } from "../FriendSection/FriendSection";
 import { GridLoader } from "react-spinners";
 
-import {getAllPosts} from '../../services/postService';
+import { getAllPosts } from "../../services/postService";
+import { getAllFriends } from "../../services/userService";
 
 import { useEffect, useState } from "react";
 
@@ -20,19 +22,26 @@ export const Main = () => {
 
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [friends, setFriends] = useState([]);
 
   useEffect(() => {
     setLoading(true);
 
     getAllPosts()
-    .then(result => {
-      setPosts(result);
-      setLoading(false);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      .then((result) => {
+        setPosts(result);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
+  useEffect(() => {
+    getAllFriends()
+      .then((result) => {
+        setFriends(result);
+      })
   }, []);
 
   const onButtonClick = (isClicked) => {
@@ -44,21 +53,23 @@ export const Main = () => {
   };
 
   const onAddedPost = (post) => {
-    setPosts(state => [post, ...state]);
+    setPosts((state) => [post, ...state]);
   };
 
   const onEditedPost = (post) => {
-    setPosts(state => state.map(x => {
-      if (x.id == post.id){
-        x = post;
-      };
+    setPosts((state) =>
+      state.map((x) => {
+        if (x.id == post.id) {
+          x = post;
+        }
 
-      return x;
-    }))
-  }
+        return x;
+      })
+    );
+  };
 
   const onDeletedPost = (postId) => {
-    setPosts(state => state.filter(post =>  post.id != postId))
+    setPosts((state) => state.filter((post) => post.id != postId));
   };
 
   return (
@@ -79,10 +90,23 @@ export const Main = () => {
         ) : (
           <section className="left-part">
             {posts.map((x) => (
-              <PostArticle onEdit={onEditedPost} key={x.id} {...x} onDelete={onDeletedPost} onPostChange={onAddedPost} />
+              <PostArticle
+                onEdit={onEditedPost}
+                key={x.id}
+                {...x}
+                onDelete={onDeletedPost}
+                onPostChange={onAddedPost}
+              />
             ))}
           </section>
         )}
+
+        <section className="right-part">
+          <div className="friends">
+            <p className="title">Friends</p>
+            {friends.map(x => <FriendSection key={x.userId} firend={x} />)}
+          </div>
+        </section>
       </div>
     </>
   );
