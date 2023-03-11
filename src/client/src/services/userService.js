@@ -4,6 +4,7 @@ const baseUrl = 'http://localhost:5236/api/UserProfile/';
 const getUserInfoUrl = baseUrl + 'user-profile';
 const updateUserInfoUrl = baseUrl + 'update';
 const getAllFriendsUrl = baseUrl + 'friends';
+const getAllRegisterdUsersUrl = baseUrl + 'all-users';
 
 export const getUserInfo = async () => {
 
@@ -11,7 +12,7 @@ export const getUserInfo = async () => {
         headers: {
             Authorization:
               "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsIm5hbWVpZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsInN1YiI6IlRlc3RAVGVzdC5jb20iLCJlbWFpbCI6IlRlc3RAVGVzdC5jb20iLCJqdGkiOiIzOTAyNjQ5Zi03YjA1LTRiNTItOTljYi1kM2JlMDBiNTgxNGUiLCJuYmYiOjE2Nzg0NjQxMTgsImV4cCI6MTY3ODU1MDUxNywiaWF0IjoxNjc4NDY0MTE4fQ.Zl5R7nNP8w0GQuMQ6seIWAO-33uuDc5CneA_ruahruY",
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsIm5hbWVpZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsInN1YiI6IlRlc3QyQFRlc3QuY29tIiwiZW1haWwiOiJUZXN0MkBUZXN0LmNvbSIsImp0aSI6IjA3ZWJhZDBmLTc5YjYtNGJlZi1iYzI4LTA3NGI4YmQ1YjhkZiIsIm5iZiI6MTY3ODU0Nzk1NSwiZXhwIjoxNjc4NjM0MzU0LCJpYXQiOjE2Nzg1NDc5NTV9.FVzvqkSuLhLC5LPt1ZZee2a9alFZ4giPwVB6xFM-MLs",
           },
     });
 
@@ -26,7 +27,7 @@ export const changeUserInfo = async (data) => {
         "Content-Type": "multipart/form-data",
         Authorization:
           "Bearer " +
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsIm5hbWVpZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsInN1YiI6IlRlc3RAVGVzdC5jb20iLCJlbWFpbCI6IlRlc3RAVGVzdC5jb20iLCJqdGkiOiIzOTAyNjQ5Zi03YjA1LTRiNTItOTljYi1kM2JlMDBiNTgxNGUiLCJuYmYiOjE2Nzg0NjQxMTgsImV4cCI6MTY3ODU1MDUxNywiaWF0IjoxNjc4NDY0MTE4fQ.Zl5R7nNP8w0GQuMQ6seIWAO-33uuDc5CneA_ruahruY",
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsIm5hbWVpZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsInN1YiI6IlRlc3QyQFRlc3QuY29tIiwiZW1haWwiOiJUZXN0MkBUZXN0LmNvbSIsImp0aSI6IjA3ZWJhZDBmLTc5YjYtNGJlZi1iYzI4LTA3NGI4YmQ1YjhkZiIsIm5iZiI6MTY3ODU0Nzk1NSwiZXhwIjoxNjc4NjM0MzU0LCJpYXQiOjE2Nzg1NDc5NTV9.FVzvqkSuLhLC5LPt1ZZee2a9alFZ4giPwVB6xFM-MLs",
       },
     });
   
@@ -38,9 +39,21 @@ export const changeUserInfo = async (data) => {
       headers: {
         Authorization:
           "Bearer " +
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsIm5hbWVpZCI6IjlhNzk5OGIxLTFmYmYtNGI3My04NDExLWJlMzE5Y2UxN2VlMyIsInN1YiI6IlRlc3RAVGVzdC5jb20iLCJlbWFpbCI6IlRlc3RAVGVzdC5jb20iLCJqdGkiOiJkNjBmNDZjMy0yZjFlLTQ4MzQtYTkxMi05MjNhYzgwY2FkM2YiLCJuYmYiOjE2Nzg1MzM2MjQsImV4cCI6MTY3ODYyMDAyMywiaWF0IjoxNjc4NTMzNjI0fQ.2AlIo-PFIp-k4WYdZn7FCb2RMSjuWJOmR0KKw8yJjus",
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsIm5hbWVpZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsInN1YiI6IlRlc3QyQFRlc3QuY29tIiwiZW1haWwiOiJUZXN0MkBUZXN0LmNvbSIsImp0aSI6IjA3ZWJhZDBmLTc5YjYtNGJlZi1iYzI4LTA3NGI4YmQ1YjhkZiIsIm5iZiI6MTY3ODU0Nzk1NSwiZXhwIjoxNjc4NjM0MzU0LCJpYXQiOjE2Nzg1NDc5NTV9.FVzvqkSuLhLC5LPt1ZZee2a9alFZ4giPwVB6xFM-MLs",
       },
     })
 
     return response.json();
   };
+
+  export const getAllRegisterdUsers = async () => {
+    const response = await fetch(getAllRegisterdUsersUrl,{
+      headers: {
+        Authorization:
+          "Bearer " +
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsIm5hbWVpZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsInN1YiI6IlRlc3QyQFRlc3QuY29tIiwiZW1haWwiOiJUZXN0MkBUZXN0LmNvbSIsImp0aSI6IjA3ZWJhZDBmLTc5YjYtNGJlZi1iYzI4LTA3NGI4YmQ1YjhkZiIsIm5iZiI6MTY3ODU0Nzk1NSwiZXhwIjoxNjc4NjM0MzU0LCJpYXQiOjE2Nzg1NDc5NTV9.FVzvqkSuLhLC5LPt1ZZee2a9alFZ4giPwVB6xFM-MLs",
+      },
+    });
+
+    return response.json();
+  }
