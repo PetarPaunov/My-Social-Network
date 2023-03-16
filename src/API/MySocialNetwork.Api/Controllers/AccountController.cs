@@ -138,6 +138,8 @@
             {
                 Token = result.JwtToken,
                 RefreshToken = result.RefreshToken,
+                ImageUrl = user.ImageUrl,
+                Email = user.Email,
                 Success = true
             });
         }
