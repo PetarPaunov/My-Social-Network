@@ -1,11 +1,32 @@
 import './Login.css';
 
+import { AuthContext } from '../../contexts/AuthContext';
+import { login } from '../../services/authService';
+
+import { useContext } from 'react';
+
 export const Login = ({
     closePopup,
 }) => {
+  const { onLogin } = useContext(AuthContext);
+
+  const onLoginHandler = async (e) => {
+    e.preventDefault();
+
+    const {
+      email,
+      password,
+    } = Object.fromEntries(new FormData(e.target));
+
+    const result = await login({email, password})
+
+    onLogin(result);
+    closePopup();
+  }
+
   return (
     <div className="container-login">
-      <form action="" className="login">
+      <form onSubmit={onLoginHandler} action="" className="login">
         <div className="head">
           <h2 className="title">Log in</h2>
           <a href="#">
@@ -14,12 +35,12 @@ export const Login = ({
         </div>
         <hr />
         <div className="input">
-          <input type="email" name="" id="" placeholder="Enter your email" />
+          <input type="email" name="email" id="" placeholder="Enter your email" />
         </div>
         <div className="input">
           <input
             type="password"
-            name=""
+            name="password"
             id=""
             placeholder="Enter your password"
           />

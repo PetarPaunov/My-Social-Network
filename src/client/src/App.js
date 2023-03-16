@@ -5,6 +5,7 @@ import { Login } from "./components/Login/Login";
 import { UserProfile } from "./components/UserProfile/UserProfile";
 import { Users } from "./components/Users/Users";
 import { getAllRegisterdUsers } from "./services/userService";
+import { AuthContext } from "./contexts/AuthContext";
 
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
@@ -17,6 +18,7 @@ function App() {
   const [navButton, setNavButton] = useState(false);
   const [userAction, setUserAction] = useState(null);
   const [registeredUsers, setRegisteredUsers] = useState([]);
+  const [auth, setAuth] = useState({});
 
   const navClickHandler = (isCliced, buttonType) => {
     setNavButton(isCliced);
@@ -27,38 +29,45 @@ function App() {
     setNavButton(false);
   };
 
+  const onLogin = (authData) => {
+    setAuth(authData);
+  }
+
   useEffect(() => {
-    getAllRegisterdUsers()
-      .then(result => {
-        setRegisteredUsers(result);
-      })
+    getAllRegisterdUsers().then((result) => {
+      setRegisteredUsers(result);
+    });
   }, []);
 
   return (
-    <div className="App">
-      {navButton && userAction == navEnum.Register && (
-        <Register closePopup={closePopupHandler} />
-      )}
-      {navButton && userAction == navEnum.Login && (
-        <Login closePopup={closePopupHandler} />
-      )}
+    <AuthContext.Provider value={{user: auth, onLogin}}>
+      <div className="App">
+        {navButton && userAction == navEnum.Register && (
+          <Register closePopup={closePopupHandler} />
+        )}
+        {navButton && userAction == navEnum.Login && (
+          <Login closePopup={closePopupHandler} />
+        )}
 
-      <Navbar clickHandler={navClickHandler} />
-      <main className="main">
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/user-profile" element={<UserProfile />} />
-          <Route
-            path="/users"
-            element={
-              <div className="requests">
-                {registeredUsers.map(x => <Users key={x.userId} users={x}/>)}
-              </div>
-            }
-          />
-        </Routes>
-      </main>
-    </div>
+        <Navbar clickHandler={navClickHandler} />
+        <main className="main">
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/user-profile" element={<UserProfile />} />
+            <Route
+              path="/users"
+              element={
+                <div className="requests">
+                  {registeredUsers.map((x) => (
+                    <Users key={x.userId} users={x} />
+                  ))}
+                </div>
+              }
+            />
+          </Routes>
+        </main>
+      </div>
+    </AuthContext.Provider>
   );
 }
 
