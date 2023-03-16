@@ -25,21 +25,17 @@ export const Navbar = ({ clickHandler }) => {
           {user.email ? (
             <>
               <li className="list-item">
-                <button className="link">Logout</button>
-              </li>
-              <li className="list-item">
                 <NavLink to="/users" className="link">
                   Users
                 </NavLink>
               </li>
               <li className="list-item">
                 <NavLink to="/user-profile" className="prifile-link">
-                  <img
-                    src="https://fakeimg.pl/300/"
-                    alt=""
-                    className="profile-img"
-                  />
+                  <img src={user.imageUrl ? user.imageUrl : "https://fakeimg.pl/300/"} alt="" className="profile-img" />
                 </NavLink>
+              </li>
+              <li className="list-item">
+                <button className="link">Logout</button>
               </li>
             </>
           ) : (

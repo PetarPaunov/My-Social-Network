@@ -40,6 +40,8 @@
   
   .header .nav .nav-list .list-item .prifile-link .profile-img {
     background-color: white;
-    width: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
+    object-fit: cover;
   }

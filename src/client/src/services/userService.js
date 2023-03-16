@@ -6,13 +6,12 @@ const updateUserInfoUrl = baseUrl + 'update';
 const getAllFriendsUrl = baseUrl + 'friends';
 const getAllRegisterdUsersUrl = baseUrl + 'all-users';
 
-export const getUserInfo = async () => {
+export const getUserInfo = async (token) => {
 
     const response = await fetch(getUserInfoUrl, {
         headers: {
             Authorization:
-              "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsIm5hbWVpZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsInN1YiI6IlRlc3QyQFRlc3QuY29tIiwiZW1haWwiOiJUZXN0MkBUZXN0LmNvbSIsImp0aSI6IjA3ZWJhZDBmLTc5YjYtNGJlZi1iYzI4LTA3NGI4YmQ1YjhkZiIsIm5iZiI6MTY3ODU0Nzk1NSwiZXhwIjoxNjc4NjM0MzU0LCJpYXQiOjE2Nzg1NDc5NTV9.FVzvqkSuLhLC5LPt1ZZee2a9alFZ4giPwVB6xFM-MLs",
+              "Bearer " + token
           },
     });
 
@@ -21,37 +20,34 @@ export const getUserInfo = async () => {
     return result;
 };
 
-export const changeUserInfo = async (data) => {
+export const changeUserInfo = async (data, token) => {
     const response = await axios.put(updateUserInfoUrl, data, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization:
-          "Bearer " +
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsIm5hbWVpZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsInN1YiI6IlRlc3QyQFRlc3QuY29tIiwiZW1haWwiOiJUZXN0MkBUZXN0LmNvbSIsImp0aSI6IjA3ZWJhZDBmLTc5YjYtNGJlZi1iYzI4LTA3NGI4YmQ1YjhkZiIsIm5iZiI6MTY3ODU0Nzk1NSwiZXhwIjoxNjc4NjM0MzU0LCJpYXQiOjE2Nzg1NDc5NTV9.FVzvqkSuLhLC5LPt1ZZee2a9alFZ4giPwVB6xFM-MLs",
+          "Bearer " + token
       },
     });
   
     return response.data;
   };
 
-  export const getAllFriends = async () => {
+  export const getAllFriends = async (token) => {
     const response = await fetch(getAllFriendsUrl, {
       headers: {
         Authorization:
-          "Bearer " +
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsIm5hbWVpZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsInN1YiI6IlRlc3QyQFRlc3QuY29tIiwiZW1haWwiOiJUZXN0MkBUZXN0LmNvbSIsImp0aSI6IjA3ZWJhZDBmLTc5YjYtNGJlZi1iYzI4LTA3NGI4YmQ1YjhkZiIsIm5iZiI6MTY3ODU0Nzk1NSwiZXhwIjoxNjc4NjM0MzU0LCJpYXQiOjE2Nzg1NDc5NTV9.FVzvqkSuLhLC5LPt1ZZee2a9alFZ4giPwVB6xFM-MLs",
+          "Bearer " + token
       },
     })
 
     return response.json();
   };
 
-  export const getAllRegisterdUsers = async () => {
+  export const getAllRegisterdUsers = async (token) => {
     const response = await fetch(getAllRegisterdUsersUrl,{
       headers: {
         Authorization:
-          "Bearer " +
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsIm5hbWVpZCI6IjA3NDllZWQyLTAxZWUtNDQ0YS1hMjdkLThiMDA4NjJjYTkwNyIsInN1YiI6IlRlc3QyQFRlc3QuY29tIiwiZW1haWwiOiJUZXN0MkBUZXN0LmNvbSIsImp0aSI6IjA3ZWJhZDBmLTc5YjYtNGJlZi1iYzI4LTA3NGI4YmQ1YjhkZiIsIm5iZiI6MTY3ODU0Nzk1NSwiZXhwIjoxNjc4NjM0MzU0LCJpYXQiOjE2Nzg1NDc5NTV9.FVzvqkSuLhLC5LPt1ZZee2a9alFZ4giPwVB6xFM-MLs",
+          "Bearer " + token
       },
     });
 

@@ -1,6 +1,7 @@
 import "./Post.css";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 import { addNewPost } from '../../services/postService';
 
 const initialFieldValues = {
@@ -12,6 +13,8 @@ const initialFieldValues = {
 export const Post = ({ closePopup, onAddedPost }) => {
 
   const [values, setValues] = useState(initialFieldValues);
+
+  const { user } = useContext(AuthContext);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -41,7 +44,7 @@ export const Post = ({ closePopup, onAddedPost }) => {
     data.append("Description", values.description);
     data.append("Image", values.image);
 
-    const result = await addNewPost(data);
+    const result = await addNewPost(data, user.token);
 
     closePopup();
     onAddedPost(result);

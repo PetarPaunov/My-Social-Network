@@ -1,6 +1,8 @@
 import { PostArticle } from "../Main/PostArticle/PostArticle";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+
+import { AuthContext } from "../../contexts/AuthContext";
 import { getUserPosts } from "../../services/postService";
 import { getUserInfo } from "../../services/userService";
 
@@ -13,8 +15,10 @@ export const UserProfile = () => {
   const [userPosts, setUserPosts] = useState([]);
   const [changeInfo, setChangeInfo] = useState(false);
 
+  const { user } = useContext(AuthContext);
+
   useEffect(() => {
-    getUserInfo()
+    getUserInfo(user.token)
       .then(setUserInfo)
       .catch((err) => {
         console.log(err);
@@ -22,7 +26,7 @@ export const UserProfile = () => {
   }, []);
 
   useEffect(() => {
-    getUserPosts()
+    getUserPosts(user.token)
       .then(setUserPosts)
       .catch((err) => {
         console.log(err);
@@ -84,9 +88,9 @@ export const UserProfile = () => {
       </section>
 
       <section className="left-part">
-        {userPosts.map((x) => (
+        {userPosts ? userPosts.map((x) => (
           <PostArticle key={x.id} {...x} onDelete={onDeletedPost} onEdit={onEditedPost} />
-        ))}
+        )) : <h2>No posts added</h2>}
       </section>
     </div>
   );

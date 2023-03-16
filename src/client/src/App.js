@@ -34,7 +34,7 @@ function App() {
   }
 
   useEffect(() => {
-    getAllRegisterdUsers().then((result) => {
+    getAllRegisterdUsers(auth.token).then((result) => {
       setRegisteredUsers(result);
     });
   }, []);

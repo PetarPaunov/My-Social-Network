@@ -4,11 +4,12 @@ import { Post } from "../Post/Post";
 import { PostArticle } from "./PostArticle/PostArticle";
 import { FriendSection } from "../FriendSection/FriendSection";
 import { GridLoader } from "react-spinners";
+import { AuthContext } from "../../contexts/AuthContext";
 
 import { getAllPosts } from "../../services/postService";
 import { getAllFriends } from "../../services/userService";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 const spinnerStyle = {
   position: "fixed",
@@ -24,6 +25,8 @@ export const Main = () => {
   const [posts, setPosts] = useState([]);
   const [friends, setFriends] = useState([]);
 
+  const { user } = useContext(AuthContext);
+
   useEffect(() => {
     setLoading(true);
 
@@ -38,10 +41,9 @@ export const Main = () => {
   }, []);
 
   useEffect(() => {
-    getAllFriends()
-      .then((result) => {
-        setFriends(result);
-      })
+    getAllFriends(user.token).then((result) => {
+      setFriends(result);
+    });
   }, []);
 
   const onButtonClick = (isClicked) => {
@@ -101,12 +103,16 @@ export const Main = () => {
           </section>
         )}
 
-        <section className="right-part">
-          <div className="friends">
-            <p className="title">Friends</p>
-            {friends.map(x => <FriendSection key={x.userId} firend={x} />)}
-          </div>
-        </section>
+        {user.email ? (
+          <section className="right-part">
+            <div className="friends">
+              <p className="title">Friends</p>
+              {friends.map((x) => (
+                <FriendSection key={x.userId} firend={x} />
+              ))}
+            </div>
+          </section>
+        ) : null}
       </div>
     </>
   );
