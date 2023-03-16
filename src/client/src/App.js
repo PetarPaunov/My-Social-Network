@@ -17,7 +17,6 @@ import "./App.css";
 function App() {
   const [navButton, setNavButton] = useState(false);
   const [userAction, setUserAction] = useState(null);
-  const [registeredUsers, setRegisteredUsers] = useState([]);
   const [auth, setAuth] = useState({});
 
   const navClickHandler = (isCliced, buttonType) => {
@@ -31,16 +30,10 @@ function App() {
 
   const onLogin = (authData) => {
     setAuth(authData);
-  }
-
-  useEffect(() => {
-    getAllRegisterdUsers(auth.token).then((result) => {
-      setRegisteredUsers(result);
-    });
-  }, []);
+  };
 
   return (
-    <AuthContext.Provider value={{user: auth, onLogin}}>
+    <AuthContext.Provider value={{ user: auth, onLogin }}>
       <div className="App">
         {navButton && userAction == navEnum.Register && (
           <Register closePopup={closePopupHandler} />
@@ -58,9 +51,7 @@ function App() {
               path="/users"
               element={
                 <div className="requests">
-                  {registeredUsers.map((x) => (
-                    <Users key={x.userId} users={x} />
-                  ))}
+                  <Users />
                 </div>
               }
             />

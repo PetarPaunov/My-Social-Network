@@ -41,9 +41,11 @@ export const Main = () => {
   }, []);
 
   useEffect(() => {
-    getAllFriends(user.token).then((result) => {
-      setFriends(result);
-    });
+    if (user.email) {
+      getAllFriends(user.token).then((result) => {
+        setFriends(result);
+      });
+    }
   }, []);
 
   const onButtonClick = (isClicked) => {
@@ -80,11 +82,13 @@ export const Main = () => {
         <Post onAddedPost={onAddedPost} closePopup={closePopupHandler} />
       ) : null}
 
-      <div className="top-part">
-        <button onClick={() => onButtonClick(true)} className="add-post">
-          Add new post
-        </button>
-      </div>
+      {user.email ? (
+        <div className="top-part">
+          <button onClick={() => onButtonClick(true)} className="add-post">
+            Add new post
+          </button>
+        </div>
+      ) : null}
 
       <div className="bottom-part">
         {loading ? (

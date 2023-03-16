@@ -67,14 +67,19 @@ export const PostArticle = (props) => {
               <p className="post-title">{props.title}</p>
             </div>
           </div>
-
+      
           <div className="opitons">
+            {user.userId && user.userId == props.userId ? 
+            <>
             <button onClick={onEditPostOpen} className="btn update-post">
               Edit
             </button>
             <button onClick={onDelete} className="btn delete-post">
               Delete
             </button>
+            </>
+            : null
+          }
           </div>
         </div>
         <div className="text">{props.description}</div>
