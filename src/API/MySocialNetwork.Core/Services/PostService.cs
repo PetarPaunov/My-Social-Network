@@ -93,6 +93,7 @@
                     Likes = x.Likes.Count(),
                     UserImage = x.ApplicationUser.ImageUrl,
                     UserName = x.ApplicationUser.UserName,
+                    UserId = x.ApplicationUserId,
                     ImageUrl = x.ImageUrl,
                     CommentsCount = x.Comments.Count(),
                     Comments = x.Comments

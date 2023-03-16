@@ -78,12 +78,16 @@
                 });
             }
 
+            var loggedInUser = await this.userManager.FindByEmailAsync(user.Email);
+
             var tokenResult = await this.jwtTokenService.GenerateJwtToken(user);
 
             return Ok(new AuthResult()
             {
                 Token = tokenResult.JwtToken,
                 RefreshToken = tokenResult.RefreshToken,
+                Email = loggedInUser.Email,
+                UserId = loggedInUser.Id,
                 Success = true,
             });
         }
@@ -137,6 +141,7 @@
             return Ok(new AuthResult()
             {
                 Token = result.JwtToken,
+                UserId = user.Id,
                 RefreshToken = result.RefreshToken,
                 ImageUrl = user.ImageUrl,
                 Email = user.Email,
