@@ -46,6 +46,7 @@ export const UserProfile = () => {
   };
 
   const onUserInfoChange = (newUserInfo) => {
+    user.imageUrl = newUserInfo.imageUrl
     setUserInfo(state => newUserInfo);
   }
 

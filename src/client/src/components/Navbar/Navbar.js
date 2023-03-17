@@ -7,7 +7,7 @@ import { navEnum } from "../constants/navigationConstants.js";
 import "./Navbar.css";
 
 export const Navbar = ({ clickHandler }) => {
-  const { user } = useContext(AuthContext);
+  const { user, onLogout } = useContext(AuthContext);
 
   return (
     <header className="header">
@@ -35,7 +35,7 @@ export const Navbar = ({ clickHandler }) => {
                 </NavLink>
               </li>
               <li className="list-item">
-                <button className="link">Logout</button>
+                <button onClick={onLogout} className="link">Logout</button>
               </li>
             </>
           ) : (

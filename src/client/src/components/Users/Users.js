@@ -20,7 +20,7 @@ export const Users = () => {
     <section className="requester">
       {registeredUsers.map((x) => (
         <>
-          <div className="left">
+          <div key={x.id} className="left">
             <img className="img" src={x.imageUrl} alt="" />
             <p className="user-name">{x.username}</p>
           </div>

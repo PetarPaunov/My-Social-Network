@@ -1,7 +1,8 @@
 import "./ChangeUserInfo.css";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { changeUserInfo } from "../../services/userService";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export const ChangeUserInfo = ({ closePopup, userInfo, onInfoChange }) => {
   const initialFieldValues = {
@@ -13,6 +14,8 @@ export const ChangeUserInfo = ({ closePopup, userInfo, onInfoChange }) => {
   };
 
   const [values, setValues] = useState(initialFieldValues);
+
+  const { user } = useContext(AuthContext);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -44,8 +47,8 @@ export const ChangeUserInfo = ({ closePopup, userInfo, onInfoChange }) => {
     data.append("Address", values.address);
     data.append("Image", values.image);
 
-    const result = await changeUserInfo(data);
-    console.log(result);
+    const result = await changeUserInfo(data, user.token);
+
     closePopup();
 
     onInfoChange(result);
