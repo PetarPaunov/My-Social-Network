@@ -142,7 +142,12 @@
                 await this.likeService.RemoveLike(loggedInUser.Id, postGuid);
             }
 
-            return Ok("Success");
+            var likes = await this.likeService.GetAllPostLikes(postGuid);
+
+            return Ok(new
+            {
+                likes,
+            });
         }
     }
 }

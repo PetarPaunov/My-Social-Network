@@ -27,6 +27,15 @@
 
         }
 
+        public async Task<int> GetAllPostLikes(Guid postId)
+        {
+            var likes = await this.repository.AllReadonly<Like>()
+                .Where(x => x.PostId == postId)
+                .ToListAsync();
+
+            return likes.Count();
+        }
+
         public async Task<bool> IsLiked(string userId, Guid postId)
         {
             var like = await this.repository.All<Like>()
@@ -48,7 +57,8 @@
                 .FirstOrDefaultAsync();
 
             this.repository.Delete<Like>(like);
-            this.repository.SaveChangesAsync();
+            await this.repository.SaveChangesAsync();
         }
+
     }
 }
