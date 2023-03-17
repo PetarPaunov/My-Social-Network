@@ -107,7 +107,7 @@ export const Main = () => {
           </section>
         )}
 
-        {user.email ? (
+        {user.email && friends.length > 0 ? (
           <section className="right-part">
             <div className="friends">
               <p className="title">Friends</p>

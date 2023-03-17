@@ -1,7 +1,7 @@
 import "./PostArticle.css";
 
 import { addComment } from "../../../services/commentService";
-import { deletePost } from "../../../services/postService";
+import { deletePost, toggleLike } from "../../../services/postService";
 
 import { Comment } from "../Comment/Comment";
 import { EditPost } from "../../EditPost/EditPost";
@@ -14,6 +14,7 @@ export const PostArticle = (props) => {
   const [comments, setComments] = useState(props.comments);
   const [commentDescription, setCommentDescription] = useState("");
   const [editPost, setEditPost] = useState(false);
+  const [likes, setLikes] = useState(props.likes);
 
   const { user } = useContext(AuthContext);
 
@@ -46,6 +47,14 @@ export const PostArticle = (props) => {
 
   const onEditPostOpen = () => {
     setEditPost((state) => !state);
+  };
+
+  const onLike = async (e) => {
+    e.preventDefault();
+
+    var result = await toggleLike(postId, user.token)
+
+    setLikes(state => result)
   };
 
   return (
@@ -86,7 +95,7 @@ export const PostArticle = (props) => {
         <img src={props.imageUrl} alt="" className="post-img" />
         <div className="liks-comment-count">
           <span className="like-container">
-            <i className="fa-solid fa-thumbs-up" /> {props.likes}
+            <i className="fa-solid fa-thumbs-up" /> {likes}
           </span>
           <p className="comments-count">{props.commentsCount} comments</p>
         </div>
@@ -94,9 +103,9 @@ export const PostArticle = (props) => {
         {user.email ? (
           <>
             <div className="like">
-              <a href="" className="like-icon">
+              <button onClick={onLike} className="like-icon">
                 <i className="fa-regular fa-thumbs-up" /> Like this post
-              </a>
+              </button>
             </div>
             <form action="" className="comment-form" onSubmit={addNewComment}>
               <textarea

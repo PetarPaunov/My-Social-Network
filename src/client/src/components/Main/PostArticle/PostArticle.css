@@ -66,6 +66,8 @@
 .main .bottom-part .left-part .post .like .like-icon {
   text-decoration: none;
   color: black;
+  border: none;
+  cursor: pointer;
 }
 
 .main .bottom-part .left-part .post .comment-form {

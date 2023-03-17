@@ -6,8 +6,9 @@ import { UserProfile } from "./components/UserProfile/UserProfile";
 import { Users } from "./components/Users/Users";
 import { getAllRegisterdUsers } from "./services/userService";
 import { AuthContext } from "./contexts/AuthContext";
+import { useLockalStorage } from "./hooks/useLockalStorage";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import { navEnum } from "./components/constants/navigationConstants.js";
@@ -17,7 +18,7 @@ import "./App.css";
 function App() {
   const [navButton, setNavButton] = useState(false);
   const [userAction, setUserAction] = useState(null);
-  const [auth, setAuth] = useState({});
+  const [auth, setAuth] = useLockalStorage('auth', {});
 
   const navClickHandler = (isCliced, buttonType) => {
     setNavButton(isCliced);
@@ -32,8 +33,12 @@ function App() {
     setAuth(authData);
   };
 
+  const onLogout = () => {
+    setAuth({});
+  }
+
   return (
-    <AuthContext.Provider value={{ user: auth, onLogin }}>
+    <AuthContext.Provider value={{ user: auth, onLogin, onLogout }}>
       <div className="App">
         {navButton && userAction == navEnum.Register && (
           <Register closePopup={closePopupHandler} />

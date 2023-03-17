@@ -6,6 +6,7 @@ const addPostUrl = baseUrl + "add-post";
 const userPostsUrl = baseUrl + "get-user-posts";
 const deletePostUrl = baseUrl + "delete?postId=";
 const updatePost = baseUrl + 'update';
+const toggleLikeUrl = baseUrl + 'toggle-like?postId=';
 
 export const getAllPosts = async () => {
   const response = await fetch(getAllUrl);
@@ -65,3 +66,17 @@ export const deletePost = async (postId, token) => {
 
   return result;
 };
+
+export const toggleLike = async (postId, token) => {
+  const response = await fetch(toggleLikeUrl + postId, {
+    method: 'POST',
+    headers: {
+      Authorization:
+        "Bearer " + token
+    }
+  });
+
+  const result = await response.json();
+
+  return result.likes;
+}
