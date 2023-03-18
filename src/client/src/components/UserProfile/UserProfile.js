@@ -15,7 +15,7 @@ export const UserProfile = () => {
   const [userPosts, setUserPosts] = useState([]);
   const [changeInfo, setChangeInfo] = useState(false);
 
-  const { user } = useContext(AuthContext);
+  const { user, onUserInfoChange } = useContext(AuthContext);
 
   useEffect(() => {
     getUserInfo(user.token)
@@ -45,8 +45,9 @@ export const UserProfile = () => {
     setChangeInfo(state => !state);
   };
 
-  const onUserInfoChange = (newUserInfo) => {
+  const onUserInfoChangeHandler = (newUserInfo) => {
     user.imageUrl = newUserInfo.imageUrl
+    onUserInfoChange(newUserInfo.imageUrl);
     setUserInfo(state => newUserInfo);
   }
 
@@ -89,7 +90,7 @@ export const UserProfile = () => {
       </section>
 
       <section className="left-part">
-        {userPosts ? userPosts.map((x) => (
+        {userPosts.length > 0 ? userPosts.map((x) => (
           <PostArticle key={x.id} {...x} onDelete={onDeletedPost} onEdit={onEditedPost} />
         )) : <h2>No posts added</h2>}
       </section>
