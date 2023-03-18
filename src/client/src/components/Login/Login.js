@@ -8,7 +8,7 @@ import { useContext } from 'react';
 export const Login = ({
     closePopup,
 }) => {
-  const { onLogin } = useContext(AuthContext);
+  const { onSigning } = useContext(AuthContext);
 
   const onLoginHandler = async (e) => {
     e.preventDefault();
@@ -20,7 +20,7 @@ export const Login = ({
 
     const result = await login({email, password})
 
-    onLogin(result);
+    onSigning(result);
     closePopup();
   }
 

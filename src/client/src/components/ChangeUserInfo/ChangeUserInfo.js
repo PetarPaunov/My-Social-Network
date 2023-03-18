@@ -98,7 +98,7 @@ export const ChangeUserInfo = ({ closePopup, userInfo, onInfoChange }) => {
             name="address"
             id=""
             placeholder="Address"
-            value={values.address}
+            value={values.address || ''}
             onChange={handleInputChange}
           />
         </div>
