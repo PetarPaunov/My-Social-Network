@@ -88,6 +88,7 @@
                 RefreshToken = tokenResult.RefreshToken,
                 Email = loggedInUser.Email,
                 UserId = loggedInUser.Id,
+                ImageUrl = loggedInUser.ImageUrl,
                 Success = true,
             });
         }
