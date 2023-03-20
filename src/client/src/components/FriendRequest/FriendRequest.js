@@ -20,7 +20,7 @@ export const FriendRequest = () => {
   return (
     <>
       {requests.map((x) => (
-        <section key={x.id} className="requester">
+        <section key={x.userId} className="requester">
           <div className="left">
             <img className="img" src={x.imageUrl} alt="" />
             <p className="user-name">{x.username}</p>

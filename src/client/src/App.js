@@ -4,6 +4,7 @@ import { Register } from "./components/Register/Register";
 import { Login } from "./components/Login/Login";
 import { UserProfile } from "./components/UserProfile/UserProfile";
 import { Users } from "./components/Users/Users";
+import { FriendRequest } from "./components/FriendRequest/FriendRequest";
 import { AuthContext } from "./contexts/AuthContext";
 import { useLockalStorage } from "./hooks/useLockalStorage";
 
@@ -17,7 +18,7 @@ import "./App.css";
 function App() {
   const [navButton, setNavButton] = useState(false);
   const [userAction, setUserAction] = useState(null);
-  const [auth, setAuth] = useLockalStorage('auth', {});
+  const [auth, setAuth] = useLockalStorage("auth", {});
 
   const navigate = useNavigate();
 
@@ -30,22 +31,24 @@ function App() {
     setNavButton(false);
   };
 
-  const onSigning  = (authData) => {
+  const onSigning = (authData) => {
     setAuth(authData);
   };
 
   const onUserInfoChange = (newUserImage) => {
-      auth.imageUrl = newUserImage;
-      setAuth(auth);
-  }
+    auth.imageUrl = newUserImage;
+    setAuth(auth);
+  };
 
   const onLogout = () => {
     setAuth({});
-    navigate('/');
-  }
+    navigate("/");
+  };
 
   return (
-    <AuthContext.Provider value={{ user: auth, onSigning , onLogout, onUserInfoChange }}>
+    <AuthContext.Provider
+      value={{ user: auth, onSigning, onLogout, onUserInfoChange }}
+    >
       <div className="App">
         {navButton && userAction == navEnum.Register && (
           <Register closePopup={closePopupHandler} />
@@ -62,11 +65,19 @@ function App() {
             <Route
               path="/users"
               element={
-                <div className="requests">
+                <div className="users">
                   <Users />
                 </div>
               }
             />
+            <Route 
+              path="friend-requests"
+              element={
+                <div className="users">
+                  <FriendRequest />
+                </div>
+              }
+            ></Route>
           </Routes>
         </main>
       </div>

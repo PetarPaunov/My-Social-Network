@@ -4,6 +4,7 @@ import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 
 import { getAllRegisterdUsers } from "../../services/userService";
+import { sendFriendRequest } from "../../services/friendService";
 
 export const Users = () => {
   const [registeredUsers, setRegisteredUsers] = useState([]);
@@ -16,16 +17,21 @@ export const Users = () => {
     });
   }, []);
 
+  const onFriendRequest = async (userId) => {
+    await sendFriendRequest(user.token, userId);
+    setRegisteredUsers(state => state.filter(x => x.userId != userId))
+  }
+
   return (
     <>
       {registeredUsers.map((x) => (
-        <section className="requester">
-          <div key={x.id} className="left">
+        <section key={x.userId} className="requester">
+          <div className="left">
             <img className="img" src={x.imageUrl} alt="" />
             <p className="user-name">{x.username}</p>
           </div>
           <div className="right">
-            <button className="btn accept">Send Friend Request</button>
+            <button onClick={() => onFriendRequest(x.userId)} className="btn accept">Send Friend Request</button>
           </div>
         </section>
       ))}

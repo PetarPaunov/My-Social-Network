@@ -1,9 +1,9 @@
-.requests{
+.users{
     width: 60%;
     margin: 1rem auto;
   }
   
-  .requests .requester{
+  .users .requester{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -13,12 +13,12 @@
     margin-bottom: 1.5rem;
   }
   
-  .requests .requester .left{
+  .users .requester .left{
     display: flex;
     align-items: center;
   }
   
-  .requests .requester .right .btn{
+  .users .requester .right .btn{
     padding: 2px 25px;
     cursor: pointer;
     font-weight: bold;
@@ -27,15 +27,15 @@
     border-radius: 15px;
   }
   
-  .requests .requester .right .btn.accept{
+  .users .requester .right .btn.accept{
     background-color: var(--clr-primary-green);
   }
   
-  .requests .requester .right .btn.decline{
+  .users .requester .right .btn.decline{
     background-color: red;
   }
   
-  .requests .requester .left .img{
+  .users .requester .left .img{
     width: 60px;
     height: 60px;
     object-fit: cover;
