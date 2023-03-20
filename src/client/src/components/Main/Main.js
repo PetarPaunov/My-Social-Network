@@ -46,7 +46,7 @@ export const Main = () => {
         setFriends(result);
       });
     }
-  }, []);
+  }, [user]);
 
   const onButtonClick = (isClicked) => {
     setPostButton(isClicked);
