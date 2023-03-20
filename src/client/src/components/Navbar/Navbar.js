@@ -30,6 +30,11 @@ export const Navbar = ({ clickHandler }) => {
                 </NavLink>
               </li>
               <li className="list-item">
+                <NavLink to="/friend-requests" className="link">
+                  Requests
+                </NavLink>
+              </li>
+              <li className="list-item">
                 <NavLink to="/user-profile" className="prifile-link">
                   <img src={user.imageUrl ? user.imageUrl : "https://fakeimg.pl/300/"} alt="" className="profile-img" />
                 </NavLink>
