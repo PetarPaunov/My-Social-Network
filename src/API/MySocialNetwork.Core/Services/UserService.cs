@@ -46,7 +46,7 @@
                 .FirstOrDefaultAsync();
 
             var users = await this.repository.AllReadonly<ApplicationUser>()
-                .Where(x => x.Id != userId)
+                .Where(x => x.Id != userId && !user.Friends.Contains(x))
                 .Select(x => new FriendViewModel()
                 {
                     UserId = x.Id,
