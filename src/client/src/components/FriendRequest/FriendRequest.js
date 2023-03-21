@@ -3,7 +3,7 @@ import "./FriendRequest.css";
 import { useEffect, useState, useContext } from "react";
 
 import { AuthContext } from "../../contexts/AuthContext";
-import { getAllFriendRequests } from "../../services/friendService";
+import { getAllFriendRequests, acceptRequest, declineRequest } from "../../services/friendService";
 
 export const FriendRequest = () => {
   const [requests, setRequests] = useState([]);
@@ -17,6 +17,16 @@ export const FriendRequest = () => {
 
   }, []);
 
+  const onAcceptRequest = async (requestId) => {
+    await acceptRequest(user.token, requestId)
+    setRequests(state => state.filter(x => x.requestId != requestId));
+  }
+
+  const onDeclineRequest = async (requestId) => {
+    await declineRequest(user.token, requestId);
+    setRequests(state => state.filter(x => x.requestId != requestId));
+  }
+
   return (
     <>
       {requests.map((x) => (
@@ -26,8 +36,8 @@ export const FriendRequest = () => {
             <p className="user-name">{x.username}</p>
           </div>
           <div className="right">
-            <button className="btn accept">Accept</button>
-            <button className="btn decline">Decline</button>
+            <button className="btn accept" onClick={() => onAcceptRequest(x.requestId)}>Accept</button>
+            <button className="btn decline" onClick={() => onDeclineRequest(x.requestId)}>Decline</button>
           </div>
         </section>
       ))}
