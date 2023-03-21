@@ -33,6 +33,7 @@
                 .FirstOrDefaultAsync(x => x.Id == request.RequestUserId);
 
             user.Friends.Add(friend);
+            friend.Friends.Add(user);
 
             user.Requests.Remove(request);
 

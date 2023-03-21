@@ -112,7 +112,10 @@ export const Main = () => {
             <div className="friends">
               <p className="title">Friends</p>
               {friends.map((x) => (
-                <FriendSection key={x.userId} firend={x} />
+                <FriendSection
+                  key={x.userId}
+                  firend={x}
+                />
               ))}
             </div>
           </section>
