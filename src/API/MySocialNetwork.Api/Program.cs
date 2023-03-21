@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
+using MySocialNetwork.Api.Hubs;
 using MySocialNetwork.Core.Configuration;
 using MySocialNetwork.Core.Contracts;
 using MySocialNetwork.Core.Services;
@@ -82,6 +83,7 @@ var apiSecret = builder.Configuration.GetValue<string>("CloudAccountSettings:Api
 
 builder.Services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
 
+builder.Services.AddSignalR();
 
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
@@ -105,9 +107,10 @@ app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 
-
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<ChatHub>("/chat");
 
 app.MapControllers();
 
