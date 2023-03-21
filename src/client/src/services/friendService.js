@@ -1,6 +1,8 @@
 const baseUrl = "http://localhost:5236/api/Request/";
 const getAllUrl = baseUrl + 'all-requests';
 const sendRequestUrl = baseUrl + 'send?userId=';
+const acceptRequestUrl = baseUrl + 'accept?requestId=';
+const declineRequestUrl = baseUrl + 'decline?requestId=';
 
 export const sendFriendRequest = async (token, userId) => {
     const response = await fetch(sendRequestUrl + userId, { 
@@ -10,10 +12,6 @@ export const sendFriendRequest = async (token, userId) => {
               "Bearer " + token
           },
     })
-
-    const result = await response.json();
-
-    return result;
 };
 
 export const getAllFriendRequests = async (token) => {
@@ -30,10 +28,22 @@ export const getAllFriendRequests = async (token) => {
     return result;
 };
 
-export const acceptRequest = async () => {
-
+export const acceptRequest = async (token, requestId) => {
+    const response = await fetch(acceptRequestUrl + requestId, {
+        method: 'POST',
+        headers: {
+            Authorization:
+              "Bearer " + token
+          },
+    });
 };
 
-export const declineRequest = async () => {
-
+export const declineRequest = async (token, requestId) => {
+    const response = await fetch(declineRequestUrl + requestId, {
+        method: 'POST',
+        headers: {
+            Authorization:
+              "Bearer " + token
+          },
+    });
 };
