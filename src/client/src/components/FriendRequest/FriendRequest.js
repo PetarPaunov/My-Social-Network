@@ -29,7 +29,7 @@ export const FriendRequest = () => {
 
   return (
     <>
-      {requests.map((x) => (
+      {requests.length > 0 ? requests.map((x) => (
         <section key={x.userId} className="requester">
           <div className="left">
             <img className="img" src={x.imageUrl} alt="" />
@@ -40,7 +40,9 @@ export const FriendRequest = () => {
             <button className="btn decline" onClick={() => onDeclineRequest(x.requestId)}>Decline</button>
           </div>
         </section>
-      ))}
+      ))
+        : <p className="no-requests">Don't have any friend requests yet!</p>
+    }
     </>
   );
 };

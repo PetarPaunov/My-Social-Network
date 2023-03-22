@@ -43,12 +43,18 @@ export const changeUserInfo = async (data, token) => {
     return response.json();
   };
 
-  export const getAllRegisterdUsers = async (token) => {
+  export const getAllRegisterdUsers = async (token, serachParam) => {
+
+    serachParam = serachParam != '' ? JSON.stringify(serachParam) : JSON.stringify('');
+    
     const response = await fetch(getAllRegisterdUsersUrl,{
+      method: 'POST',
       headers: {
+        "Content-Type": "application/json",
         Authorization:
           "Bearer " + token
       },
+      body: serachParam,
     });
 
     return response.json();
