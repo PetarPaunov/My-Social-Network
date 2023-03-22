@@ -79,13 +79,13 @@
             return Ok(friends);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("all-users")]
-        public async Task<IActionResult> GetAllLoggedInUsers()
+        public async Task<IActionResult> GetAllLoggedInUsers([FromBody] string? serachParam)
         {
             var loggedInUser = await this.userManager.GetUserAsync(this.HttpContext.User);
 
-            var users = await this.userService.GetAllLoggedInUsers(loggedInUser.Id);
+            var users = await this.userService.GetAllLoggedInUsers(loggedInUser.Id, serachParam);
 
             return Ok(users);
         }

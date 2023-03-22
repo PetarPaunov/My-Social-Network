@@ -38,26 +38,38 @@
             return friends;
         }
 
-        public async Task<IEnumerable<FriendViewModel>> GetAllLoggedInUsers(string userId)
+        public async Task<IEnumerable<FriendViewModel>> GetAllLoggedInUsers(string userId, string? serachParam)
         {
             var user = await this.repository.All<ApplicationUser>()
                 .Include(x => x.Friends)
                 .Where(x => x.Id == userId)
                 .FirstOrDefaultAsync();
 
-            var users = await this.repository.AllReadonly<ApplicationUser>()
-                .Where(x => x.Id != userId && !user.Friends.Contains(x))
-                .Select(x => new FriendViewModel()
-                {
-                    UserId = x.Id,
-                    Username = x.UserName,
-                    ImageUrl = x.ImageUrl,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName
-                })
-                .ToListAsync();
+            var users = this.repository.AllReadonly<ApplicationUser>()
+                .Where(x => x.Id != userId && !user.Friends.Contains(x));
 
-            return users;
+            if (string.IsNullOrEmpty(serachParam) == false)
+            {
+                serachParam = $"%{serachParam.ToLower()}%";
+
+                users = users
+                    .Where(x => EF.Functions.Like(x.FirstName.ToLower(), serachParam) || 
+                        EF.Functions.Like(x.LastName.ToLower(), serachParam) ||
+                        EF.Functions.Like(x.UserName.ToLower(), serachParam));
+            }
+
+            var filtredUsers = await users
+            .Select(x => new FriendViewModel()
+            {
+                UserId = x.Id,
+                Username = x.UserName,
+                ImageUrl = x.ImageUrl,
+                FirstName = x.FirstName,
+                LastName = x.LastName
+            })
+            .ToListAsync();
+
+            return filtredUsers;
         }
 
         public async Task<GetUserProfileModel> UpdateUserProfileAsync(string userId, UpdateProfileModel model)
