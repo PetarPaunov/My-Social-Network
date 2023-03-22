@@ -1,9 +1,13 @@
 import "./EditPost.css";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { editPost } from '../../services/postService';
 
+import { AuthContext } from "../../contexts/AuthContext";
+
 export const EditPost = ({ onClose, onEdit, postInfo }) => {
+
+  const { user } = useContext(AuthContext);
 
   const initialFieldValues = {
     id: postInfo.id,
@@ -43,7 +47,7 @@ export const EditPost = ({ onClose, onEdit, postInfo }) => {
     data.append("Description", values.description);
     data.append("Image", values.image);
 
-    const result = await editPost(data);
+    const result = await editPost(data, user.token);
 
     onClose();
     onEdit(result);

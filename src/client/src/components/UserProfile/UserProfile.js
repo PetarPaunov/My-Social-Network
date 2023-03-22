@@ -63,7 +63,7 @@ export const UserProfile = () => {
 
   return (
     <div className="bottom-part">
-      {changeInfo ? <ChangeUserInfo onInfoChange={onUserInfoChange} userInfo={userInfo} closePopup={closePopupHandler} /> : null}
+      {changeInfo ? <ChangeUserInfo onInfoChange={onUserInfoChangeHandler} userInfo={userInfo} closePopup={closePopupHandler} /> : null}
       <section className="user-profile">
         <img src={userInfo.imageUrl} alt="" className="user-profile-img" />
 
