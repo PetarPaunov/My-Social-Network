@@ -10,5 +10,6 @@
         Task<bool> DeletePostAsync(Guid postId);
         Task<IEnumerable<GetPostModel>> GetAllPostsAsync();
         Task<IEnumerable<GetPostModel>> GetUserPosts(string userId);
+        Task<IEnumerable<GetPostModel>> GetFriendUserPosts(string userId);
     }
 }

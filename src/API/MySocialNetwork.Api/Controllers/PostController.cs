@@ -48,6 +48,15 @@
             return Ok(posts);
         }
 
+        [HttpGet]
+        [Route("get-friend-posts")]
+        public async Task<IActionResult> GetFriendPosts([FromQuery] string userId)
+        {
+            var posts = await this.postService.GetFriendUserPosts(userId);
+
+            return Ok(posts);
+        }
+
         [HttpPost]
         [Route("add-post")]
         public async Task<IActionResult> AddPost([FromForm] AddPostModel model)

@@ -5,13 +5,17 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 
 import { getFriendUserInfo } from "../../services/userService";
+import { getFreindPosts } from "../../services/postService";
+import { PostArticle } from "../Main/PostArticle/PostArticle";
 
 export const FriendPorfile = () => {
 
   const { user } = useContext(AuthContext);
 
   const userId = useParams();
+
   const [firendInfo, setFriendInfo] = useState({});
+  const [friendPosts, setFriendPosts] = useState({});
 
 
   useEffect(() => {
@@ -19,6 +23,12 @@ export const FriendPorfile = () => {
         .then(res => res.json())
         .then(setFriendInfo)
   }, []);  
+
+  useEffect(() => {
+    getFreindPosts(userId, user.token)
+        .then(res => res.json())
+        .then(setFriendPosts);
+  });
 
   return (
     <div className="bottom-part">
@@ -46,18 +56,16 @@ export const FriendPorfile = () => {
       </section>
 
       <section className="left-part">
-        {/* {userPosts.length > 0 ? (
-          userPosts.map((x) => (
+        {friendPosts.length > 0 ? (
+          friendPosts.map((x) => (
             <PostArticle
               key={x.id}
               {...x}
-              onDelete={onDeletedPost}
-              onEdit={onEditedPost}
             />
           ))
         ) : (
           <h2>No posts added</h2>
-        )} */}
+        )}
       </section>
     </div>
   );

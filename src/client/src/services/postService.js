@@ -7,6 +7,7 @@ const userPostsUrl = baseUrl + "get-user-posts";
 const deletePostUrl = baseUrl + "delete?postId=";
 const updatePost = baseUrl + 'update';
 const toggleLikeUrl = baseUrl + 'toggle-like?postId=';
+const getFriendPosts = baseUrl + 'get-friend-posts?userId=';
 
 export const getAllPosts = async () => {
   const response = await fetch(getAllUrl);
@@ -49,8 +50,18 @@ export const getUserPosts = async (token) => {
 
   const result = await response.json();
 
-  console.log(result);
   return result;
+};
+
+export const getFreindPosts = async (userId, token) => {
+  const response = await fetch(getFriendPosts + userId.userId, {
+    headers: {
+      Authorization:
+        "Bearer " + token
+    },
+  });
+
+  return response;
 };
 
 export const deletePost = async (postId, token) => {

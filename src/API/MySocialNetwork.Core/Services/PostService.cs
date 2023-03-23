@@ -128,6 +128,37 @@
             return post;
         }
 
+        public async Task<IEnumerable<GetPostModel>> GetFriendUserPosts(string userId)
+        {
+            var posts = await this.repository.AllReadonly<Post>()
+                .Where(x => x.ApplicationUserId == userId && x.IsDeleted == false)
+                .Select(x => new GetPostModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Description = x.Description,
+                    Likes = x.Likes.Count(),
+                    UserImage = x.ApplicationUser.ImageUrl,
+                    UserName = x.ApplicationUser.UserName,
+                    UserId = x.ApplicationUserId,
+                    ImageUrl = x.ImageUrl,
+                    CommentsCount = x.Comments.Count(),
+                    Comments = x.Comments
+                    .Where(c => c.IsDeleted == false)
+                    .Select(c => new GetCommentModel()
+                    {
+                        Id = c.Id,
+                        Description = c.Description,
+                        ApplicationUserUsername = c.ApplicationUser.UserName,
+                        ApplicationUserImage = c.ApplicationUser.ImageUrl
+                    })
+                    .ToList()
+                })
+                .ToListAsync();
+
+            return posts;
+        }
+
         public async Task<IEnumerable<GetPostModel>> GetUserPosts(string userId)
         {
             var posts = await this.repository.All<Post>()
