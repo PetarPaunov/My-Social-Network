@@ -4,6 +4,7 @@ import { Register } from "./components/Register/Register";
 import { Login } from "./components/Login/Login";
 import { UserProfile } from "./components/UserProfile/UserProfile";
 import { Users } from "./components/Users/Users";
+import { FriendPorfile } from "./components/FriendProfile/FriendProfile";
 import { FriendRequest } from "./components/FriendRequest/FriendRequest";
 import { AuthContext } from "./contexts/AuthContext";
 import { useLockalStorage } from "./hooks/useLockalStorage";
@@ -78,6 +79,7 @@ function App() {
                 </div>
               }
             ></Route>
+            <Route path="/friend/:userId" element={<FriendPorfile />} ></Route>
           </Routes>
         </main>
       </div>
