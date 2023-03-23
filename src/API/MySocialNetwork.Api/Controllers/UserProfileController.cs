@@ -89,5 +89,14 @@
 
             return Ok(users);
         }
+
+        [HttpPost]
+        [Route("friend-info")]
+        public async Task<IActionResult> GetFriendUserProfileInfo([FromBody] string userId)
+        {
+            var user = await this.userService.GetFriendUserProfileInfoAsync(userId);
+
+            return Ok(user);
+        }
     }
 }
