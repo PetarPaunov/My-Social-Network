@@ -1,33 +1,46 @@
 import "./FriendProfile.css";
 
 import { useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+
+import { getFriendUserInfo } from "../../services/userService";
 
 export const FriendPorfile = () => {
 
-    const userId = useParams();
-    console.log(userId);
+  const { user } = useContext(AuthContext);
+
+  const userId = useParams();
+  const [firendInfo, setFriendInfo] = useState({});
+
+
+  useEffect(() => {
+    getFriendUserInfo(userId, user.token)
+        .then(res => res.json())
+        .then(setFriendInfo)
+  }, []);  
 
   return (
     <div className="bottom-part">
       <section className="user-profile">
-        <img src={'userInfo.imageUrl'} alt="" className="user-profile-img" />
+        <img src={firendInfo.imageUrl} alt="" className="user-profile-img" />
 
         <div className="user-info">
           <p className="user-info-field">
             <span>Username: </span>
-            {'userInfo.userName'}
+            {firendInfo.username}
           </p>
           <p className="user-info-field">
             <span>First Name: </span>
-            {'userInfo.firstName'}
+            {firendInfo.firstName}
           </p>
           <p className="user-info-field">
             <span>Last Name: </span>
-            {'userInfo.lastName'}
+            {firendInfo.lastName}
           </p>
           <p className="user-info-field">
             <span>Address: </span>
-            {'userInfo.address'}
+            {firendInfo.address}
           </p>
         </div>
       </section>

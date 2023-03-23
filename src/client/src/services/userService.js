@@ -5,6 +5,7 @@ const getUserInfoUrl = baseUrl + 'user-profile';
 const updateUserInfoUrl = baseUrl + 'update';
 const getAllFriendsUrl = baseUrl + 'friends';
 const getAllRegisterdUsersUrl = baseUrl + 'all-users';
+const getFriendUserInfoUrl = baseUrl + 'friend-info?userId=';
 
 export const getUserInfo = async (token) => {
 
@@ -19,6 +20,20 @@ export const getUserInfo = async (token) => {
 
     return result;
 };
+
+export const getFriendUserInfo = async (userId, token) => {
+
+  console.log(userId);
+  const response = await fetch(getFriendUserInfoUrl + userId.userId, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization:
+        "Bearer " + token
+    },
+  });
+
+  return response;
+}
 
 export const changeUserInfo = async (data, token) => {
     const response = await axios.put(updateUserInfoUrl, data, {

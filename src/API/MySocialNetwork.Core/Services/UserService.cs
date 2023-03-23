@@ -82,7 +82,8 @@
                     LastName = x.LastName,
                     ImageUrl = x.ImageUrl,
                     Username = x.UserName,
-                    UserId = x.Id
+                    UserId = x.Id,
+                    Address = x.Address
                 })
                 .FirstOrDefaultAsync();
 
