@@ -7,5 +7,6 @@
         Task<GetUserProfileModel> UpdateUserProfileAsync(string userId, UpdateProfileModel model);
         Task<IEnumerable<FriendViewModel>> GetAllFriends(string userId);
         Task<IEnumerable<FriendViewModel>> GetAllLoggedInUsers(string userId, string? serachParam);
+        Task<FriendViewModel> GetFriendUserProfileInfoAsync(string userId);
     }
 }

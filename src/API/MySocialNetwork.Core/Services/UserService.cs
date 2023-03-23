@@ -72,6 +72,23 @@
             return filtredUsers;
         }
 
+        public async Task<FriendViewModel> GetFriendUserProfileInfoAsync(string userId)
+        {
+            var user = await this.repository.AllReadonly<ApplicationUser>()
+                .Where(x => x.Id == userId)
+                .Select(x => new FriendViewModel()
+                {
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    ImageUrl = x.ImageUrl,
+                    Username = x.UserName,
+                    UserId = x.Id
+                })
+                .FirstOrDefaultAsync();
+
+            return user;
+        }
+
         public async Task<GetUserProfileModel> UpdateUserProfileAsync(string userId, UpdateProfileModel model)
         {
             var user = await this.repository.All<ApplicationUser>()
