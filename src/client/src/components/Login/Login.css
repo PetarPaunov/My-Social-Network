@@ -78,3 +78,10 @@
 .container-login .login .input-double input{
     width: 49.5%;
 }
+
+.error{
+    color: red;
+    display: block;
+    text-align: center;
+    margin-bottom: 5px;
+}

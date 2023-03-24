@@ -1,28 +1,34 @@
-import './Login.css';
+import "./Login.css";
 
-import { AuthContext } from '../../contexts/AuthContext';
-import { login } from '../../services/authService';
+import { AuthContext } from "../../contexts/AuthContext";
+import { login } from "../../services/authService";
 
-import { useContext } from 'react';
+import { useContext, useState } from "react";
+import { redirect } from "react-router-dom";
 
-export const Login = ({
-    closePopup,
-}) => {
+export const Login = ({ closePopup }) => {
   const { onSigning } = useContext(AuthContext);
+  const [errors, setErrors] = useState({});
 
   const onLoginHandler = async (e) => {
     e.preventDefault();
+    try {
+      const { email, password } = Object.fromEntries(new FormData(e.target));
 
-    const {
-      email,
-      password,
-    } = Object.fromEntries(new FormData(e.target));
+      const result = await login({ email, password });
 
-    const result = await login({email, password})
-
-    onSigning(result);
-    closePopup();
-  }
+      if (!result) {
+        setErrors({
+          login: "Something went wrong!",
+        });
+      } else {
+        onSigning(result);
+        closePopup();
+      }
+    } catch (error) {
+      redirect('/404');
+    }
+  };
 
   return (
     <div className="container-login">
@@ -34,8 +40,14 @@ export const Login = ({
           </a>
         </div>
         <hr />
+        {errors.login ? <span className="error">{errors.login}</span> : null}
         <div className="input">
-          <input type="email" name="email" id="" placeholder="Enter your email" />
+          <input
+            type="email"
+            name="email"
+            id=""
+            placeholder="Enter your email"
+          />
         </div>
         <div className="input">
           <input
