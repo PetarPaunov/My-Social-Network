@@ -64,7 +64,7 @@
 }
 
 .container-post .post hr{
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .container-post .post .input input,
@@ -74,7 +74,7 @@
     border-radius: 5px;
     border: 0.2px solid gray;
     padding: 10px 10px;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .container-post .post .input .description-area{

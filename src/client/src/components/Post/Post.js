@@ -2,7 +2,9 @@ import "./Post.css";
 
 import { useState, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import { addNewPost } from '../../services/postService';
+import { addNewPost } from "../../services/postService";
+
+import { errorHandler } from "../../utils/postValidation";
 
 const initialFieldValues = {
   title: "",
@@ -11,10 +13,19 @@ const initialFieldValues = {
 };
 
 export const Post = ({ closePopup, onAddedPost }) => {
-
   const [values, setValues] = useState(initialFieldValues);
+  const [errors, setErrors] = useState(initialFieldValues);
 
   const { user } = useContext(AuthContext);
+
+  const validationCheck = (e) => {
+    const { name, value } = e.target;
+
+    setErrors((errors) => ({
+      ...errors,
+      [name]: errorHandler(name, value),
+    }));
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -61,6 +72,9 @@ export const Post = ({ closePopup, onAddedPost }) => {
         </div>
         <hr />
         <div className="input">
+          {errors.title ? (
+            <span className="error-post first">{errors.title}</span>
+          ) : null}
           <input
             type="text"
             name="title"
@@ -68,9 +82,13 @@ export const Post = ({ closePopup, onAddedPost }) => {
             placeholder="Title"
             value={values.title}
             onChange={handleInputChange}
+            onBlur={validationCheck}
           />
         </div>
         <div className="input">
+          {errors.description ? (
+            <span className="error-post second">{errors.description}</span>
+          ) : null}
           <textarea
             placeholder="Description"
             name="description"
@@ -80,6 +98,7 @@ export const Post = ({ closePopup, onAddedPost }) => {
             className="description-area"
             value={values.description}
             onChange={handleInputChange}
+            onBlur={validationCheck}
           />
         </div>
         <div className="input">

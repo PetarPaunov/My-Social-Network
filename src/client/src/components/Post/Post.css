@@ -62,7 +62,7 @@
 }
 
 .container-post .post hr{
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 .container-post .post .input input,
@@ -72,7 +72,7 @@
     border-radius: 5px;
     border: 0.2px solid gray;
     padding: 10px 10px;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .container-post .post .input .description-area{
@@ -146,3 +146,19 @@
   input[type=file]::file-selector-button:hover {
     background: #0d45a5;
   }
+
+  .error-post{
+    position: absolute;
+    color: red;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.error-post.first{
+    top: 87px;
+}
+
+.error-post.second{
+    top: 157px;
+}
