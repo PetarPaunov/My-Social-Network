@@ -59,8 +59,6 @@ export const Register = ({ closePopup }) => {
 
     const result = await register(values);
 
-    console.log(result);
-
     if (result.status == 400) {
       setErrors(state => serverValidation(result.errors));
     } else {

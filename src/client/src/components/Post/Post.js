@@ -4,7 +4,7 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { addNewPost } from "../../services/postService";
 
-import { errorHandler } from "../../utils/postValidation";
+import { errorHandler, serverValidation } from "../../utils/postValidation";
 
 const initialFieldValues = {
   title: "",
@@ -57,8 +57,12 @@ export const Post = ({ closePopup, onAddedPost }) => {
 
     const result = await addNewPost(data, user.token);
 
-    closePopup();
-    onAddedPost(result);
+    if (result.status == 400) {
+      setErrors((state) => serverValidation(result.errors));
+    } else {
+      closePopup();
+      onAddedPost(result);
+    }
   };
 
   return (
