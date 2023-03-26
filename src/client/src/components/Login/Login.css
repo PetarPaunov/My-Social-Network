@@ -63,7 +63,7 @@
 }
 
 .container-login .login hr{
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .container-login .login .input input{
@@ -80,6 +80,8 @@
 }
 
 .error{
+    position: absolute;
+    top: 70px;
     color: red;
     display: block;
     text-align: center;
