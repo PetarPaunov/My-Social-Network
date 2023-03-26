@@ -5,7 +5,11 @@ import { useContext, useState } from "react";
 import { register } from "../../services/authService";
 import { AuthContext } from "../../contexts/AuthContext";
 
-import { errorHandler, passwordDidNotMatch } from '../../utils/registerValidation';
+import {
+  errorHandler,
+  passwordDidNotMatch,
+  serverValidation
+} from "../../utils/registerValidation";
 
 const initialObject = {
   firstName: "",
@@ -19,24 +23,27 @@ const initialObject = {
 export const Register = ({ closePopup }) => {
   const { onSigning } = useContext(AuthContext);
   const [values, setValues] = useState(initialObject);
-  const [errors , setErrors] = useState(initialObject);
+  const [errors, setErrors] = useState(initialObject);
 
-  const validationCheck = (e) => { 
-    const { name , value } = e.target;
+  const validationCheck = (e) => {
+    const { name, value } = e.target;
 
     setErrors((errors) => ({
       ...errors,
-      [name] : errorHandler(name, value)
+      [name]: errorHandler(name, value),
     }));
-  }
+  };
 
   const passwordValidation = () => {
     setErrors((errors) => ({
       ...errors,
-      passwordConfirm : passwordDidNotMatch(values.password, values.passwordConfirm),
-      password : passwordDidNotMatch(values.password, values.passwordConfirm),
+      passwordConfirm: passwordDidNotMatch(
+        values.password,
+        values.passwordConfirm
+      ),
+      password: passwordDidNotMatch(values.password, values.passwordConfirm),
     }));
-  }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -53,8 +60,13 @@ export const Register = ({ closePopup }) => {
     const result = await register(values);
 
     console.log(result);
-    onSigning(result);
-    closePopup();
+
+    if (result.status == 400) {
+      setErrors(state => serverValidation(result.errors));
+    } else {
+      onSigning(result);
+      closePopup();
+    }
   };
 
   return (
@@ -69,7 +81,9 @@ export const Register = ({ closePopup }) => {
         <hr />
         <div className="input-double input">
           <div>
-            {errors.firstName ? <span className="error-reg first">{errors.firstName}</span> : null}
+            {errors.firstName ? (
+              <span className="error-reg first">{errors.firstName}</span>
+            ) : null}
             <input
               type="text"
               name="firstName"
@@ -81,7 +95,9 @@ export const Register = ({ closePopup }) => {
             />
           </div>
           <div>
-            {errors.lastName ? <span className="error-reg first">{errors.lastName}</span> : null}
+            {errors.lastName ? (
+              <span className="error-reg first">{errors.lastName}</span>
+            ) : null}
             <input
               type="text"
               name="lastName"
@@ -94,7 +110,9 @@ export const Register = ({ closePopup }) => {
           </div>
         </div>
         <div className="input">
-          {errors.userName ? <span className="error-reg second">{errors.userName}</span> : null}
+          {errors.userName ? (
+            <span className="error-reg second">{errors.userName}</span>
+          ) : null}
           <input
             type="text"
             name="userName"
@@ -106,7 +124,9 @@ export const Register = ({ closePopup }) => {
           />
         </div>
         <div className="input">
-          {errors.email ? <span className="error-reg third">{errors.email}</span> : null}
+          {errors.email ? (
+            <span className="error-reg third">{errors.email}</span>
+          ) : null}
           <input
             type="email"
             name="email"
@@ -119,7 +139,9 @@ export const Register = ({ closePopup }) => {
         </div>
         <div className="input-double input">
           <div>
-          {errors.password ? <span className="error-reg forth">{errors.password}</span> : null}
+            {errors.password ? (
+              <span className="error-reg forth">{errors.password}</span>
+            ) : null}
             <input
               type="password"
               name="password"
@@ -131,7 +153,9 @@ export const Register = ({ closePopup }) => {
             />
           </div>
           <div>
-          {errors.passwordConfirm ? <span className="error-reg forth">{errors.passwordConfirm}</span> : null}
+            {errors.passwordConfirm ? (
+              <span className="error-reg forth">{errors.passwordConfirm}</span>
+            ) : null}
             <input
               type="password"
               name="passwordConfirm"
