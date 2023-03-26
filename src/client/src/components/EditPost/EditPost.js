@@ -1,14 +1,19 @@
 import "./EditPost.css";
 
 import { useState, useContext } from "react";
-import { editPost } from '../../services/postService';
+import { editPost } from "../../services/postService";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
+import { errorHandler, serverValidation } from "../../utils/postValidation";
+
+const initialErrorValues = {
+  title: "",
+  description: "",
+  image: null,
+};
+
 export const EditPost = ({ onClose, onEdit, postInfo }) => {
-
-  const { user } = useContext(AuthContext);
-
   const initialFieldValues = {
     id: postInfo.id,
     title: postInfo.title,
@@ -16,7 +21,19 @@ export const EditPost = ({ onClose, onEdit, postInfo }) => {
     image: null,
   };
 
+  const { user } = useContext(AuthContext);
+
   const [values, setValues] = useState(initialFieldValues);
+  const [errors, setErrors] = useState(initialErrorValues);
+
+  const validationCheck = (e) => {
+    const { name, value } = e.target;
+
+    setErrors((errors) => ({
+      ...errors,
+      [name]: errorHandler(name, value),
+    }));
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,15 +59,19 @@ export const EditPost = ({ onClose, onEdit, postInfo }) => {
     e.preventDefault();
 
     const data = new FormData();
-    data.append('Id', values.id);
+    data.append("Id", values.id);
     data.append("Title", values.title);
     data.append("Description", values.description);
     data.append("Image", values.image);
 
     const result = await editPost(data, user.token);
 
-    onClose();
-    onEdit(result);
+    if (result.status == 400) {
+      setErrors((state) => serverValidation(result.errors));
+    } else {
+      onClose();
+      onEdit(result);
+    }
   };
 
   return (
@@ -64,6 +85,9 @@ export const EditPost = ({ onClose, onEdit, postInfo }) => {
         </div>
         <hr />
         <div className="input">
+          {errors.title ? (
+            <span className="error-post first">{errors.title}</span>
+          ) : null}
           <input
             type="text"
             name="title"
@@ -71,9 +95,13 @@ export const EditPost = ({ onClose, onEdit, postInfo }) => {
             placeholder="Title"
             value={values.title}
             onChange={handleInputChange}
+            onBlur={validationCheck}
           />
         </div>
         <div className="input">
+          {errors.description ? (
+            <span className="error-post second">{errors.description}</span>
+          ) : null}
           <textarea
             placeholder="Description"
             name="description"
@@ -83,6 +111,7 @@ export const EditPost = ({ onClose, onEdit, postInfo }) => {
             className="description-area"
             value={values.description}
             onChange={handleInputChange}
+            onBlur={validationCheck}
           />
         </div>
         <div className="input">
