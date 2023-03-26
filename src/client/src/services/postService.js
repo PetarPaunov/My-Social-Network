@@ -17,27 +17,29 @@ export const getAllPosts = async () => {
 };
 
 export const addNewPost = async (data, token) => {
-  const response = await axios.post(addPostUrl, data, {
+  const response = await fetch(addPostUrl, {
+    method: 'POST',
     headers: {
-      "Content-Type": "multipart/form-data",
       Authorization:
         "Bearer " + token
     },
-  });
+    body: data
+  })
 
-  return response.data;
+  return response.json();
 };
 
 export const editPost = async (data, token) => {
-  const response = await axios.put(updatePost, data, {
+  const response = await fetch(updatePost, {
+    method: 'PUT',
     headers: {
-      "Content-Type": "multipart/form-data",
       Authorization:
         "Bearer " + token
     },
+    body: data,
   });
 
-  return response.data;
+  return response.json();
 };
 
 export const getUserPosts = async (token) => {
