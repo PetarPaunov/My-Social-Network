@@ -53,6 +53,7 @@
     transform: translate(-50%, -50%);
     background-color: white;
     border-radius: 20px;
+    width: 43%;
 }
 
 .container-register .register .title{
@@ -61,7 +62,7 @@
 }
 
 .container-register .register hr{
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .container-register .register .input input{
@@ -70,10 +71,38 @@
     border-radius: 5px;
     border: 0.2px solid gray;
     padding: 10px 10px;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .container-register .register .input-double.input{
     display: flex;
     gap: 1rem;
+}
+
+.container-register .register .input-double.input div{
+    width: 50%;
+}
+
+.error-reg{
+    position: absolute;
+    color: red;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 13px;
+}
+
+.error-reg.first{
+    top: 86px;
+}
+
+.error-reg.second{
+    top: 155px;
+}
+
+.error-reg.third{
+    top: 225px;
+}
+
+.error-reg.forth{
+    top: 295px;
 }
