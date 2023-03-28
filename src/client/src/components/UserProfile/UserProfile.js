@@ -92,7 +92,7 @@ export const UserProfile = () => {
       <section className="left-part">
         {userPosts.length > 0 ? userPosts.map((x) => (
           <PostArticle key={x.id} {...x} onDelete={onDeletedPost} onEdit={onEditedPost} />
-        )) : <h2>No posts added</h2>}
+        )) : <h2 className="no-posts">No posts added!</h2>}
       </section>
     </div>
   );

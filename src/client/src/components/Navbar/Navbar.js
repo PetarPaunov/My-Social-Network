@@ -16,14 +16,13 @@ export const Navbar = ({ clickHandler }) => {
       </NavLink>
       <nav className="nav">
         <ul className="nav-list">
-          <li className="list-item">
-            <NavLink to="/" className="link">
-              Home
-            </NavLink>
-          </li>
-
           {user.email ? (
             <>
+              <li className="list-item">
+                <NavLink to="/" className="link">
+                  Home
+                </NavLink>
+              </li>
               <li className="list-item">
                 <NavLink to="/users" className="link">
                   Users
@@ -36,11 +35,19 @@ export const Navbar = ({ clickHandler }) => {
               </li>
               <li className="list-item">
                 <NavLink to="/user-profile" className="prifile-link">
-                  <img src={user.imageUrl ? user.imageUrl : "https://fakeimg.pl/300/"} alt="" className="profile-img" />
+                  <img
+                    src={
+                      user.imageUrl ? user.imageUrl : "https://fakeimg.pl/300/"
+                    }
+                    alt=""
+                    className="profile-img"
+                  />
                 </NavLink>
               </li>
               <li className="list-item">
-                <button onClick={onLogout} className="link">Logout</button>
+                <button onClick={onLogout} className="link">
+                  Logout
+                </button>
               </li>
             </>
           ) : (

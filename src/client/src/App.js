@@ -1,3 +1,5 @@
+import "./App.css";
+
 import { Navbar } from "./components/Navbar/Navbar";
 import { Main } from "./components/Main/Main";
 import { Register } from "./components/Register/Register";
@@ -7,14 +9,14 @@ import { Users } from "./components/Users/Users";
 import { FriendPorfile } from "./components/FriendProfile/FriendProfile";
 import { FriendRequest } from "./components/FriendRequest/FriendRequest";
 import { AuthContext } from "./contexts/AuthContext";
+import { RauteGuard } from "./components/common/RouteGuard";
+
 import { useLockalStorage } from "./hooks/useLockalStorage";
 
 import { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 import { navEnum } from "./components/constants/navigationConstants.js";
-
-import "./App.css";
 
 function App() {
   const [navButton, setNavButton] = useState(false);
@@ -62,24 +64,26 @@ function App() {
         <main className="main">
           <Routes>
             <Route path="/" element={<Main />} />
-            <Route path="/user-profile" element={<UserProfile />} />
-            <Route
-              path="/users"
-              element={
-                <div className="users">
-                  <Users />
-                </div>
-              }
-            />
-            <Route 
-              path="friend-requests"
-              element={
-                <div className="users">
-                  <FriendRequest />
-                </div>
-              }
-            ></Route>
-            <Route path="/friend/:userId" element={<FriendPorfile />} ></Route>
+            <Route element={<RauteGuard />}>
+              <Route path="/user-profile" element={<UserProfile />} />
+              <Route
+                path="/users"
+                element={
+                  <div className="users">
+                    <Users />
+                  </div>
+                }
+              />
+              <Route
+                path="friend-requests"
+                element={
+                  <div className="users">
+                    <FriendRequest />
+                  </div>
+                }
+              />
+              <Route path="/friend/:userId" element={<FriendPorfile />}></Route>
+            </Route>
           </Routes>
         </main>
       </div>
