@@ -1,0 +1,5 @@
+.no-posts {
+  color: var(--clr-primary-blue);
+  width: 30%;
+  margin: 1rem auto;
+}

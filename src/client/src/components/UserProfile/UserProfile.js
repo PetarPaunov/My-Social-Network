@@ -1,19 +1,21 @@
 import { PostArticle } from "../Main/PostArticle/PostArticle";
 
 import { useEffect, useState, useContext } from "react";
+import { GridLoader } from "react-spinners";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import { getUserPosts } from "../../services/postService";
 import { getUserInfo } from "../../services/userService";
+import { spinnerStylePosts } from "../constants/spinnerConstants";
 
 import "./UserProfile.css";
 import { ChangeUserInfo } from "../ChangeUserInfo/ChangeUserInfo";
 
 export const UserProfile = () => {
-
   const [userInfo, setUserInfo] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [changeInfo, setChangeInfo] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { user, onUserInfoChange } = useContext(AuthContext);
 
@@ -26,44 +28,57 @@ export const UserProfile = () => {
   }, []);
 
   useEffect(() => {
+    setLoading((state) => !state);
+
     getUserPosts(user.token)
-      .then(setUserPosts)
+      .then((res) => {
+        setUserPosts(res);
+        setLoading((state) => !state);
+      })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
   const onDeletedPost = (postId) => {
-    setUserPosts(state => state.filter(post =>  post.id != postId))
+    setUserPosts((state) => state.filter((post) => post.id != postId));
   };
 
   const onChangeInfoClick = () => {
-    setChangeInfo(state => !state);
-  }
+    setChangeInfo((state) => !state);
+  };
 
   const closePopupHandler = () => {
-    setChangeInfo(state => !state);
+    setChangeInfo((state) => !state);
   };
 
   const onUserInfoChangeHandler = (newUserInfo) => {
-    user.imageUrl = newUserInfo.imageUrl
+    user.imageUrl = newUserInfo.imageUrl;
     onUserInfoChange(newUserInfo.imageUrl);
-    setUserInfo(state => newUserInfo);
-  }
+    setUserInfo((state) => newUserInfo);
+  };
 
   const onEditedPost = (post) => {
-    setUserPosts(state => state.map(x => {
-      if (x.id == post.id){
-        x = post;
-      };
+    setUserPosts((state) =>
+      state.map((x) => {
+        if (x.id == post.id) {
+          x = post;
+        }
 
-      return x;
-    }))
-  }
+        return x;
+      })
+    );
+  };
 
   return (
     <div className="bottom-part">
-      {changeInfo ? <ChangeUserInfo onInfoChange={onUserInfoChangeHandler} userInfo={userInfo} closePopup={closePopupHandler} /> : null}
+      {changeInfo ? (
+        <ChangeUserInfo
+          onInfoChange={onUserInfoChangeHandler}
+          userInfo={userInfo}
+          closePopup={closePopupHandler}
+        />
+      ) : null}
       <section className="user-profile">
         <img src={userInfo.imageUrl} alt="" className="user-profile-img" />
 
@@ -86,13 +101,26 @@ export const UserProfile = () => {
           </p>
         </div>
 
-        <button onClick={onChangeInfoClick} className="user-profile-btn">Change Information</button>
+        <button onClick={onChangeInfoClick} className="user-profile-btn">
+          Change Information
+        </button>
       </section>
 
       <section className="left-part">
-        {userPosts.length > 0 ? userPosts.map((x) => (
-          <PostArticle key={x.id} {...x} onDelete={onDeletedPost} onEdit={onEditedPost} />
-        )) : <h2 className="no-posts">No posts added!</h2>}
+        {loading ? (
+          <GridLoader style={spinnerStylePosts} color="#1877f2" />
+        ) : userPosts.length > 0 ? (
+          userPosts.map((x) => (
+            <PostArticle
+              key={x.id}
+              {...x}
+              onDelete={onDeletedPost}
+              onEdit={onEditedPost}
+            />
+          ))
+        ) : (
+          <h2 className="no-posts">No posts added!</h2>
+        )}
       </section>
     </div>
   );

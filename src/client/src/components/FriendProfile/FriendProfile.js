@@ -2,33 +2,39 @@ import "./FriendProfile.css";
 
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
+import { GridLoader } from "react-spinners";
 import { AuthContext } from "../../contexts/AuthContext";
 
 import { getFriendUserInfo } from "../../services/userService";
 import { getFreindPosts } from "../../services/postService";
 import { PostArticle } from "../Main/PostArticle/PostArticle";
+import { spinnerStylePosts } from "../constants/spinnerConstants";
 
 export const FriendPorfile = () => {
-
   const { user } = useContext(AuthContext);
 
   const userId = useParams();
 
   const [firendInfo, setFriendInfo] = useState({});
   const [friendPosts, setFriendPosts] = useState({});
-
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getFriendUserInfo(userId, user.token)
-        .then(res => res.json())
-        .then(setFriendInfo)
-  }, []);  
+      .then((res) => res.json())
+      .then(setFriendInfo);
+  }, []);
 
   useEffect(() => {
+    setLoading((state) => !state);
+
     getFreindPosts(userId, user.token)
-        .then(res => res.json())
-        .then(setFriendPosts);
-  });
+      .then((res) => res.json())
+      .then((result) => {
+        setFriendPosts(result);
+        setLoading((state) => !state);
+      });
+  }, []);
 
   return (
     <div className="bottom-part">
@@ -56,15 +62,12 @@ export const FriendPorfile = () => {
       </section>
 
       <section className="left-part">
-        {friendPosts.length > 0 ? (
-          friendPosts.map((x) => (
-            <PostArticle
-              key={x.id}
-              {...x}
-            />
-          ))
+        {loading ? (
+          <GridLoader style={spinnerStylePosts} color="#1877f2" />
+        ) : friendPosts.length > 0 ? (
+          friendPosts.map((x) => <PostArticle key={x.id} {...x} />)
         ) : (
-          <h2>No posts added</h2>
+          <h2 className="no-posts">No posts added</h2>
         )}
       </section>
     </div>

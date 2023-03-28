@@ -3,20 +3,14 @@ import "./Main.css";
 import { Post } from "../Post/Post";
 import { PostArticle } from "./PostArticle/PostArticle";
 import { FriendSection } from "../FriendSection/FriendSection";
-import { GridLoader } from "react-spinners";
 import { AuthContext } from "../../contexts/AuthContext";
 
 import { getAllPosts } from "../../services/postService";
 import { getAllFriends } from "../../services/userService";
+import { spinnerStyle } from "../constants/spinnerConstants";
 
 import { useEffect, useState, useContext } from "react";
-
-const spinnerStyle = {
-  position: "fixed",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-};
+import { GridLoader } from "react-spinners";
 
 export const Main = () => {
   const [postButton, setPostButton] = useState(false);
@@ -28,12 +22,12 @@ export const Main = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(state => !state);
 
     getAllPosts()
       .then((result) => {
         setPosts(result);
-        setLoading(false);
+        setLoading(state => !state);
       })
       .catch((err) => {
         console.log(err);

@@ -1,20 +1,27 @@
 import "./Users.css";
 
 import { useEffect, useState, useContext } from "react";
+import { GridLoader } from "react-spinners";
+
 import { AuthContext } from "../../contexts/AuthContext";
 
 import { getAllRegisterdUsers } from "../../services/userService";
 import { sendFriendRequest } from "../../services/friendService";
+import { spinnerStyle } from "../constants/spinnerConstants";
 
 export const Users = () => {
   const [registeredUsers, setRegisteredUsers] = useState([]);
   const [serachParam, setSerachParam] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
+    setLoading((state) => !state);
+
     getAllRegisterdUsers(user.token, serachParam).then((result) => {
       setRegisteredUsers(result);
+      setLoading((state) => !state);
     });
   }, [serachParam]);
 
@@ -38,24 +45,30 @@ export const Users = () => {
           placeholder="Search for specific user"
         ></input>
       </div>
-      {registeredUsers.length > 0 ?
-       registeredUsers.map((x) => (
-        <section key={x.userId} className="requester">
-          <div className="left">
-            <img className="img" src={x.imageUrl} alt="" />
-            <p className="user-name">{x.username}</p>
-          </div>
-          <div className="right">
-            <button
-              onClick={() => onFriendRequest(x.userId)}
-              className="btn accept"
-            >
-              Send Friend Request
-            </button>
-          </div>
-        </section>
-      ))
-    : <p className="no-users">There are no users who respond to these terms!</p>}
+      {loading ? (
+        <GridLoader style={spinnerStyle} color="#1877f2" />
+      ) : registeredUsers.length > 0 ? (
+        registeredUsers.map((x) => (
+          <section key={x.userId} className="requester">
+            <div className="left">
+              <img className="img" src={x.imageUrl} alt="" />
+              <p className="user-name">{x.username}</p>
+            </div>
+            <div className="right">
+              <button
+                onClick={() => onFriendRequest(x.userId)}
+                className="btn accept"
+              >
+                Send Friend Request
+              </button>
+            </div>
+          </section>
+        ))
+      ) : (
+        <p className="no-users">
+          There are no users who respond to these terms!
+        </p>
+      )}
     </>
   );
 };
