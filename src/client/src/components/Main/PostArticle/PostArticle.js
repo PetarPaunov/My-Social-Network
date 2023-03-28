@@ -1,5 +1,8 @@
 import "./PostArticle.css";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons"
+
 import { addComment } from "../../../services/commentService";
 import { deletePost, toggleLike } from "../../../services/postService";
 
@@ -80,12 +83,8 @@ export const PostArticle = (props) => {
           <div className="opitons">
             {user.userId && user.userId == props.userId ? 
             <>
-            <button onClick={onEditPostOpen} className="btn update-post">
-              Edit
-            </button>
-            <button onClick={onDelete} className="btn delete-post">
-              Delete
-            </button>
+            <FontAwesomeIcon icon={faPenToSquare} style={{color: "#e17f0e", width: '30px', height: '30px', cursor: 'pointer'}} onClick={onEditPostOpen} />
+            <FontAwesomeIcon icon={faTrashCan} style={{color: "#941414", width: '30px', height: '30px', cursor: 'pointer', marginLeft: '.7rem'}} onClick={onDelete} />
             </>
             : null
           }
