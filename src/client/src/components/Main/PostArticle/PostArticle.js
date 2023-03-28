@@ -1,13 +1,14 @@
 import "./PostArticle.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons"
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 import { addComment } from "../../../services/commentService";
 import { deletePost, toggleLike } from "../../../services/postService";
 
 import { Comment } from "../Comment/Comment";
 import { EditPost } from "../../EditPost/EditPost";
+import { Modal } from "../../Modal/Modal";
 import { AuthContext } from "../../../contexts/AuthContext";
 
 import { useState, useContext } from "react";
@@ -17,6 +18,7 @@ export const PostArticle = (props) => {
   const [comments, setComments] = useState(props.comments);
   const [commentDescription, setCommentDescription] = useState("");
   const [editPost, setEditPost] = useState(false);
+  const [modalDelete, setModalDelete] = useState(false);
   const [likes, setLikes] = useState(props.likes);
 
   const { user } = useContext(AuthContext);
@@ -38,6 +40,10 @@ export const PostArticle = (props) => {
     setComments((state) => [...state, result]);
   };
 
+  const openModalHandler = () => {
+    setModalDelete((state) => !state);
+  };
+
   const onDelete = async (e) => {
     e.preventDefault();
 
@@ -55,9 +61,9 @@ export const PostArticle = (props) => {
   const onLike = async (e) => {
     e.preventDefault();
 
-    var result = await toggleLike(postId, user.token)
+    var result = await toggleLike(postId, user.token);
 
-    setLikes(state => result)
+    setLikes((state) => result);
   };
 
   return (
@@ -70,6 +76,7 @@ export const PostArticle = (props) => {
         />
       ) : null}
 
+      {modalDelete ? <Modal onDelete={onDelete} opneModal={openModalHandler}/> : null}
       <article className="post">
         <div className="who">
           <div className="combine-container">
@@ -79,15 +86,33 @@ export const PostArticle = (props) => {
               <p className="post-title">{props.title}</p>
             </div>
           </div>
-      
+
           <div className="opitons">
-            {user.userId && user.userId == props.userId ? 
-            <>
-            <FontAwesomeIcon icon={faPenToSquare} style={{color: "#e17f0e", width: '30px', height: '30px', cursor: 'pointer'}} onClick={onEditPostOpen} />
-            <FontAwesomeIcon icon={faTrashCan} style={{color: "#941414", width: '30px', height: '30px', cursor: 'pointer', marginLeft: '.7rem'}} onClick={onDelete} />
-            </>
-            : null
-          }
+            {user.userId && user.userId == props.userId ? (
+              <>
+                <FontAwesomeIcon
+                  icon={faPenToSquare}
+                  style={{
+                    color: "#e17f0e",
+                    width: "30px",
+                    height: "30px",
+                    cursor: "pointer",
+                  }}
+                  onClick={onEditPostOpen}
+                />
+                <FontAwesomeIcon
+                  icon={faTrashCan}
+                  style={{
+                    color: "#941414",
+                    width: "30px",
+                    height: "30px",
+                    cursor: "pointer",
+                    marginLeft: ".7rem",
+                  }}
+                  onClick={openModalHandler}
+                />
+              </>
+            ) : null}
           </div>
         </div>
         <div className="text">{props.description}</div>
