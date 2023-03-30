@@ -6,6 +6,7 @@ import { editPost } from "../../services/postService";
 import { AuthContext } from "../../contexts/AuthContext";
 
 import { errorHandler, serverValidation } from "../../utils/postValidation";
+import { redirect } from "react-router-dom";
 
 const initialErrorValues = {
   title: "",
@@ -57,20 +58,23 @@ export const EditPost = ({ onClose, onEdit, postInfo }) => {
 
   const postEditHandler = async (e) => {
     e.preventDefault();
+    try {
+      const data = new FormData();
+      data.append("Id", values.id);
+      data.append("Title", values.title);
+      data.append("Description", values.description);
+      data.append("Image", values.image);
 
-    const data = new FormData();
-    data.append("Id", values.id);
-    data.append("Title", values.title);
-    data.append("Description", values.description);
-    data.append("Image", values.image);
+      const result = await editPost(data, user.token);
 
-    const result = await editPost(data, user.token);
-
-    if (result.status == 400) {
-      setErrors((state) => serverValidation(result.errors));
-    } else {
-      onClose();
-      onEdit(result);
+      if (result.status == 400) {
+        setErrors((state) => serverValidation(result.errors));
+      } else {
+        onClose();
+        onEdit(result);
+      }
+    } catch (error) {
+      redirect("/404");
     }
   };
 

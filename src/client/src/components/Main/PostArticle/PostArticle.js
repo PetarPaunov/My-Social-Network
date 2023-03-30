@@ -39,9 +39,8 @@ export const PostArticle = (props) => {
       var result = await addComment(data, user.token);
 
       setComments((state) => [...state, result]);
-
     } catch (error) {
-      redirect('404');
+      redirect("/404");
     }
   };
 
@@ -55,7 +54,7 @@ export const PostArticle = (props) => {
     deletePost(postId, user.token)
       .then(props.onDelete(postId))
       .catch((err) => {
-        console.log(err);
+        redirect("/404");
       });
   };
 
@@ -64,11 +63,15 @@ export const PostArticle = (props) => {
   };
 
   const onLike = async (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    var result = await toggleLike(postId, user.token);
+      var result = await toggleLike(postId, user.token);
 
-    setLikes((state) => result);
+      setLikes((state) => result);
+    } catch (error) {
+      redirect("/404");
+    }
   };
 
   return (

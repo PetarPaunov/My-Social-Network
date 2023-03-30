@@ -5,6 +5,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { addNewPost } from "../../services/postService";
 
 import { errorHandler, serverValidation } from "../../utils/postValidation";
+import { redirect } from "react-router-dom";
 
 const initialFieldValues = {
   title: "",
@@ -50,18 +51,22 @@ export const Post = ({ closePopup, onAddedPost }) => {
   const postSubmitHandler = async (e) => {
     e.preventDefault();
 
-    const data = new FormData();
-    data.append("Title", values.title);
-    data.append("Description", values.description);
-    data.append("Image", values.image);
+    try {
+      const data = new FormData();
+      data.append("Title", values.title);
+      data.append("Description", values.description);
+      data.append("Image", values.image);
 
-    const result = await addNewPost(data, user.token);
+      const result = await addNewPost(data, user.token);
 
-    if (result.status == 400) {
-      setErrors((state) => serverValidation(result.errors));
-    } else {
-      closePopup();
-      onAddedPost(result);
+      if (result.status == 400) {
+        setErrors((state) => serverValidation(result.errors));
+      } else {
+        closePopup();
+        onAddedPost(result);
+      }
+    } catch (error) {
+      redirect("/404");
     }
   };
 

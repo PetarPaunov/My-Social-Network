@@ -10,6 +10,7 @@ import { spinnerStylePosts } from "../constants/spinnerConstants";
 
 import "./UserProfile.css";
 import { ChangeUserInfo } from "../ChangeUserInfo/ChangeUserInfo";
+import { redirect } from "react-router-dom";
 
 export const UserProfile = () => {
   const [userInfo, setUserInfo] = useState({});
@@ -36,7 +37,7 @@ export const UserProfile = () => {
         setLoading((state) => !state);
       })
       .catch((err) => {
-        console.log(err);
+        redirect('/404');
       });
   }, []);
 

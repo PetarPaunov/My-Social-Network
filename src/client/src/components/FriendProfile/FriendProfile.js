@@ -1,6 +1,6 @@
 import "./FriendProfile.css";
 
-import { useParams } from "react-router-dom";
+import { redirect, useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { GridLoader } from "react-spinners";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -33,6 +33,9 @@ export const FriendPorfile = () => {
       .then((result) => {
         setFriendPosts(result);
         setLoading((state) => !state);
+      })
+      .catch((err) => {
+        redirect("/404");
       });
   }, []);
 

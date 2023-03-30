@@ -21,7 +21,7 @@ export const FriendRequest = () => {
         setRequests(result);
       });
     } catch (error) {
-      redirect('404');
+      redirect('/404');
     }
   }, []);
 
@@ -30,7 +30,7 @@ export const FriendRequest = () => {
       await acceptRequest(user.token, requestId);
       setRequests((state) => state.filter((x) => x.requestId != requestId));
     } catch (error) {
-      redirect("404");
+      redirect("/404");
     }
   };
 
@@ -39,7 +39,7 @@ export const FriendRequest = () => {
       await declineRequest(user.token, requestId);
       setRequests((state) => state.filter((x) => x.requestId != requestId));
     } catch (error) {
-      redirect("404");
+      redirect("/404");
     }
   };
 

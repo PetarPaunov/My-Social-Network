@@ -10,6 +10,7 @@ import { getAllFriends } from "../../services/userService";
 import { spinnerStyle } from "../constants/spinnerConstants";
 
 import { useEffect, useState, useContext } from "react";
+import { redirect } from "react-router-dom";
 import { GridLoader } from "react-spinners";
 
 export const Main = () => {
@@ -22,16 +23,20 @@ export const Main = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    setLoading(state => !state);
+    try {
+      setLoading((state) => !state);
 
-    getAllPosts()
-      .then((result) => {
-        setPosts(result);
-        setLoading(state => !state);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      getAllPosts()
+        .then((result) => {
+          setPosts(result);
+          setLoading((state) => !state);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      redirect("/404");
+    }
   }, []);
 
   useEffect(() => {
@@ -106,10 +111,7 @@ export const Main = () => {
             <div className="friends">
               <p className="title">Friends</p>
               {friends.map((x) => (
-                <FriendSection
-                  key={x.userId}
-                  firend={x}
-                />
+                <FriendSection key={x.userId} firend={x} />
               ))}
             </div>
           </section>
