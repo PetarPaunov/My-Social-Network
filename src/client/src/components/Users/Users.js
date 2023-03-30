@@ -2,6 +2,7 @@ import "./Users.css";
 
 import { useEffect, useState, useContext } from "react";
 import { GridLoader } from "react-spinners";
+import { redirect } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -26,8 +27,12 @@ export const Users = () => {
   }, [serachParam]);
 
   const onFriendRequest = async (userId) => {
-    await sendFriendRequest(user.token, userId);
-    setRegisteredUsers((state) => state.filter((x) => x.userId != userId));
+    try {
+      await sendFriendRequest(user.token, userId);
+      setRegisteredUsers((state) => state.filter((x) => x.userId != userId));
+    } catch (error) {
+      redirect("404");
+    }
   };
 
   const onSerachParamChange = (e) => {
