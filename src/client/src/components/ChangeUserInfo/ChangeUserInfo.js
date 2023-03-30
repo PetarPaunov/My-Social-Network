@@ -5,6 +5,16 @@ import { changeUserInfo } from "../../services/userService";
 import { AuthContext } from "../../contexts/AuthContext";
 import { redirect } from "react-router-dom";
 
+import { errorHandler, serverValidation } from "../../utils/profileChangeValidation";
+
+const initialErrorValues = {
+  firstName: "",
+  lastName: "",
+  userName: "",
+  address: "",
+  image: null,
+};
+
 export const ChangeUserInfo = ({ closePopup, userInfo, onInfoChange }) => {
   const initialFieldValues = {
     firstName: userInfo.firstName,
@@ -15,8 +25,18 @@ export const ChangeUserInfo = ({ closePopup, userInfo, onInfoChange }) => {
   };
 
   const [values, setValues] = useState(initialFieldValues);
+  const [errors, setErrors] = useState(initialErrorValues);
 
   const { user } = useContext(AuthContext);
+
+  const validationCheck = (e) => {
+    const { name, value } = e.target;
+
+    setErrors((errors) => ({
+      ...errors,
+      [name]: errorHandler(name, value),
+    }));
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -51,9 +71,12 @@ export const ChangeUserInfo = ({ closePopup, userInfo, onInfoChange }) => {
 
       const result = await changeUserInfo(data, user.token);
 
-      closePopup();
-
-      onInfoChange(result);
+      if (result.status == 400) {
+        setErrors((state) => serverValidation(result.errors));
+      } else {
+        closePopup();
+        onInfoChange(result);
+      }
     } catch (error) {
       redirect("/404");
     }
@@ -70,24 +93,39 @@ export const ChangeUserInfo = ({ closePopup, userInfo, onInfoChange }) => {
         </div>
         <hr />
         <div className="input-double input">
-          <input
-            type="text"
-            name="firstName"
-            id=""
-            placeholder="First name"
-            value={values.firstName}
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="lastName"
-            id=""
-            placeholder="Last name"
-            value={values.lastName}
-            onChange={handleInputChange}
-          />
+          <div>
+            {errors.firstName ? (
+              <span className="error-profile first">{errors.firstName}</span>
+            ) : null}
+            <input
+              type="text"
+              name="firstName"
+              id=""
+              placeholder="First name"
+              value={values.firstName}
+              onChange={handleInputChange}
+              onBlur={validationCheck}
+            />
+          </div>
+          <div>
+            {errors.lastName ? (
+              <span className="error-profile first">{errors.lastName}</span>
+            ) : null}
+            <input
+              type="text"
+              name="lastName"
+              id=""
+              placeholder="Last name"
+              value={values.lastName}
+              onChange={handleInputChange}
+              onBlur={validationCheck}
+            />
+          </div>
         </div>
         <div className="input">
+          {errors.userName ? (
+            <span className="error-profile second">{errors.userName}</span>
+          ) : null}
           <input
             type="text"
             name="userName"
@@ -95,6 +133,7 @@ export const ChangeUserInfo = ({ closePopup, userInfo, onInfoChange }) => {
             placeholder="Username"
             value={values.userName}
             onChange={handleInputChange}
+            onBlur={validationCheck}
           />
         </div>
         <div className="input">

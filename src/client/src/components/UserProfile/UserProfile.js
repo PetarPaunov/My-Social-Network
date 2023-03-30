@@ -1,3 +1,5 @@
+import "./UserProfile.css";
+
 import { PostArticle } from "../Main/PostArticle/PostArticle";
 
 import { useEffect, useState, useContext } from "react";
@@ -8,7 +10,6 @@ import { getUserPosts } from "../../services/postService";
 import { getUserInfo } from "../../services/userService";
 import { spinnerStylePosts } from "../constants/spinnerConstants";
 
-import "./UserProfile.css";
 import { ChangeUserInfo } from "../ChangeUserInfo/ChangeUserInfo";
 import { redirect } from "react-router-dom";
 

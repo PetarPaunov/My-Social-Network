@@ -5,7 +5,7 @@ export const errorHandler = (name, value) => {
       : null;
   } else if (name == "description") {
     return value.length < 20 || value.length > 5000
-      ? "Last Name must be between 20 and 5000 letters."
+      ? "Description must be between 20 and 5000 letters."
       : null;
   }
 };
