@@ -3,6 +3,7 @@ import "./ChangeUserInfo.css";
 import { useState, useContext } from "react";
 import { changeUserInfo } from "../../services/userService";
 import { AuthContext } from "../../contexts/AuthContext";
+import { redirect } from "react-router-dom";
 
 export const ChangeUserInfo = ({ closePopup, userInfo, onInfoChange }) => {
   const initialFieldValues = {
@@ -38,20 +39,24 @@ export const ChangeUserInfo = ({ closePopup, userInfo, onInfoChange }) => {
   };
 
   const postSubmitHandler = async (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    const data = new FormData();
-    data.append("FirstName", values.firstName);
-    data.append("LastName", values.lastName);
-    data.append("UserName", values.userName);
-    data.append("Address", values.address);
-    data.append("Image", values.image);
+      const data = new FormData();
+      data.append("FirstName", values.firstName);
+      data.append("LastName", values.lastName);
+      data.append("UserName", values.userName);
+      data.append("Address", values.address);
+      data.append("Image", values.image);
 
-    const result = await changeUserInfo(data, user.token);
+      const result = await changeUserInfo(data, user.token);
 
-    closePopup();
+      closePopup();
 
-    onInfoChange(result);
+      onInfoChange(result);
+    } catch (error) {
+      redirect("/404");
+    }
   };
 
   return (
@@ -98,7 +103,7 @@ export const ChangeUserInfo = ({ closePopup, userInfo, onInfoChange }) => {
             name="address"
             id=""
             placeholder="Address"
-            value={values.address || ''}
+            value={values.address || ""}
             onChange={handleInputChange}
           />
         </div>

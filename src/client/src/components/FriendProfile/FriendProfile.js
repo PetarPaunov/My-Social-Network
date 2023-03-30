@@ -22,7 +22,10 @@ export const FriendPorfile = () => {
   useEffect(() => {
     getFriendUserInfo(userId, user.token)
       .then((res) => res.json())
-      .then(setFriendInfo);
+      .then(setFriendInfo)
+      .catch((err) => {
+        redirect("/404");
+      });
   }, []);
 
   useEffect(() => {

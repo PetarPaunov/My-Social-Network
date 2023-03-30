@@ -41,9 +41,13 @@ export const Main = () => {
 
   useEffect(() => {
     if (user.email) {
-      getAllFriends(user.token).then((result) => {
-        setFriends(result);
-      });
+      getAllFriends(user.token)
+        .then((result) => {
+          setFriends(result);
+        })
+        .catch((err) => {
+          redirect("/404");
+        });
     }
   }, [user]);
 

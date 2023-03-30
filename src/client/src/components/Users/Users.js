@@ -20,10 +20,14 @@ export const Users = () => {
   useEffect(() => {
     setLoading((state) => !state);
 
-    getAllRegisterdUsers(user.token, serachParam).then((result) => {
-      setRegisteredUsers(result);
-      setLoading((state) => !state);
-    });
+    getAllRegisterdUsers(user.token, serachParam)
+      .then((result) => {
+        setRegisteredUsers(result);
+        setLoading((state) => !state);
+      })
+      .catch((err) => {
+        redirect("/404");
+      });
   }, [serachParam]);
 
   const onFriendRequest = async (userId) => {

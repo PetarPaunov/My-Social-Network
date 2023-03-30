@@ -24,7 +24,7 @@ export const UserProfile = () => {
     getUserInfo(user.token)
       .then(setUserInfo)
       .catch((err) => {
-        console.log(err);
+        redirect("/404");
       });
   }, []);
 
@@ -37,7 +37,7 @@ export const UserProfile = () => {
         setLoading((state) => !state);
       })
       .catch((err) => {
-        redirect('/404');
+        redirect("/404");
       });
   }, []);
 
