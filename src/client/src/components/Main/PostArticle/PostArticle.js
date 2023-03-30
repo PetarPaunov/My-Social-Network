@@ -12,6 +12,7 @@ import { Modal } from "../../Modal/Modal";
 import { AuthContext } from "../../../contexts/AuthContext";
 
 import { useState, useContext } from "react";
+import { redirect } from "react-router-dom";
 
 export const PostArticle = (props) => {
   const [postId] = useState(props.id);
@@ -29,15 +30,19 @@ export const PostArticle = (props) => {
 
   const addNewComment = async (e) => {
     e.preventDefault();
+    try {
+      const data = {
+        postId,
+        description: commentDescription,
+      };
 
-    const data = {
-      postId,
-      description: commentDescription,
-    };
+      var result = await addComment(data, user.token);
 
-    var result = await addComment(data, user.token);
+      setComments((state) => [...state, result]);
 
-    setComments((state) => [...state, result]);
+    } catch (error) {
+      redirect('404');
+    }
   };
 
   const openModalHandler = () => {
@@ -76,7 +81,9 @@ export const PostArticle = (props) => {
         />
       ) : null}
 
-      {modalDelete ? <Modal onDelete={onDelete} opneModal={openModalHandler}/> : null}
+      {modalDelete ? (
+        <Modal onDelete={onDelete} opneModal={openModalHandler} />
+      ) : null}
       <article className="post">
         <div className="who">
           <div className="combine-container">
