@@ -8,6 +8,7 @@ import { UserProfile } from "./components/UserProfile/UserProfile";
 import { Users } from "./components/Users/Users";
 import { FriendPorfile } from "./components/FriendProfile/FriendProfile";
 import { FriendRequest } from "./components/FriendRequest/FriendRequest";
+import { Error404 } from "./components/Error404/Error404";
 import { AuthContext } from "./contexts/AuthContext";
 import { RauteGuard } from "./components/common/RouteGuard";
 
@@ -84,6 +85,7 @@ function App() {
               />
               <Route path="/friend/:userId" element={<FriendPorfile />}></Route>
             </Route>
+            <Route path="/404" element={<Error404 />}></Route>
           </Routes>
         </main>
       </div>
