@@ -96,6 +96,11 @@
         {
             var user = await this.userService.GetFriendUserProfileInfoAsync(userId);
 
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
             return Ok(user);
         }
     }
