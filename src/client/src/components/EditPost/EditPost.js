@@ -6,7 +6,7 @@ import { editPost } from "../../services/postService";
 import { AuthContext } from "../../contexts/AuthContext";
 
 import { errorHandler, serverValidation } from "../../utils/postValidation";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const initialErrorValues = {
   title: "",
@@ -26,6 +26,8 @@ export const EditPost = ({ onClose, onEdit, postInfo }) => {
 
   const [values, setValues] = useState(initialFieldValues);
   const [errors, setErrors] = useState(initialErrorValues);
+
+  const navigate = useNavigate();
 
   const validationCheck = (e) => {
     const { name, value } = e.target;
@@ -74,7 +76,7 @@ export const EditPost = ({ onClose, onEdit, postInfo }) => {
         onEdit(result);
       }
     } catch (error) {
-      redirect("/404");
+      navigate("/404");
     }
   };
 

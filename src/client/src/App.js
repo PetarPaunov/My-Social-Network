@@ -86,6 +86,7 @@ function App() {
               <Route path="/friend/:userId" element={<FriendPorfile />}></Route>
             </Route>
             <Route path="/404" element={<Error404 />}></Route>
+            <Route path="*" element={<Error404 />}></Route>
           </Routes>
         </main>
       </div>

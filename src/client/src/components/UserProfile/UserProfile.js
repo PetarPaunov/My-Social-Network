@@ -11,7 +11,7 @@ import { getUserInfo } from "../../services/userService";
 import { spinnerStylePosts } from "../constants/spinnerConstants";
 
 import { ChangeUserInfo } from "../ChangeUserInfo/ChangeUserInfo";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const UserProfile = () => {
   const [userInfo, setUserInfo] = useState({});
@@ -21,11 +21,13 @@ export const UserProfile = () => {
 
   const { user, onUserInfoChange } = useContext(AuthContext);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     getUserInfo(user.token)
       .then(setUserInfo)
       .catch((err) => {
-        redirect("/404");
+        navigate("/404");
       });
   }, []);
 
@@ -38,7 +40,7 @@ export const UserProfile = () => {
         setLoading((state) => !state);
       })
       .catch((err) => {
-        redirect("/404");
+        navigate("/404");
       });
   }, []);
 

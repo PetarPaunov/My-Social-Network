@@ -1,7 +1,7 @@
 import "./FriendRequest.css";
 
 import { useEffect, useState, useContext } from "react";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/AuthContext";
 import {
@@ -13,6 +13,8 @@ import {
 export const FriendRequest = () => {
   const [requests, setRequests] = useState([]);
 
+  const navigate = useNavigate();
+
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -21,7 +23,7 @@ export const FriendRequest = () => {
         setRequests(result);
       });
     } catch (error) {
-      redirect('/404');
+      navigate('/404');
     }
   }, []);
 
@@ -30,7 +32,7 @@ export const FriendRequest = () => {
       await acceptRequest(user.token, requestId);
       setRequests((state) => state.filter((x) => x.requestId != requestId));
     } catch (error) {
-      redirect("/404");
+      navigate("/404");
     }
   };
 
@@ -39,7 +41,7 @@ export const FriendRequest = () => {
       await declineRequest(user.token, requestId);
       setRequests((state) => state.filter((x) => x.requestId != requestId));
     } catch (error) {
-      redirect("/404");
+      navigate("/404");
     }
   };
 

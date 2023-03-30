@@ -1,7 +1,7 @@
 import "./Register.css";
 
 import { useContext, useState } from "react";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { register } from "../../services/authService";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -25,6 +25,8 @@ export const Register = ({ closePopup }) => {
   const { onSigning } = useContext(AuthContext);
   const [values, setValues] = useState(initialObject);
   const [errors, setErrors] = useState(initialObject);
+
+  const navigate = useNavigate();
 
   const validationCheck = (e) => {
     const { name, value } = e.target;
@@ -68,7 +70,7 @@ export const Register = ({ closePopup }) => {
         closePopup();
       }
     } catch (error) {
-      redirect("/404");
+      navigate("/404");
     }
   };
 

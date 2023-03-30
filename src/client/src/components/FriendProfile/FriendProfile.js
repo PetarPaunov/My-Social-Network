@@ -1,6 +1,6 @@
 import "./FriendProfile.css";
 
-import { redirect, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { GridLoader } from "react-spinners";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -14,6 +14,7 @@ export const FriendPorfile = () => {
   const { user } = useContext(AuthContext);
 
   const userId = useParams();
+  const navigate = useNavigate();
 
   const [firendInfo, setFriendInfo] = useState({});
   const [friendPosts, setFriendPosts] = useState({});
@@ -21,10 +22,17 @@ export const FriendPorfile = () => {
 
   useEffect(() => {
     getFriendUserInfo(userId, user.token)
-      .then((res) => res.json())
-      .then(setFriendInfo)
+      .then((res) => {
+        if (res.status == 400) {
+          navigate('/404')
+        }
+        return res.json();
+      })
+      .then((result) => {
+        setFriendInfo(result);
+      })
       .catch((err) => {
-        redirect("/404");
+        navigate("/404");
       });
   }, []);
 
@@ -38,7 +46,7 @@ export const FriendPorfile = () => {
         setLoading((state) => !state);
       })
       .catch((err) => {
-        redirect("/404");
+        navigate("/404");
       });
   }, []);
 

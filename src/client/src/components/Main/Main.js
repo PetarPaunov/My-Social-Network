@@ -10,7 +10,7 @@ import { getAllFriends } from "../../services/userService";
 import { spinnerStyle } from "../constants/spinnerConstants";
 
 import { useEffect, useState, useContext } from "react";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { GridLoader } from "react-spinners";
 
 export const Main = () => {
@@ -20,10 +20,11 @@ export const Main = () => {
   const [posts, setPosts] = useState([]);
   const [friends, setFriends] = useState([]);
 
+  const navigate = useNavigate();
+
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    try {
       setLoading((state) => !state);
 
       getAllPosts()
@@ -32,11 +33,8 @@ export const Main = () => {
           setLoading((state) => !state);
         })
         .catch((err) => {
-          console.log(err);
+          navigate("/404");
         });
-    } catch (error) {
-      redirect("/404");
-    }
   }, []);
 
   useEffect(() => {
@@ -46,7 +44,7 @@ export const Main = () => {
           setFriends(result);
         })
         .catch((err) => {
-          redirect("/404");
+          navigate("/404");
         });
     }
   }, [user]);

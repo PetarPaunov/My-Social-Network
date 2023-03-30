@@ -3,7 +3,7 @@ import "./ChangeUserInfo.css";
 import { useState, useContext } from "react";
 import { changeUserInfo } from "../../services/userService";
 import { AuthContext } from "../../contexts/AuthContext";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { errorHandler, serverValidation } from "../../utils/profileChangeValidation";
 
@@ -26,6 +26,8 @@ export const ChangeUserInfo = ({ closePopup, userInfo, onInfoChange }) => {
 
   const [values, setValues] = useState(initialFieldValues);
   const [errors, setErrors] = useState(initialErrorValues);
+
+  const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
 
@@ -78,7 +80,7 @@ export const ChangeUserInfo = ({ closePopup, userInfo, onInfoChange }) => {
         onInfoChange(result);
       }
     } catch (error) {
-      redirect("/404");
+      navigate("/404");
     }
   };
 

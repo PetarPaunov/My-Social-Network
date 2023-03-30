@@ -12,7 +12,7 @@ import { Modal } from "../../Modal/Modal";
 import { AuthContext } from "../../../contexts/AuthContext";
 
 import { useState, useContext } from "react";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const PostArticle = (props) => {
   const [postId] = useState(props.id);
@@ -21,6 +21,8 @@ export const PostArticle = (props) => {
   const [editPost, setEditPost] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [likes, setLikes] = useState(props.likes);
+
+  const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
 
@@ -40,7 +42,7 @@ export const PostArticle = (props) => {
 
       setComments((state) => [...state, result]);
     } catch (error) {
-      redirect("/404");
+      navigate("/404");
     }
   };
 
@@ -54,7 +56,7 @@ export const PostArticle = (props) => {
     deletePost(postId, user.token)
       .then(props.onDelete(postId))
       .catch((err) => {
-        redirect("/404");
+        navigate("/404");
       });
   };
 
@@ -70,7 +72,7 @@ export const PostArticle = (props) => {
 
       setLikes((state) => result);
     } catch (error) {
-      redirect("/404");
+      navigate("/404");
     }
   };
 

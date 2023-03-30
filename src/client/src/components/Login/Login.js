@@ -4,11 +4,13 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { login } from "../../services/authService";
 
 import { useContext, useState } from "react";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Login = ({ closePopup }) => {
   const { onSigning } = useContext(AuthContext);
   const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate();
 
   const onLoginHandler = async (e) => {
     e.preventDefault();
@@ -26,7 +28,7 @@ export const Login = ({ closePopup }) => {
         closePopup();
       }
     } catch (error) {
-      redirect('/404');
+      navigate('/404');
     }
   };
 

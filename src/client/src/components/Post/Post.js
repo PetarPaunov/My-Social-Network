@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { addNewPost } from "../../services/postService";
 
 import { errorHandler, serverValidation } from "../../utils/postValidation";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const initialFieldValues = {
   title: "",
@@ -16,6 +16,7 @@ const initialFieldValues = {
 export const Post = ({ closePopup, onAddedPost }) => {
   const [values, setValues] = useState(initialFieldValues);
   const [errors, setErrors] = useState(initialFieldValues);
+  const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
 
@@ -66,7 +67,7 @@ export const Post = ({ closePopup, onAddedPost }) => {
         onAddedPost(result);
       }
     } catch (error) {
-      redirect("/404");
+      navigate("/404");
     }
   };
 
