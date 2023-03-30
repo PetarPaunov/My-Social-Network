@@ -1,6 +1,7 @@
 import "./Register.css";
 
 import { useContext, useState } from "react";
+import { redirect } from "react-router-dom";
 
 import { register } from "../../services/authService";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -8,7 +9,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import {
   errorHandler,
   passwordDidNotMatch,
-  serverValidation
+  serverValidation,
 } from "../../utils/registerValidation";
 
 const initialObject = {
@@ -57,13 +58,17 @@ export const Register = ({ closePopup }) => {
   const onRegisterHandler = async (e) => {
     e.preventDefault();
 
-    const result = await register(values);
+    try {
+      const result = await register(values);
 
-    if (result.status == 400) {
-      setErrors(state => serverValidation(result.errors));
-    } else {
-      onSigning(result);
-      closePopup();
+      if (result.status == 400) {
+        setErrors((state) => serverValidation(result.errors));
+      } else {
+        onSigning(result);
+        closePopup();
+      }
+    } catch (error) {
+      redirect("/404");
     }
   };
 

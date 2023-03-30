@@ -21,13 +21,17 @@ export const login = async (credentials) => {
 };
 
 export const register = async (credentials) => {
-  const response = await fetch(registerUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(credentials),
-  });
-  
-  return response.json();
+  try {
+    const response = await fetch(registerUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    });
+    
+    return response.json();
+  } catch (error) {
+    throw new Error(error);
+  }
 };
