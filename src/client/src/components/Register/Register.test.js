@@ -8,7 +8,7 @@ import "@testing-library/jest-dom";
 import { Register } from "./Register";
 import { AuthContext } from "../../contexts/AuthContext";
 
-test("Register component should render corectly", () => {
+test("Register component should render correctly", () => {
   const onSigning = () => {};
 
   render(
