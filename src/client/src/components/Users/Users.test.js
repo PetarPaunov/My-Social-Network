@@ -3,7 +3,7 @@ import React from "react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 
-import { render, screen, fireEvent, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
 
@@ -32,6 +32,9 @@ const testReturnObject = [
 const server = setupServer(
   rest.post("http://localhost:5236/api/UserProfile/all-users", (req, res, ctx) => {
     return res(ctx.json(testReturnObject));
+  }),
+  rest.post("http://localhost:5236/api/Request/send", (req, res, ctx) => {
+    return res(ctx.json(testReturnObject));
   })
 );
 
@@ -39,7 +42,7 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-test("Gets all registered users", async () => {
+test("Should get all registered users", async () => {
   const firstUser = 'testUsername';
   const secondUser = 'testUsername';
 
@@ -56,3 +59,22 @@ test("Gets all registered users", async () => {
   expect(screen.getByText(firstUser)).toBeInTheDocument();
   expect(screen.getByText(secondUser)).toBeInTheDocument();
 });
+
+test("Should remove user when send friend request is clicked", async () => {
+    const expected = 1;
+    const user = { name: "Giorgio", token:'testToken' };
+  
+    render(
+      <AuthContext.Provider value={{user}}>
+        <Users />
+      </AuthContext.Provider>
+    );
+  
+    await waitFor(() => screen.getAllByRole('img'));
+        
+    fireEvent.click(screen.queryAllByText('Send Friend Request')[0]);
+
+    await waitFor(() => {
+        expect(screen.getAllByRole('img')).toHaveLength(expected);
+    });
+  });

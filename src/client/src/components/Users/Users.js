@@ -35,7 +35,7 @@ export const Users = () => {
       await sendFriendRequest(user.token, userId);
       setRegisteredUsers((state) => state.filter((x) => x.userId != userId));
     } catch (error) {
-      redirect("404");
+      redirect("/404");
     }
   };
 
