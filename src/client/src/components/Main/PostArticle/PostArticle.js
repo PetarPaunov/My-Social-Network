@@ -94,7 +94,7 @@ export const PostArticle = (props) => {
           <div className="combine-container">
             <img src={props.userImage} alt="" className="user-img" />
             <div className="combine">
-              <p className="user-name">Test User</p>
+              <p className="user-name">{props.username}</p>
               <p className="post-title">{props.title}</p>
             </div>
           </div>
