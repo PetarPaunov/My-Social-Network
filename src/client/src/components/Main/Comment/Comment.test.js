@@ -9,7 +9,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 
 test("Comment should render correctly", () => {
   render(
-    <AuthContext.Provider>
+    <AuthContext.Provider value={{}}>
       <Comment applicationUserUsername={'test username'} description={'test description'}/>
     </AuthContext.Provider>
   );
