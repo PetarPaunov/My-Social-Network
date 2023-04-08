@@ -16,7 +16,7 @@
   justify-content: space-between;
 }
 
-.main .bottom-part .left-part .post .who .combine-container{
+.main .bottom-part .left-part .post .who .combine-container {
   display: flex;
 }
 
@@ -27,6 +27,7 @@
 
 .main .bottom-part .left-part .post .post-img {
   width: 100%;
+  height: 750px;
   object-fit: cover;
   object-position: center;
   -o-object-fit: cover;
@@ -98,7 +99,7 @@
 
 .main .bottom-part .left-part .post .who .opitons .btn.update-post {
   background-color: orange;
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 .main .bottom-part .left-part .post .who .opitons .btn.delete-post {

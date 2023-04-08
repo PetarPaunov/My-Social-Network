@@ -25,11 +25,11 @@ export const errorHandler = (name, value) => {
 
 export const serverValidation = (errors) => {
   return {
-    firstName: errors.FirstName ? errors.FirstName[0] : '',
-    lastName: errors.LastName ? errors.LastName[0] : '',
-    userName: errors.UserName ? errors.UserName[0] : '',
-    email: errors.Email ? errors.Email[0] : '',
-    password: errors.Password ? errors.Password[0] : '',
+    firstName: errors.FirstName ? errors.FirstName[0] : "",
+    lastName: errors.LastName ? errors.LastName[0] : "",
+    userName: errors.UserName ? errors.UserName[0] : "",
+    email: errors.Email ? errors.Email[0] : "",
+    password: errors.Password ? errors.Password[0] : "",
     passwordConfirm: "",
   };
 };

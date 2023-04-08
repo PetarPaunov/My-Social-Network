@@ -3,7 +3,6 @@ const addCommentUrl = baseUrl + "add";
 
 export const addComment = async (data, token) => {
   try {
-    
     const response = await fetch(addCommentUrl, {
       method: "POST",
       headers: {
@@ -16,7 +15,6 @@ export const addComment = async (data, token) => {
     const result = await response.json();
 
     return result;
-
   } catch (error) {
     throw new Error(error);
   }

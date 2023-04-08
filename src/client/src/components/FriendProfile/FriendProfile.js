@@ -24,7 +24,7 @@ export const FriendPorfile = () => {
     getFriendUserInfo(userId, user.token)
       .then((res) => {
         if (res.status == 400) {
-          navigate('/404')
+          navigate("/404");
         }
         return res.json();
       })

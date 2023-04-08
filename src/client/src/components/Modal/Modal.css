@@ -30,7 +30,7 @@
   background-color: #f44336;
 }
 
-.container {
+.modal-container {
   padding: 16px;
   text-align: center;
   width: 100%;
@@ -43,7 +43,7 @@
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
+  /* overflow: auto; Enable scroll if needed */
   background: rgba(0, 0, 0, 0.3);
   padding-top: 50px;
 }

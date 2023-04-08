@@ -13,11 +13,11 @@ test("Login popup should render correctly", () => {
 
   render(
     <BrowserRouter>
-      <AuthContext.Provider value={{onSigning}}>
+      <AuthContext.Provider value={{ onSigning }}>
         <Login />
       </AuthContext.Provider>
     </BrowserRouter>
   );
 
-  expect(screen.queryByText('Log in')).toBeInTheDocument();
+  expect(screen.queryByText("Log in")).toBeInTheDocument();
 });

@@ -4,7 +4,7 @@ export const Modal = ({ onDelete, opneModal }) => {
   return (
     <div id="id01" className="modal">
       <div className="modal-content">
-        <div className="container">
+        <div className="modal-container">
           <h1>Delete Post</h1>
           <p>Are you sure you want to delete this post?</p>
 

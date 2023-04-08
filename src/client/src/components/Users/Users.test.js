@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
 
 import { rest } from "msw";
 import { setupServer } from "msw/node";
@@ -30,9 +31,12 @@ const testReturnObject = [
 ];
 
 const server = setupServer(
-  rest.post("http://localhost:5236/api/UserProfile/all-users", (req, res, ctx) => {
-    return res(ctx.json(testReturnObject));
-  }),
+  rest.post(
+    "http://localhost:5236/api/UserProfile/all-users",
+    (req, res, ctx) => {
+      return res(ctx.json(testReturnObject));
+    }
+  ),
   rest.post("http://localhost:5236/api/Request/send", (req, res, ctx) => {
     return res(ctx.json(testReturnObject));
   })
@@ -43,38 +47,42 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 test("Should get all registered users", async () => {
-  const firstUser = 'testUsername';
-  const secondUser = 'testUsername';
+  const firstUser = "testUsername";
+  const secondUser = "testUsername";
 
-  const user = { name: "Giorgio", token:'testToken' };
+  const user = { name: "Giorgio", token: "testToken" };
 
   render(
-    <AuthContext.Provider value={{user}}>
-      <Users />
-    </AuthContext.Provider>
+    <BrowserRouter>
+      <AuthContext.Provider value={{ user }}>
+        <Users />
+      </AuthContext.Provider>
+    </BrowserRouter>
   );
 
-  await waitFor(() => screen.getAllByRole('img'));
+  await waitFor(() => screen.getAllByRole("img"));
 
   expect(screen.getByText(firstUser)).toBeInTheDocument();
   expect(screen.getByText(secondUser)).toBeInTheDocument();
 });
 
 test("Should remove user when send friend request is clicked", async () => {
-    const expected = 1;
-    const user = { name: "Giorgio", token:'testToken' };
-  
-    render(
-      <AuthContext.Provider value={{user}}>
+  const expected = 1;
+  const user = { name: "Giorgio", token: "testToken" };
+
+  render(
+    <BrowserRouter>
+      <AuthContext.Provider value={{ user }}>
         <Users />
       </AuthContext.Provider>
-    );
-  
-    await waitFor(() => screen.getAllByRole('img'));
-        
-    fireEvent.click(screen.queryAllByText('Send Friend Request')[0]);
+    </BrowserRouter>
+  );
 
-    await waitFor(() => {
-        expect(screen.getAllByRole('img')).toHaveLength(expected);
-    });
+  await waitFor(() => screen.getAllByRole("img"));
+
+  fireEvent.click(screen.queryAllByText("Send Friend Request")[0]);
+
+  await waitFor(() => {
+    expect(screen.getAllByRole("img")).toHaveLength(expected);
   });
+});

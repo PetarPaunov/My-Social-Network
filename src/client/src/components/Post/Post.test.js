@@ -13,12 +13,12 @@ test("Post component should render correctly", () => {
 
   render(
     <BrowserRouter>
-      <AuthContext.Provider value={{user}}>
+      <AuthContext.Provider value={{ user }}>
         <Post />
       </AuthContext.Provider>
     </BrowserRouter>
   );
 
-  expect(screen.queryByText('Post')).toBeInTheDocument();
-  expect(screen.queryByRole('button')).toBeInTheDocument();
+  expect(screen.queryByText("Post")).toBeInTheDocument();
+  expect(screen.queryByRole("button")).toBeInTheDocument();
 });

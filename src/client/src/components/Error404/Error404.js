@@ -91,7 +91,9 @@ export const Error404 = () => {
           You got lost in the <strong>404</strong> galaxy.
         </p>
         <p>
-          <NavLink to='/' className="home-button">Go back to earth.</NavLink>
+          <NavLink to="/" className="home-button">
+            Go back to earth.
+          </NavLink>
         </p>
       </article>
     </div>

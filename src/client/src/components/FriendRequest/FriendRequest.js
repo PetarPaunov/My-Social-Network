@@ -23,7 +23,7 @@ export const FriendRequest = () => {
         setRequests(result);
       });
     } catch (error) {
-      navigate('/404');
+      navigate("/404");
     }
   }, []);
 

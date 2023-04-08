@@ -5,7 +5,10 @@ import { changeUserInfo } from "../../services/userService";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-import { errorHandler, serverValidation } from "../../utils/profileChangeValidation";
+import {
+  errorHandler,
+  serverValidation,
+} from "../../utils/profileChangeValidation";
 
 const initialErrorValues = {
   firstName: "",

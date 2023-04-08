@@ -32,3 +32,9 @@
   right: 10px;
   overflow: scroll;
 }
+
+.no-posts{
+  color: var(--clr-primary-green);
+  font-weight: 500;
+  font-size: 1.3rem;
+}

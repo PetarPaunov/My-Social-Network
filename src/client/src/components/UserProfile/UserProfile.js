@@ -84,7 +84,13 @@ export const UserProfile = () => {
         />
       ) : null}
       <section className="user-profile">
-        <img src={userInfo.imageUrl} alt="" className="user-profile-img" />
+        <img
+          src={
+            userInfo.imageUrl ? userInfo.imageUrl : "https://fakeimg.pl/300/"
+          }
+          alt=""
+          className="user-profile-img"
+        />
 
         <div className="user-info">
           <p className="user-info-field">

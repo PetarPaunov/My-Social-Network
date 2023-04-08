@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
 

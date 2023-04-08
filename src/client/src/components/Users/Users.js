@@ -2,7 +2,7 @@ import "./Users.css";
 
 import { useEffect, useState, useContext } from "react";
 import { GridLoader } from "react-spinners";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -17,6 +17,8 @@ export const Users = () => {
 
   const { user } = useContext(AuthContext);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     setLoading((state) => !state);
 
@@ -26,7 +28,7 @@ export const Users = () => {
         setLoading((state) => !state);
       })
       .catch((err) => {
-        redirect("/404");
+        navigate("/404");
       });
   }, [serachParam]);
 
@@ -35,7 +37,7 @@ export const Users = () => {
       await sendFriendRequest(user.token, userId);
       setRegisteredUsers((state) => state.filter((x) => x.userId != userId));
     } catch (error) {
-      redirect("/404");
+      navigate("/404");
     }
   };
 

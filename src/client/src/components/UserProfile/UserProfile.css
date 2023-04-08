@@ -10,10 +10,10 @@
 
 .main .bottom-part .user-profile .user-profile-img {
   width: 100%;
-  height: 50%;
+  height: 60%;
   margin-bottom: 0.5rem;
   object-fit: cover;
-  object-position: top;
+  object-position: center;
 }
 
 .main .bottom-part .user-profile .user-info {

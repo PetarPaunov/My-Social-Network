@@ -33,7 +33,7 @@
                 LastName = x.LastName,
                 Username = x.UserName,
                 ImageUrl = x.ImageUrl
-            });
+            }).ToList();
 
             return friends;
         }

@@ -28,7 +28,7 @@ export const Login = ({ closePopup }) => {
         closePopup();
       }
     } catch (error) {
-      navigate('/404');
+      navigate("/404");
     }
   };
 

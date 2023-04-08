@@ -12,11 +12,10 @@ export const login = async (credentials) => {
   });
   if (response.status == 200) {
     return response.json();
-  }
-  else if (response.status == 400) {
+  } else if (response.status == 400) {
     return false;
-  }else{
-    throw new Error('404');
+  } else {
+    throw new Error("404");
   }
 };
 
@@ -29,7 +28,7 @@ export const register = async (credentials) => {
       },
       body: JSON.stringify(credentials),
     });
-    
+
     return response.json();
   } catch (error) {
     throw new Error(error);

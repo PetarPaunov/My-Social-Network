@@ -3,12 +3,11 @@ import { Navigate, Outlet } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
-export const RauteGuard = ( {children} ) => {
+export const RauteGuard = ({ children }) => {
+  const { user } = useContext(AuthContext);
+  if (!user.email) {
+    return <Navigate to={"/"} />;
+  }
 
-    const { user } = useContext(AuthContext); 
-    if (!user.email) {
-        return <Navigate to={'/'}/>
-    }
-
-    return children ? children : <Outlet />
+  return children ? children : <Outlet />;
 };

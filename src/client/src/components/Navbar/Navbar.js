@@ -1,10 +1,10 @@
+import "./Navbar.css";
+
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 
 import { AuthContext } from "../../contexts/AuthContext.js";
 import { navEnum } from "../constants/navigationConstants.js";
-
-import "./Navbar.css";
 
 export const Navbar = ({ clickHandler }) => {
   const { user, onLogout } = useContext(AuthContext);

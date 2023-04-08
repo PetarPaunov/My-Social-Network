@@ -25,16 +25,16 @@ export const Main = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-      setLoading((state) => !state);
+    setLoading((state) => !state);
 
-      getAllPosts()
-        .then((result) => {
-          setPosts(result);
-          setLoading((state) => !state);
-        })
-        .catch((err) => {
-          navigate("/404");
-        });
+    getAllPosts()
+      .then((result) => {
+        setPosts(result);
+        setLoading((state) => !state);
+      })
+      .catch((err) => {
+        navigate("/404");
+      });
   }, []);
 
   useEffect(() => {
@@ -92,9 +92,15 @@ export const Main = () => {
       ) : null}
 
       <div className="bottom-part">
-        {loading ? (
-          <GridLoader style={spinnerStyle} color="#1877f2" />
-        ) : (
+        {loading ? 
+          <GridLoader style={spinnerStyle} color="#1877f2" /> 
+          : 
+          ( posts.length <= 0 ) 
+          ? 
+          (
+            <p className="no-posts">Be the first to add post article!</p>
+          )
+         : (
           <section className="left-part">
             {posts.map((x) => (
               <PostArticle
