@@ -23,7 +23,7 @@
 ## About The Project
 
 <p align="center">
-  <img src="" width="700" alt="accessibility text">
+  <img src="https://user-images.githubusercontent.com/85368212/230733545-f4873770-48c7-4b54-a8eb-d2240f256fd7.png" width="1000" alt="accessibility text">
 </p>
 
 The website is a copy of social media [Facebook](https://www.facebook.com/), where you can add posts (to share them with your friends). You can also like these posts and comment on them. The app provides the ability to send friend requests to other users. The site was created for educational purposes. 
