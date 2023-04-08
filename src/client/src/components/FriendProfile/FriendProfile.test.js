@@ -30,7 +30,7 @@ const firnedPostsRequestObject = {
   title: "New post test 123",
   userId: "2e80d0e6-57fa-436a-9e33-bb7668dc3a8e",
   userImage: "testImage",
-  userName: "TestUser Username",
+  userName: "TestUser Username1",
 };
 
 const server = setupServer(
